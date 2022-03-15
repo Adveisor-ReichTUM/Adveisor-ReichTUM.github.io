@@ -3,7 +3,9 @@ import java.util.*;
 public class Player {
     private final int startmoney;   // amount of money available in the beginning
 
-    int position;               // position on the field array: 0 - 39
+    private int position;       // position on the field array: 0 - 39
+    private int dice;           // total value of dices
+    private boolean pasch;      // dices with same value
 
     private int balance;        // amount of money the player owns
     private boolean bankrupt;   // criteria defining if player is still in the game
@@ -69,6 +71,21 @@ public class Player {
 
     public void setPosition(int position_new){
         this.position = position_new;
+    }
+
+    public boolean throwDices(){
+        int[] dice_values = Dice.throwDices();
+        this.dice = dice_values[0] + dice_values[1];
+        this.pasch = (dice_values[0] == dice_values[1]);
+
+        return this.pasch;
+    }
+
+    public void move(){
+        setPosition((getPosition()+dice)%40);
+        if(this.position<dice){
+            adjustBalance(200);
+        }
     }
 
 }
