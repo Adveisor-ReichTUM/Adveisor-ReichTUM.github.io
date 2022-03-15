@@ -1,23 +1,30 @@
+import java.util.*;
+
 public class Player {
-    private final int startmoney;
+    private final int startmoney;   // amount of money available in the beginning
 
-    int position;
+    int position;               // position on the field array: 0 - 39
 
-    private int balance;
-    private boolean bankrupt;
-    private String name;
+    private int balance;        // amount of money the player owns
+    private boolean bankrupt;   // criteria defining if player is still in the game
+    private String name;        // name of player
+    private boolean[] streets;  // fields owned by player: true if in possession
 
-    private int roundsInJail;
-    private boolean inJail;
-    private int numJailCards;
+    private int roundsInJail;   // number of consecutive rounds the player has spent in jail
+    private boolean inJail;     // jailed status
+    private int numJailCards;   // number of Out-of-jail cards in players possession
 
-    //Game game = new Game()
+    private Game game;          // reference object to interact with game
 
-    public Player(String name, int startmoney){
+    public Player(String name, int startmoney, Game game){
         this.startmoney = startmoney;
         this.balance = startmoney;
         this.name = name;
+        this.bankrupt = false;
         this.position = 0;
+        this.game = game;
+        this.streets = new boolean[40];    // initializes the elements with false
+
     }
 
     public int getBalance(){
@@ -50,6 +57,18 @@ public class Player {
 
     public void setInJail(boolean isInJail_new){
         this.inJail = isInJail_new;
+    }
+
+    public void adjustBalance(int diff){
+        this.balance += diff;
+    }
+
+    public int getPosition(){
+        return this.position;
+    }
+
+    public void setPosition(int position_new){
+        this.position = position_new;
     }
 
 }
