@@ -11,4 +11,13 @@ public class Dice {
         }
         return dices;
     }
+
+    public static int getTotal(int[] dices){
+        return dices[0] + dices[1];
+    }
+
+    public static boolean isPasch(int[] dices){
+        return dices[0] == dices[1];
+    }
+
 }

@@ -16,6 +16,7 @@ public class Player {
     private boolean inJail;     // jailed status
     private int numJailCards;   // number of Out-of-jail cards in players possession
 
+    // reference attribute
     private Game game;          // reference object to interact with game
 
     public Player(String name, int startmoney, Game game){
@@ -75,9 +76,8 @@ public class Player {
 
     public boolean throwDices(){
         int[] dice_values = Dice.throwDices();
-        this.dice = dice_values[0] + dice_values[1];
-        this.pasch = (dice_values[0] == dice_values[1]);
-
+        this.dice = Dice.getTotal(dice_values);
+        this.pasch = Dice.isPasch(dice_values);
         return this.pasch;
     }
 
@@ -86,6 +86,14 @@ public class Player {
         if(this.position<dice){
             adjustBalance(200);
         }
+    }
+
+    public boolean getPossession(int field_num){
+        return this.streets[field_num];
+    }
+
+    public void setPossession(int field_num, boolean ownership){
+        this.streets[field_num] = ownership;
     }
 
 }
