@@ -6,6 +6,7 @@ public class Field {
     // reference attribute
     private Board board;
 
+    // constructor
     public Field(String street_name, int position, Board board){
         this.street_name = street_name;
         this.position = position;

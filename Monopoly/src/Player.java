@@ -1,6 +1,8 @@
 import java.util.*;
 
 public class Player {
+    private int id;             // identification number for player
+
     private final int startmoney;   // amount of money available in the beginning
 
     private int position;       // position on the field array: 0 - 39
@@ -19,8 +21,9 @@ public class Player {
     // reference attribute
     private Game game;          // reference object to interact with game
 
-    public Player(String name, int startmoney, Game game){
-        this.startmoney = startmoney;
+    // constructor
+    public Player(String name, Game game){
+        this.startmoney = 1500;
         this.balance = startmoney;
         this.name = name;
         this.bankrupt = false;
