@@ -11,20 +11,20 @@ public class Game {
 
     // reference attributes
     private ArrayList<Player> players;
-    private ArrayList<Field> fields;
+    //private ArrayList<Field> fields;
     private Deck communityDeck;
     private Deck chanceDeck;
     private Board board;
 
     // constructor
-    public Game(String boardfile, String fieldsfile, String chancefile, String communityfile, String playerFile){
+    public Game(String boardfile, String chancefile, String communityfile, String playerFile){
         // set up board
         board = new Board();
         board.setup(boardfile);
 
         // set up fields
-        fields = new ArrayList<Field>;
-        Field.setup(fields, fieldsFile);
+        /*fields = new ArrayList<Field>;
+        Field.setup(fields, fieldsFile);*/
 
         // set up chance Deck
         chanceDeck = new Deck("Chance", chancefile);
@@ -45,6 +45,26 @@ public class Game {
             System.err.println(exception);
         }
 
+    }
+
+    public int getNumPlayers(){
+        return this.numPlayers;
+    }
+
+    public int getNumRounds(){
+        return this.numRounds;
+    }
+
+    public int getNumActivePlayers() {
+        return this.numActivePlayers;
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return this.players;
+    }
+
+    public Board getBoard(){
+        return this.board;
     }
 
 }

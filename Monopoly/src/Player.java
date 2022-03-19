@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Player {
     private int id;             // identification number for player
+    //private static int counter;     // number of players
 
     private final int startmoney;   // amount of money available in the beginning
 
@@ -13,6 +14,8 @@ public class Player {
     private boolean bankrupt;   // criteria defining if player is still in the game
     private String name;        // name of player
     private boolean[] streets;  // fields owned by player: true if in possession
+    private int numHouses;         // number of houses owned, required for renovation cost calculation
+    private int numHotels;         // number of hotels owned, required for renovation cost calculation
 
     private int roundsInJail;   // number of consecutive rounds the player has spent in jail
     private boolean inJail;     // jailed status
@@ -97,6 +100,18 @@ public class Player {
 
     public void setPossession(int field_num, boolean ownership){
         this.streets[field_num] = ownership;
+    }
+
+    public int getCounter(){
+        return this.counter;
+    }
+
+    public int getNumHouses(){
+        return this.numHouses;
+    }
+
+    public int getNumHotels(){
+        return this.numHotels;
     }
 
 }
