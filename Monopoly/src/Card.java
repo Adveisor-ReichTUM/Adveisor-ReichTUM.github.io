@@ -2,17 +2,17 @@ public class Card {
     private enum cardType {renovation, get_money_bank, get_money_player, pay_money_bank, pay_money_player, out_of_jail, move_via_GO, move_not_GO, houses_renovation};
     private final cardType type;
 
-    private final int id;
+    //private final int id;
     private final String description;
     private final String value;
-    private final boolean chance_deck;     // true if chance card, false if community card
+    private final boolean isChanceDeck;     // true if chance card, false if community card
 
-    public Card(String desc, String type, String value, int id, boolean chance_deck) {
+    public Card(String desc, String type, String value, boolean isChanceDeck) {
         this.type = cardType.valueOf(type);
         this.description = desc;
-        this.id = id;
+        //this.id = id;
         this.value = value;
-        this.chance_deck = chance_deck;
+        this.isChanceDeck = isChanceDeck;
     }
 
     public cardType getCardType() {
@@ -67,7 +67,7 @@ public class Card {
                 int sum = 0;
                 int numHouses = player.getNumHouses();
                 int numHotels = player.getNumHotels();
-                if (this.chance_deck)
+                if (this.isChanceDeck)
                     sum = numHouses * 25 + numHotels * 100;
                 else
                     sum = numHouses * 40 + numHotels * 115;
@@ -78,7 +78,7 @@ public class Card {
     public int identifyTargetPosition(int current_pos){
         int pos = 40;   // moving 40 fields will end up with player on the same spot
 
-        if(chance_deck) {
+        if(this.isChanceDeck) {
             switch (value) {
                 case "Gefängnis": return 30;
                 case "LOS": return 0;

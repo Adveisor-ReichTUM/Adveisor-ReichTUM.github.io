@@ -27,10 +27,10 @@ public class Game {
         Field.setup(fields, fieldsFile);*/
 
         // set up chance Deck
-        chanceDeck = new Deck("Chance", chancefile);
+        chanceDeck = new Deck(true, chancefile);
 
         // set up community Deck
-        communityDeck = new Deck("Community", communityfile);
+        communityDeck = new Deck(false, communityfile);
 
         // Load players
         try{
