@@ -13,10 +13,10 @@ public class Deck {
         try{
             BufferedReader cardset = new BufferedReader(new FileReader(filename));
             String input = cardset.readLine();
-            String[] parts;
+            String[] args;
             while(input != null){
-                parts = input.split("-");
-                cards.add(new Card(parts[2], parts[0], parts[1], isChanceDeck));
+                args = input.split(" - ");
+                cards.add(new Card(args[2], args[0], args[1], isChanceDeck));
                 input = cardset.readLine();
             }
             cardset.close();

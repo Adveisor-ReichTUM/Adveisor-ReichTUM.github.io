@@ -19,8 +19,7 @@ public class Game {
     // constructor
     public Game(String boardfile, String chancefile, String communityfile, String playerFile){
         // set up board
-        board = new Board();
-        board.setup(boardfile);
+        board = new Board(boardfile);
 
         // set up fields
         /*fields = new ArrayList<Field>;
