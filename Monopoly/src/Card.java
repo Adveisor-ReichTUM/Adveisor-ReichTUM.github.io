@@ -88,6 +88,7 @@ public class Card {
         else{
             switch (value){
                 case "Schlossalle": return 39;
+                case "Südbahnhof": return 5;
                 case "Bahnhof":
                     if(current_pos < 5 || current_pos >= 35) return 5;
                     else if(current_pos < 15) return 15;
@@ -105,4 +106,6 @@ public class Card {
             }
         }
     }
+
+
 }
