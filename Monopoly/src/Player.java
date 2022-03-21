@@ -102,9 +102,9 @@ public class Player {
         this.streets[field_num] = ownership;
     }
 
-    public int getCounter(){
+    /*public int getCounter(){
         return this.counter;
-    }
+    }*/
 
     public int getNumHouses(){
         return this.numHouses;
@@ -112,6 +112,25 @@ public class Player {
 
     public int getNumHotels(){
         return this.numHotels;
+    }
+
+    public int getRoundsInJail(){
+        return this.roundsInJail;
+    }
+
+    public void setRoundsInJail(int roundsInJail){
+        this.roundsInJail = roundsInJail;
+    }
+
+    public int getId(){
+        return this.id;
+    }
+
+    public void buy(Field field){
+        adjustBalance(field.getPrice());
+        streets[field.getPosition()] = true;
+        field.setOwned(true);
+        field.setOwner(id);
     }
 
 }

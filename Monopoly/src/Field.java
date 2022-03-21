@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Field {
     private String name;
     private int position;
@@ -7,12 +10,13 @@ public class Field {
 
     private int numHouses;
     private final int price;
-    private int[] rent_stages;
+    private int[] rent_stages;      // Hypothek; Normal = 1; (Alle Farben = 2); ++houses;
+    private boolean isHypothek;
 
-    private enum colorType {braun, hellblau, pink, orange, rot, gelb, gruen, dunkelblau};
+    private enum colorType {no_color, braun, hellblau, pink, orange, rot, gelb, gruen, dunkelblau};
     private final colorType color;
 
-    private enum fieldType {no_color, los, street, station, jail, police, parking, tax, chance, community, utilities};
+    private enum fieldType {los, street, station, jail, police, parking, tax, chance, community, utilities};
     private final fieldType type;
 
     // constructor
@@ -28,6 +32,7 @@ public class Field {
         this.owned = false;
         this.owner = -1;
         this.numHouses = 0;
+        this.isHypothek = false;
     }
 
     public String getName(){
@@ -45,4 +50,86 @@ public class Field {
     public void setOwned(boolean owned){
         this.owned = owned;
     }
+
+    public void evaluateField(Player player, Game game, Player players){
+        switch(type){
+            case los: break;
+            case street: evaluateStreet(player, game); break;
+            case station: evaluateStation(player, game); break;
+            case jail: break;
+            case police: evaluatePolice(player, game); break;
+            case parking: break;
+            case tax: evaluateTax(player, game); break;
+            case chance: game.getChanceDeck().takeCard(player, game); break;
+            case community: game.getCommunityDeck().takeCard(player, game); break;
+            case utilities: evaluateUtilities(player, game);
+        }
+    }
+
+    public void evaluateStreet(Player player, Game game){
+        ArrayList<Player> players = game.getPlayers();
+        if(this.owner != player.getId() && this.owned){
+            // Spieler nicht Besitzer des gekauften Feldes
+            if(this.owner>=0 && this.owner < players.size())
+                payRent(player, players.get(this.owner));       // Miete bezahlen
+            else
+                System.err.println("Fehler: Besitzer nicht identifizierbar");
+        }
+        else if(this.owned == false){
+            decideBuy(player);
+        }
+    }
+
+    public void decideBuy(Player player){
+        if(player.getBalance()<this.price)
+            System.out.print("You cannot afford to buy this street. ");
+            System.out.print("You may be able to increase your balance by trading, selling houses, mortgage.\n");
+        else{
+            System.out.println("Would you like to buy this street? y/n");
+            char decision = 'n';
+            Scanner input = new Scanner(System.in);
+            decision = java.lang.Character.toLowerCase(input.next().charAt(0));
+
+            boolean valid = false;
+            while(!valid)
+                switch(decision){
+                    case 'y':
+                        valid = true;
+                        player.buy(this); break;
+                    case 'n':
+                        valid = true;
+                        break;
+                    default:
+                        System.out.println("Falsche Eingabe! Would you like to buy this street? y/n");
+                        break;
+                }
+        }
+    }
+
+    public void transaction(Player paying_pl, Player paid_pl, int diff){
+        paying_pl.adjustBalance(diff);
+        paid_pl.adjustBalance(diff);
+    }
+
+    public void payRent(Player paying_pl, Player paid_pl){
+        int stage = determineStreetStage();
+        int diff = this.rent_stages[stage];
+        transaction(paying_pl, paid_pl, diff);
+    }
+
+    public int determineStreetStage(){
+        if(this.isHypothek)
+            return 0;
+        else
+            return (1 + this.numHouses);
+    }
+
+    public int getPrice(){
+        return this.price;
+    }
+
+    public void setOwner(int owner_id){
+        this.owner = owner_id;
+    }
+
 }

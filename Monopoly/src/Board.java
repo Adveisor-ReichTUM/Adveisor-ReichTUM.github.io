@@ -24,11 +24,11 @@ public class Board {
                 }
                 fields.add(new Field(name, type, color, position, price, rent_stages));
             }
+            fieldset.close();
         }
         catch(java.io.IOException exception){
             System.err.println(exception);
         }
     }
-
 
 }

@@ -66,4 +66,12 @@ public class Game {
         return this.board;
     }
 
+    public Deck getCommunityDeck(){
+        return this.communityDeck;
+    }
+
+    public Deck getChanceDeck(){
+        return this.chanceDeck;
+    }
+
 }
