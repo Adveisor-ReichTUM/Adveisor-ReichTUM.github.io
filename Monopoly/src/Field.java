@@ -54,10 +54,10 @@ public class Field {
     public void evaluateField(Player player, Game game, Player players){
         switch(type){
             case los: break;
+            case station:
             case street: evaluateStreet(player, game); break;
-            case station: evaluateStation(player, game); break;
             case jail: break;
-            case police: evaluatePolice(player, game); break;
+            case police: evaluatePolice(player); break;
             case parking: break;
             case tax: evaluateTax(player, game); break;
             case chance: game.getChanceDeck().takeCard(player, game); break;
@@ -71,7 +71,7 @@ public class Field {
         if(this.owner != player.getId() && this.owned){
             // Spieler nicht Besitzer des gekauften Feldes
             if(this.owner>=0 && this.owner < players.size())
-                payRent(player, players.get(this.owner));       // Miete bezahlen
+                    payRent(player, players.get(this.owner));       // Miete bezahlen
             else
                 System.err.println("Fehler: Besitzer nicht identifizierbar");
         }
@@ -79,6 +79,7 @@ public class Field {
             decideBuy(player);
         }
     }
+
 
     public void decideBuy(Player player){
         if(player.getBalance()<this.price)
@@ -112,9 +113,20 @@ public class Field {
     }
 
     public void payRent(Player paying_pl, Player paid_pl){
-        int stage = determineStreetStage();
+        int stage;
+        if(this.type == fieldType.street)
+            stage = determineStreetStage();
+        else
+            stage = determineStationStage();
         int diff = this.rent_stages[stage];
         transaction(paying_pl, paid_pl, diff);
+    }
+
+    public int determineStationStage(Player paid_pl, Board board){
+        if(this.isHypothek)
+            return 0;
+        else
+            return board.countType(this, paid_pl);
     }
 
     public int determineStreetStage(){
@@ -130,6 +142,19 @@ public class Field {
 
     public void setOwner(int owner_id){
         this.owner = owner_id;
+    }
+
+    public void evaluatePolice(Player player){
+        player.setInJail(true);
+        player.setPosition(10);
+    }
+
+    public fieldType getType(){
+        return this.type;
+    }
+
+    public int getOwner(){
+        return this.owner;
     }
 
 }

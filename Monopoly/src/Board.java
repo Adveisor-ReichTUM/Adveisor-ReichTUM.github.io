@@ -18,8 +18,9 @@ public class Board {
                 String color = args[2];
                 int price = Integer.parseInt(args[3]);
                 String[] stages = args[4].split(":");
-                int[] rent_stages = new int[stages.length];
-                for(int i = 0; i<stages.length; i++){
+                int[] rent_stages = new int[stages.length+1];
+                rent_stages[0] = 0;
+                for(int i = 1; i<stages.length+1; i++){
                     rent_stages[i] = Integer.parseInt(stages[i]);
                 }
                 fields.add(new Field(name, type, color, position, price, rent_stages));
@@ -29,6 +30,15 @@ public class Board {
         catch(java.io.IOException exception){
             System.err.println(exception);
         }
+    }
+
+    public int countType(Field field, Player player){
+        int counter = 0;
+        for(Field f: fields){
+            if((f.getType()==field.getType()) && (f.getOwner()==player.getId()))
+                counter++;
+        }
+        return counter;
     }
 
 }
