@@ -86,10 +86,11 @@ public class Field {
 
 
     public void decideBuy(Player player){
-        if(player.getBalance()<this.price)
+        if(player.getBalance()<this.price) {
             System.out.print("You cannot afford to buy this street. ");
             System.out.print("You may be able to increase your balance by trading, selling houses, mortgage.\n");
-        else{
+        }
+        else {
             System.out.println("Would you like to buy this street? y/n");
             char decision = 'n';
             Scanner input = new Scanner(System.in);
