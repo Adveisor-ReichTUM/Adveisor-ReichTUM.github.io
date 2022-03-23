@@ -59,11 +59,15 @@ public class Field {
             case jail: break;
             case police: evaluatePolice(player); break;
             case parking: break;
-            case tax: evaluateTax(player, game); break;
+            case tax: player.adjustBalance(this.price); break;
             case chance: game.getChanceDeck().takeCard(player, game); break;
             case community: game.getCommunityDeck().takeCard(player, game); break;
             case utilities: evaluateUtilities(player, game);
         }
+    }
+
+    public void evaluateUtilities(Player player, Game game){
+
     }
 
     public void evaluateStreet(Player player, Game game){
@@ -71,7 +75,7 @@ public class Field {
         if(this.owner != player.getId() && this.owned){
             // Spieler nicht Besitzer des gekauften Feldes
             if(this.owner>=0 && this.owner < players.size())
-                    payRent(player, players.get(this.owner));       // Miete bezahlen
+                    payRent(player, players.get(this.owner), game.getBoard());       // Miete bezahlen
             else
                 System.err.println("Fehler: Besitzer nicht identifizierbar");
         }
@@ -112,17 +116,34 @@ public class Field {
         paid_pl.adjustBalance(diff);
     }
 
-    public void payRent(Player paying_pl, Player paid_pl){
-        int stage;
-        if(this.type == fieldType.street)
-            stage = determineStreetStage();
-        else
-            stage = determineStationStage();
-        int diff = this.rent_stages[stage];
+    public void payRent(Player paying_pl, Player paid_pl, Board board){
+        int stage = 0;
+        int diff = 0;
+        switch(this.type) {
+            case street:
+                stage = determineStreetStage();
+                diff = this.rent_stages[stage];
+                break;
+            case station:
+                stage = determineStationStage(paid_pl, board);
+                diff = this.rent_stages[stage];
+                break;
+            case utilities:
+                stage = determineUtilityStage();
+                diff = this.rent_stages[stage] * paying_pl.getDiceResult();
+                break;
+        }
         transaction(paying_pl, paid_pl, diff);
     }
 
     public int determineStationStage(Player paid_pl, Board board){
+        if(this.isHypothek)
+            return 0;
+        else
+            return board.countType(this, paid_pl);
+    }
+
+    public int determineUtilityStage(Player paid_pl, Board board, Dice dice){
         if(this.isHypothek)
             return 0;
         else

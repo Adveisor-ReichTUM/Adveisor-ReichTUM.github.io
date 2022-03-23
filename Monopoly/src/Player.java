@@ -87,6 +87,10 @@ public class Player {
         return this.pasch;
     }
 
+    public int getDiceResult(){
+        return this.dice;
+    }
+
     public void move(){
         setPosition((getPosition()+dice)%40);
         if(this.position<dice){
@@ -101,10 +105,6 @@ public class Player {
     public void setPossession(int field_num, boolean ownership){
         this.streets[field_num] = ownership;
     }
-
-    /*public int getCounter(){
-        return this.counter;
-    }*/
 
     public int getNumHouses(){
         return this.numHouses;
