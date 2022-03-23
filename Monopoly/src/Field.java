@@ -59,7 +59,7 @@ public class Field {
             case jail: break;
             case police: evaluatePolice(player); break;
             case parking: break;
-            case tax: player.adjustBalance(this.price); break;
+            case tax: player.adjustBalance(-this.price); break;
             case chance: game.getChanceDeck().takeCard(player, game); break;
             case community: game.getCommunityDeck().takeCard(player, game); break;
             case utilities: evaluateUtilities(player, game);
@@ -113,7 +113,7 @@ public class Field {
     }
 
     public void transaction(Player paying_pl, Player paid_pl, int diff){
-        paying_pl.adjustBalance(diff);
+        paying_pl.adjustBalance(-diff);
         paid_pl.adjustBalance(diff);
     }
 
