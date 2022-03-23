@@ -130,7 +130,7 @@ public class Field {
                 diff = this.rent_stages[stage];
                 break;
             case utilities:
-                stage = determineUtilityStage();
+                stage = determineUtilityStage(paid_pl, board);
                 diff = this.rent_stages[stage] * paying_pl.getDiceResult();
                 break;
         }
@@ -144,7 +144,7 @@ public class Field {
             return board.countType(this, paid_pl);
     }
 
-    public int determineUtilityStage(Player paid_pl, Board board, Dice dice){
+    public int determineUtilityStage(Player paid_pl, Board board){
         if(this.isHypothek)
             return 0;
         else
