@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Player {
     private int id;             // identification number for player
@@ -80,11 +80,10 @@ public class Player {
         this.position = position_new;
     }
 
-    public boolean throwDices(){
+    public void throwDices(){
         int[] dice_values = Dice.throwDices();
         this.dice = Dice.getTotal(dice_values);
         this.pasch = Dice.isPasch(dice_values);
-        return this.pasch;
     }
 
     public int getDiceResult(){
@@ -131,6 +130,47 @@ public class Player {
         streets[field.getPosition()] = true;
         field.setOwned(true);
         field.setOwner(id);
+    }
+
+    public void toJail(){
+        setInJail(true);
+        setPosition(10);
+    }
+
+    public void turn(){
+        int counter = 0;
+        if(inJail){
+            System.out.println("Willst du 50€ zahlen oder eine Aus-dem-Gefängnis Karte nutzen, um aus den Gefängnis zu kommen? y/n");
+            Scanner input = new Scanner(System.in);
+            char decision = java.lang.Character.toLowerCase(input.next().charAt(0));
+            switch(decision){
+                case 'y':
+                    if(this.numJailCards>0)
+                        this.numJailCards--;
+                    else
+                        adjustBalance(-50);
+                    moveAndEvaluate();
+            }
+        }
+    }
+
+    public void moveAndEvaluate(Board board){
+        int counter = 0;
+        this.pasch = true;
+        while(this.pasch && (this.inJail == false) && counter <=2)
+            if(counter == 2 && this.pasch) toJail();
+            throwDices();
+            move();
+            Field field = board.getFields().get(this.position);
+            Field.evaluateField(field, this, game);
+        buildTradeMortgage();
+    }
+
+    public void buildTradeMortgage(){
+        System.out.println("Available actions: B (Bauen), T (Tausschen), H (Hypothek), F (Finish)");
+        Scanner input = new Scanner(System.in);
+        char selection = java.lang.Character.toLowerCase(input.next().charAt(0));
+
     }
 
 }

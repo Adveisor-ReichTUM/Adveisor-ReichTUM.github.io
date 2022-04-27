@@ -51,18 +51,18 @@ public class Field {
         this.owned = owned;
     }
 
-    public void evaluateField(Player player, Game game, Player players){
-        switch(type){
+    public static void evaluateField(Field field, Player player, Game game){
+        switch(field.getType()){
             case los: break;
             case station:
-            case street: evaluateStreet(player, game); break;
+            case street: field.evaluateStreet(player, game); break;
             case jail: break;
-            case police: evaluatePolice(player); break;
+            case police: field.evaluatePolice(player); break;
             case parking: break;
-            case tax: player.adjustBalance(-this.price); break;
+            case tax: player.adjustBalance(-field.getPrice()); break;
             case chance: game.getChanceDeck().takeCard(player, game); break;
             case community: game.getCommunityDeck().takeCard(player, game); break;
-            case utilities: evaluateUtilities(player, game);
+            case utilities: field.evaluateUtilities(player, game);
         }
     }
 
@@ -109,6 +109,7 @@ public class Field {
                         System.out.println("Falsche Eingabe! Would you like to buy this street? y/n");
                         break;
                 }
+            input.close();
         }
     }
 

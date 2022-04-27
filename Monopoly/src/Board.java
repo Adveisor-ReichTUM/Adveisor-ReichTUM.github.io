@@ -41,4 +41,8 @@ public class Board {
         return counter;
     }
 
+    public ArrayList<Field> getFields(){
+        return this.fields;
+    }
+
 }
