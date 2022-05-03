@@ -1,3 +1,5 @@
+package com.adveisor.g2.monopoly.engine.service.model;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -94,7 +96,7 @@ public class Field {
             System.out.println("Would you like to buy this street? y/n");
             char decision = 'n';
             Scanner input = new Scanner(System.in);
-            decision = java.lang.Character.toLowerCase(input.next().charAt(0));
+            decision = Character.toLowerCase(input.next().charAt(0));
 
             boolean valid = false;
             while(!valid)

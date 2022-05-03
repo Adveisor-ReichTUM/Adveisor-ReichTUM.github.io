@@ -1,3 +1,5 @@
+package com.adveisor.g2.monopoly.engine.service.model;
+
 import java.util.Scanner;
 
 public class Player {
@@ -142,14 +144,14 @@ public class Player {
         if(inJail){
             System.out.println("Willst du 50€ zahlen oder eine Aus-dem-Gefängnis Karte nutzen, um aus den Gefängnis zu kommen? y/n");
             Scanner input = new Scanner(System.in);
-            char decision = java.lang.Character.toLowerCase(input.next().charAt(0));
+            char decision = Character.toLowerCase(input.next().charAt(0));
             switch(decision){
                 case 'y':
                     if(this.numJailCards>0)
                         this.numJailCards--;
                     else
                         adjustBalance(-50);
-                    moveAndEvaluate();
+                    moveAndEvaluate(game.getBoard());
             }
         }
     }
@@ -169,7 +171,7 @@ public class Player {
     public void buildTradeMortgage(){
         System.out.println("Available actions: B (Bauen), T (Tausschen), H (Hypothek), F (Finish)");
         Scanner input = new Scanner(System.in);
-        char selection = java.lang.Character.toLowerCase(input.next().charAt(0));
+        char selection = Character.toLowerCase(input.next().charAt(0));
 
     }
 

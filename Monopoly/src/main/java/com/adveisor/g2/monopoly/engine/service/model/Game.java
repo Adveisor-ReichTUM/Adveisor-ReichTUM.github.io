@@ -1,3 +1,5 @@
+package com.adveisor.g2.monopoly.engine.service.model;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileReader;
