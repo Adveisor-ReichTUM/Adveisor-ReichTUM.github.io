@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileReader;
 import java.io.BufferedReader;
-
 public class Game {
+
+    private enum status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
     private int numPlayers;
     private int numActivePlayers;
     private int numRounds;
