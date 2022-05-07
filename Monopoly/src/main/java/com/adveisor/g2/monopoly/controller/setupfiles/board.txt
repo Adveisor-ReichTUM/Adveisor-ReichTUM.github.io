@@ -1,0 +1,1 @@
+// Specific structure required (check board.java)

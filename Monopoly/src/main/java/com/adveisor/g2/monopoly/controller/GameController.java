@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @EnableAutoConfiguration
 public class GameController {
 
-    public static Game game;
+    public static Game game = new Game("setupfiles/board.txt", "setupfiles/chanceDeck.txt", "communityDeck.txt");
 
     // -----------------------
     @RequestMapping(value="/{file_name:.+}", method=RequestMethod.GET)
@@ -31,9 +31,14 @@ public class GameController {
         return game;
     }
 
+
+
     @RequestMapping(value="/join", method = RequestMethod.GET, produces="application/json")
     public Game join(@RequestParam String name, @RequestParam Piece piece){
         game.join(name, piece);
         return game;
     }
+
+    @RequestMapping(value="/start", method=RequestMethod.GET, produces="application/json")
+    public Game start()
 }
