@@ -35,10 +35,12 @@ public class Deck {
 
     public static void shuffleDeck(ArrayList<Card> cards){
         // iterate over array an swap each array element once with random index
-        for (int i = 0; i < cards.size(); i++){
-            Random rand = new Random();
-            int swap_index = rand.nextInt(40);
-            Collections.swap(cards, i, swap_index);
+        if(cards!=null) {
+            for (int i = 0; i < cards.size(); i++) {
+                Random rand = new Random();
+                int swap_index = rand.nextInt(40);
+                Collections.swap(cards, i, swap_index);
+            }
         }
     }
 
