@@ -6,9 +6,11 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 public class Game {
 
-    private enum status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
+    private enum Status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
+    private final Status status;
     private int numPlayers;
     private int numActivePlayers;
+    private int numBankruptPlayers;
     private int numRounds;
     private boolean running;
 
@@ -20,32 +22,34 @@ public class Game {
     private Board board;
 
     // constructor
-    public Game(String boardfile, String chancefile, String communityfile, String playerFile){
+    public Game(String boardfile, String chancefile, String communityfile){
         // set up board
-        board = new Board(boardfile);
+        this.board = new Board(boardfile);
 
         // set up fields
         /*fields = new ArrayList<Field>;
         Field.setup(fields, fieldsFile);*/
 
         // set up chance Deck
-        chanceDeck = new Deck(true, chancefile);
+        this.chanceDeck = new Deck(true, chancefile);
 
         // set up community Deck
-        communityDeck = new Deck(false, communityfile);
+        this.communityDeck = new Deck(false, communityfile);
 
         // Load players
-        try{
+        /*try{
             BufferedReader input = new BufferedReader(new FileReader(playerFile));
-            numPlayers = Integer.parseInt(input.readLine());
+            numPlayers = Integer.parseInt(input.readLine())/2;
             for(int i = 0; i<numPlayers; i++){
-                players.add(new Player(input.readLine(),this));
+                players.add(new Player(input.readLine(), this, Piece.valueOf(input.readLine())));
             }
             input.close();
         }
         catch(java.io.IOException exception){
             System.err.println(exception);
-        }
+        }*/
+
+        this.status = Status.WAITING;
 
     }
 
@@ -77,4 +81,17 @@ public class Game {
         return this.chanceDeck;
     }
 
+    public void join(String name, Piece piece){
+        // check for failure
+        if(status != status.WAITING) throw new IllegalStateException("Failed to join Game: already running.");
+
+        for(Player player : players){
+            if(player.getName().equals(name)) throw new IllegalArgumentException("This name already exists.");
+            if(player.getPiece().equals(piece)) throw new IllegalArgumentException("This color is already used by another player.");
+        }
+
+        // create player
+        Player player = new Player(name, this, piece);
+        players.add(player);
+    }
 }

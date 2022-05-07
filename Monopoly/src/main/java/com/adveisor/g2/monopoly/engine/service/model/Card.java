@@ -1,7 +1,7 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
 public class Card {
-    private enum cardType {renovation, get_money_bank, get_money_player, pay_money_bank, pay_money_player, out_of_jail, move_via_GO, move_not_GO, houses_renovation};
+    private enum cardType {renovation, get_money_bank, get_money_player, pay_money_bank, pay_money_player, out_of_jail, move_via_GO, move_not_GO};
     private final cardType type;
 
     //private final int id;

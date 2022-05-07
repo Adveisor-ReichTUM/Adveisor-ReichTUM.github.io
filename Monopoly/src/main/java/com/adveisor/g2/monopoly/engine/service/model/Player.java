@@ -3,7 +3,7 @@ package com.adveisor.g2.monopoly.engine.service.model;
 import java.util.Scanner;
 
 public class Player {
-    private int id;             // identification number for player
+    private static int id = 0;             // identification number for player
     //private static int counter;     // number of players
 
     private final int startmoney;   // amount of money available in the beginning
@@ -39,6 +39,7 @@ public class Player {
         this.streets = new boolean[40];    // initializes the elements with false
         this.bid = -1;
         this.piece = piece;
+        this.id = id+1;
     }
 
     public int getBalance(){
@@ -184,4 +185,11 @@ public class Player {
         char selection = Character.toLowerCase(input.next().charAt(0));
     }
 
+    public String getName(){
+        return this.name;
+    }
+
+    public Piece getPiece(){
+        return this.piece;
+    }
 }
