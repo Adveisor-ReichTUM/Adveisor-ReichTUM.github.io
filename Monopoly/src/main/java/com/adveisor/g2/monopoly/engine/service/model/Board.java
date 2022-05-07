@@ -1,15 +1,15 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import java.io.*;
 import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class Board {
     private ArrayList<Field> fields;
 
-    public Board(String boardfile){
+    public Board(String boardfile) {
         try{
-            BufferedReader fieldset = new BufferedReader(new FileReader(boardfile));
+            InputStream inputStream = getClass().getResourceAsStream(boardfile);
+            BufferedReader fieldset = new BufferedReader(new InputStreamReader(inputStream));
             String input = fieldset.readLine();
             String[] args;
             while(input != null){
@@ -19,13 +19,14 @@ public class Board {
                 String type = args[1];
                 String color = args[2];
                 int price = Integer.parseInt(args[3]);
-                String[] stages = args[4].split(":");
+                int housecost = Integer.parseInt(args[4]);
+                String[] stages = args[5].split(":");
                 int[] rent_stages = new int[stages.length+1];
                 rent_stages[0] = 0;
                 for(int i = 1; i<stages.length+1; i++){
                     rent_stages[i] = Integer.parseInt(stages[i]);
                 }
-                fields.add(new Field(name, type, color, position, price, rent_stages));
+                fields.add(new Field(name, type, color, position, price, housecost, rent_stages));
             }
             fieldset.close();
         }

@@ -12,6 +12,8 @@ public class Field {
 
     private int numHouses;
     private final int price;
+
+    private final int housecost;
     private int[] rent_stages;      // Hypothek; Normal = 1; (Alle Farben = 2); ++houses;
     private boolean isHypothek;
 
@@ -22,12 +24,13 @@ public class Field {
     private final fieldType type;
 
     // constructor
-    public Field(String name, String type, String color, int position, int price, int[] rent_stages){
+    public Field(String name, String type, String color, int position, int price, int housecost, int[] rent_stages){
         this.name = name;
         this.position = position;
         this.owned = false;
         this.type = fieldType.valueOf(type);
         this.price = price;
+        this.housecost = housecost;
         this.rent_stages = rent_stages;
         this.color = colorType.valueOf(color);
 
@@ -180,6 +183,14 @@ public class Field {
 
     public int getOwner(){
         return this.owner;
+    }
+
+    public int getHouseCost(){
+        return this.housecost;
+    }
+
+    public int getNumHouses(){
+        return this.numHouses;
     }
 
 }

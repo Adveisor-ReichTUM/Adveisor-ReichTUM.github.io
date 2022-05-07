@@ -1,5 +1,7 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -13,7 +15,8 @@ public class Deck {
     public Deck(boolean isChanceDeck, String filename){
         this.isChanceDeck = isChanceDeck;
         try{
-            BufferedReader cardset = new BufferedReader(new FileReader(filename));
+            InputStream inputStream = getClass().getResourceAsStream(filename);
+            BufferedReader cardset = new BufferedReader(new InputStreamReader(inputStream));
             String input = cardset.readLine();
             String[] args;
             while(input != null){

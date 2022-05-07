@@ -192,4 +192,18 @@ public class Player {
     public Piece getPiece(){
         return this.piece;
     }
+
+    public int calculateWealth(){
+        int wealth = getBalance();
+        wealth += getNumJailCards()*50;
+        for(int i = 0; i<streets.length; i++){
+            if(streets[i]){
+                Field field = game.getBoard().getFields().get(i);
+                wealth += field.getPrice();
+                wealth += field.getNumHouses() * field.getHouseCost();
+            }
+        }
+        return wealth;
+    }
+
 }

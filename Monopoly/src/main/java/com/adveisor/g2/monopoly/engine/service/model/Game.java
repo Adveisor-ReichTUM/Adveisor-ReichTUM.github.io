@@ -1,5 +1,7 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileReader;
@@ -7,7 +9,7 @@ import java.io.BufferedReader;
 public class Game {
 
     private enum Status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
-    private final Status status;
+    private Status status;
     private int numPlayers;
     private int numActivePlayers;
     private int numBankruptPlayers;
@@ -22,6 +24,7 @@ public class Game {
     private Board board;
 
     // constructor
+    @Autowired
     public Game(String boardfile, String chancefile, String communityfile){
         // set up board
         this.board = new Board(boardfile);
@@ -83,7 +86,7 @@ public class Game {
 
     public void join(String name, Piece piece){
         // check for failure
-        if(status != status.WAITING) throw new IllegalStateException("Failed to join Game: already running.");
+        if(status != status.WAITING) throw new IllegalStateException("Failed to join game: already running.");
 
         for(Player player : players){
             if(player.getName().equals(name)) throw new IllegalArgumentException("This name already exists.");
@@ -94,4 +97,20 @@ public class Game {
         Player player = new Player(name, this, piece);
         players.add(player);
     }
+
+    public void start(){
+        if(status != status.WAITING) throw new IllegalStateException("Failed to start game: wrong status.");
+        if(players.size()<2 || players.size()>4) return;
+    }
+
+    public String end(){
+        status = Status.END;
+        String winner = "";
+        int greatestWealth = 0;
+        for(int i = 0; i<players.size(); i++){
+            if(players.get(i).calculateWealth()>greatestWealth) winner = players.get(i).getName();
+        }
+        return winner;
+    }
+
 }

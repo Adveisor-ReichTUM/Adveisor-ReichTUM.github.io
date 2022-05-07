@@ -2,6 +2,8 @@ package com.adveisor.g2.monopoly.controller;
 
 import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.Piece;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
@@ -9,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @EnableAutoConfiguration
 public class GameController {
-
-    public static Game game = new Game("setupfiles/board.txt", "setupfiles/chanceDeck.txt", "communityDeck.txt");
+    @Autowired
+    private static Game game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/communityDeck.txt");
 
     // -----------------------
     @RequestMapping(value="/{file_name:.+}", method=RequestMethod.GET)
@@ -40,5 +42,26 @@ public class GameController {
     }
 
     @RequestMapping(value="/start", method=RequestMethod.GET, produces="application/json")
-    public Game start()
+    public Game start(){
+        game.start();
+        return game;
+    }
+
+    @RequestMapping(value="/reset", method = RequestMethod.GET, produces="application/json")
+    public Game reset(){
+        game = new Game("setupfiles/board.txt", "setupfiles/chanceDeck.txt", "communityDeck.txt");
+        return game;
+    }
+
+    @RequestMapping(value="/end", method = RequestMethod.GET, produces="application/json")
+    public Game end(){
+        game.end();
+        return game;
+    }
+
+    /*public static void main(String[] args) throws Exception{
+        SpringApplication.run(GameController.class, args);
+
+        game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/communityDeck.txt");
+    }*/
 }
