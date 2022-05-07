@@ -11,7 +11,9 @@ public class Player {
     private int position;       // position on the field array: 0 - 39
     private int dice;           // total value of dices
     private boolean pasch;      // dices with same value
+    private int bid;
 
+    private final Piece piece;
     private int balance;        // amount of money the player owns
     private boolean bankrupt;   // criteria defining if player is still in the game
     private String name;        // name of player
@@ -27,7 +29,7 @@ public class Player {
     private Game game;          // reference object to interact with game
 
     // constructor
-    public Player(String name, Game game){
+    public Player(String name, Game game, Piece piece){
         this.startmoney = 1500;
         this.balance = startmoney;
         this.name = name;
@@ -35,7 +37,8 @@ public class Player {
         this.position = 0;
         this.game = game;
         this.streets = new boolean[40];    // initializes the elements with false
-
+        this.bid = -1;
+        this.piece = piece;
     }
 
     public int getBalance(){
@@ -139,6 +142,13 @@ public class Player {
         setPosition(10);
     }
 
+    public int getBid(){
+        return this.bid;
+    }
+
+    public void setBid(int bid){
+        this.bid = bid;
+    }
     public void turn(){
         int counter = 0;
         if(inJail){
@@ -172,7 +182,6 @@ public class Player {
         System.out.println("Available actions: B (Bauen), T (Tausschen), H (Hypothek), F (Finish)");
         Scanner input = new Scanner(System.in);
         char selection = Character.toLowerCase(input.next().charAt(0));
-
     }
 
 }
