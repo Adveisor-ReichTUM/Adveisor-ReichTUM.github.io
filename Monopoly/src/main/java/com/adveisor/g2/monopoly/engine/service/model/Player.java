@@ -11,6 +11,8 @@ public class Player {
     private int position;       // position on the field array: 0 - 39
     private int dice;           // total value of dices
     private boolean pasch;      // dices with same value
+
+    private int numPasch;
     private int bid;
 
     private final Piece piece;
@@ -40,6 +42,7 @@ public class Player {
         this.bid = -1;
         this.piece = piece;
         this.id = id+1;
+        this.numPasch = 0;
     }
 
     public int getBalance(){
@@ -74,6 +77,11 @@ public class Player {
         this.inJail = isInJail_new;
     }
 
+    public void jail(){
+        setInJail(true);
+        setRoundsInJail(0);
+
+    }
     public void adjustBalance(int diff){
         this.balance += diff;
     }
@@ -141,6 +149,7 @@ public class Player {
     public void toJail(){
         setInJail(true);
         setPosition(10);
+        setNumPasch(0);
     }
 
     public int getBid(){
@@ -204,6 +213,18 @@ public class Player {
             }
         }
         return wealth;
+    }
+
+    public boolean getPasch(){
+        return this.pasch;
+    }
+
+    public int getNumPasch(){
+        return this.numPasch;
+    }
+
+    public void setNumPasch(int numPasch){
+        this.numPasch = numPasch;
     }
 
 }
