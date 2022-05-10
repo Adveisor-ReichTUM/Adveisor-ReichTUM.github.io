@@ -13,6 +13,8 @@ public class Game {
     private int numPlayers;
     private int numActivePlayers;
     private int numBankruptPlayers;
+
+    private int currentPlayer;
     private int numRounds;
     private boolean running;
 
@@ -53,6 +55,8 @@ public class Game {
         }*/
 
         this.status = Status.WAITING;
+
+        this.currentPlayer = 0;
 
     }
 
@@ -111,6 +115,50 @@ public class Game {
             if(players.get(i).calculateWealth()>greatestWealth) winner = players.get(i).getName();
         }
         return winner;
+    }
+
+    public void rollAndMove(){
+        Player player = players.get(currentPlayer);
+        /*if(player.isInJail()){
+            status = Status.JAIL;
+            return;
+        }*/
+        if(status == Status.END) return;
+
+        if(player.isInJail()==false && player.getPasch()==true){
+            if(player.getNumPasch()==3) player.jail();
+            else if (player.getNumPasch()<3) player.setNumPasch(player.getNumPasch()+1);
+        }
+
+        if(player.getPasch()==false){
+            player.setNumPasch(0);
+            while(player.isBankrupt()){
+                currentPlayer = (currentPlayer +1)%players.size();
+            }
+        }
+
+        //Abbruch falls ins Gefägnis gekommen
+        if(player.isInJail()){
+            status = Status.JAIL;
+            return;
+        }
+
+        //Würfeln
+        status = Status.DICE;
+        player.throwDices();
+
+        if(player.isInJail()){
+            if(player.getPasch()){
+                player.setPasch(false); // Nach Gefägnis führt Pasch zu keinem zweiten Zug
+                player.setRoundsInJail(0);
+                player.move();
+            } else{
+                player.setRoundsInJail(player.getRoundsInJail()+1);
+                return;
+            }
+        }
+
+        player.move();
     }
 
 }

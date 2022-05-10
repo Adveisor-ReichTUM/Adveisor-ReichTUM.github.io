@@ -33,8 +33,6 @@ public class GameController {
         return game;
     }
 
-
-
     @RequestMapping(value="/join", method = RequestMethod.GET, produces="application/json")
     public Game join(@RequestParam String name, @RequestParam Piece piece){
         game.join(name, piece);
@@ -59,9 +57,14 @@ public class GameController {
         return game;
     }
 
-    /*public static void main(String[] args) throws Exception{
-        SpringApplication.run(GameController.class, args);
+    @RequestMapping(value="/rollingdices", method = RequestMethod.GET, produces="application/json")
+    public Game rollAndMove(){
+        game.rollAndMove();
+        return game;
+    }
 
-        game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/communityDeck.txt");
-    }*/
+    public static void main(String[] args) throws Exception{
+        SpringApplication.run(GameController.class, args);
+        //game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/communityDeck.txt");
+    }
 }

@@ -227,4 +227,8 @@ public class Player {
         this.numPasch = numPasch;
     }
 
+    public void setPasch(boolean pasch){
+        this.pasch = pasch;
+    }
+
 }
