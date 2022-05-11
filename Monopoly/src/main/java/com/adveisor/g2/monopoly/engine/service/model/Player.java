@@ -80,7 +80,8 @@ public class Player {
     public void jail(){
         setInJail(true);
         setRoundsInJail(0);
-
+        setPosition(10);
+        this.setNumPasch(0);
     }
     public void adjustBalance(int diff){
         this.balance += diff;
@@ -159,7 +160,7 @@ public class Player {
     public void setBid(int bid){
         this.bid = bid;
     }
-    public void turn(){
+    /*public void turn(){
         int counter = 0;
         if(inJail){
             System.out.println("Willst du 50€ zahlen oder eine Aus-dem-Gefängnis Karte nutzen, um aus den Gefängnis zu kommen? y/n");
@@ -174,18 +175,19 @@ public class Player {
                     moveAndEvaluate(game.getBoard());
             }
         }
-    }
+    }*/
 
     public void moveAndEvaluate(Board board){
-        int counter = 0;
+        /*int counter = 0;
         this.pasch = true;
         while(this.pasch && (this.inJail == false) && counter <=2)
             if(counter == 2 && this.pasch) toJail();
             throwDices();
-            move();
-            Field field = board.getFields().get(this.position);
-            Field.evaluateField(field, this, game);
-        buildTradeMortgage();
+            move();*/
+        move();
+        Field field = board.getFields().get(this.position);
+        Field.evaluateField(field, this, game);
+        //buildTradeMortgage();
     }
 
     public void buildTradeMortgage(){

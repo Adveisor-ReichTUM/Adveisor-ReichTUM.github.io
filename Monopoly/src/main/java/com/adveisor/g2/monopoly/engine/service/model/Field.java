@@ -62,12 +62,13 @@ public class Field {
             case station:
             case street: field.evaluateStreet(player, game); break;
             case jail: break;
-            case police: field.evaluatePolice(player); break;
+            case police: field.evaluatePolice(player, game); break;
             case parking: break;
             case tax: player.adjustBalance(-field.getPrice()); break;
             case chance: game.getChanceDeck().takeCard(player, game); break;
             case community: game.getCommunityDeck().takeCard(player, game); break;
             case utilities: field.evaluateUtilities(player, game);
+            default: break;
         }
     }
 
@@ -85,7 +86,7 @@ public class Field {
                 System.err.println("Fehler: Besitzer nicht identifizierbar");
         }
         else if(this.owned == false){
-            decideBuy(player);
+            game.setStatus(Status.BUY_PROPERTY);
         }
     }
 
@@ -124,6 +125,8 @@ public class Field {
     }
 
     public void payRent(Player paying_pl, Player paid_pl, Board board){
+        if(this.isHypothek) return;
+
         int stage = 0;
         int diff = 0;
         switch(this.type) {
@@ -144,24 +147,24 @@ public class Field {
     }
 
     public int determineStationStage(Player paid_pl, Board board){
-        if(this.isHypothek)
+        /*if(this.isHypothek)
             return 0;
-        else
-            return board.countType(this, paid_pl);
+        else*/
+        return board.countType(this, paid_pl);
     }
 
     public int determineUtilityStage(Player paid_pl, Board board){
-        if(this.isHypothek)
+        /*if(this.isHypothek)
             return 0;
-        else
-            return board.countType(this, paid_pl);
+        else*/
+        return board.countType(this, paid_pl);
     }
 
     public int determineStreetStage(){
-        if(this.isHypothek)
+        /*if(this.isHypothek)
             return 0;
-        else
-            return (1 + this.numHouses);
+        else*/
+        return (1 + this.numHouses);
     }
 
     public int getPrice(){
@@ -172,9 +175,9 @@ public class Field {
         this.owner = owner_id;
     }
 
-    public void evaluatePolice(Player player){
-        player.setInJail(true);
-        player.setPosition(10);
+    public void evaluatePolice(Player player, Game game){
+        player.jail();
+        game.rollAndMove();
     }
 
     public fieldType getType(){

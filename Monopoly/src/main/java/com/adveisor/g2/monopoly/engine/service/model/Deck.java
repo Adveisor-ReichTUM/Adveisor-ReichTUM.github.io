@@ -46,8 +46,9 @@ public class Deck {
 
     public void takeCard(Player player, Game game){
         Card card = cards.get(0);
+        game.setStatus(Status.CARD);
         card.evaluateCard(player, game);
-
+        game.setCardDescription(card.getDescription());
         // put card to the back of the deck
         cards.remove(card);
         cards.add(card);

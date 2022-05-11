@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 public class Game {
 
-    private enum Status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
+    //private enum Status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
     private Status status;
     private int numPlayers;
     private int numActivePlayers;
@@ -17,6 +17,8 @@ public class Game {
     private int currentPlayer;
     private int numRounds;
     private boolean running;
+
+    private String cardDescription;
 
     // reference attributes
     private ArrayList<Player> players;
@@ -151,14 +153,26 @@ public class Game {
             if(player.getPasch()){
                 player.setPasch(false); // Nach Gefägnis führt Pasch zu keinem zweiten Zug
                 player.setRoundsInJail(0);
-                player.move();
+                player.moveAndEvaluate(this.getBoard());
             } else{
                 player.setRoundsInJail(player.getRoundsInJail()+1);
                 return;
             }
         }
 
-        player.move();
+        player.moveAndEvaluate(this.getBoard());
+    }
+
+    public void setStatus(Status status){
+        this.status = status;
+    }
+
+    public void setCardDescription(String desc){
+        this.cardDescription = desc;
+    }
+
+    public String getCardDescription(){
+        return this.cardDescription;
     }
 
 }
