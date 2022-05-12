@@ -186,7 +186,17 @@ public class Game {
     public void sellBank(int fieldIndex){
         if (status != Status.TURN) throw new IllegalStateException("Tried to sell despite not being in TURN");
         Player player = players.get(currentPlayer);
-        player.sellPropertyToBank(fieldIndex);
+        Field field = getBoard().getFields().get(fieldIndex);
+        if(player.checkPossession(fieldIndex)) throw new IllegalStateException("Tried to sell property not in possession");
+        if(field.getIsHypothek()){
+            player.endMortgage(fieldIndex);
+            return;
+        }
+        if(field.getNumHouses()>0) return;
+        player.adjustBalance(field.getPrice()/2);
+        player.setPossession(fieldIndex, false);
+        field.reset();
+
     }
 
     public Status getStatus(){

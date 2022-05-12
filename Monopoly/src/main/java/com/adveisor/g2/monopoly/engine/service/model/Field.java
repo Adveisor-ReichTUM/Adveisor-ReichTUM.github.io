@@ -27,7 +27,6 @@ public class Field {
     public Field(String name, String type, String color, int position, int price, int housecost, int[] rent_stages){
         this.name = name;
         this.position = position;
-        this.owned = false;
         this.type = fieldType.valueOf(type);
         this.price = price;
         this.housecost = housecost;
@@ -206,6 +205,13 @@ public class Field {
 
     public void setIsHypothek(boolean isHypothek){
         this.isHypothek = isHypothek;
+    }
+
+    public void reset(){
+        this.owned = false;
+        this.owner = -1;
+        this.numHouses = 0;
+        this.isHypothek = false;
     }
 
 }

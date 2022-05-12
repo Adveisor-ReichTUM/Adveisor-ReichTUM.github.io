@@ -235,10 +235,6 @@ public class Player {
         this.pasch = pasch;
     }
 
-    /*public void sellPropertyToBank(int fieldIndex){
-
-    }*/
-
     public void endMortgage(int fieldIndex){
         if(game.getStatus() != Status.TURN) throw new IllegalStateException("Cannot end mortgage while not being in TURN.");
 
