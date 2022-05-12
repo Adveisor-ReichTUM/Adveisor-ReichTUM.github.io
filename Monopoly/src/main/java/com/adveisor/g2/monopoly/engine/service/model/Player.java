@@ -141,7 +141,7 @@ public class Player {
     }
 
     public void buy(Field field){
-        adjustBalance(field.getPrice());
+        adjustBalance(-field.getPrice());
         streets[field.getPosition()] = true;
         field.setOwned(true);
         field.setOwner(id);

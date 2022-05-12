@@ -175,4 +175,10 @@ public class Game {
         return this.cardDescription;
     }
 
+    public void buy(){
+        Player player = players.get(currentPlayer);
+        Field field = board.getFields().get(player.getPosition());
+        player.buy(field);
+    }
+
 }

@@ -63,6 +63,12 @@ public class GameController {
         return game;
     }
 
+    @RequestMapping(value="/buyproperty", method = RequestMethod.GET, produces="application/json")
+    public Game buy(){
+        game.buy();
+        return game;
+    }
+
     public static void main(String[] args) throws Exception{
         SpringApplication.run(GameController.class, args);
         //game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/communityDeck.txt");
