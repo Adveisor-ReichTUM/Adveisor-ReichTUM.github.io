@@ -2,6 +2,8 @@ package com.adveisor.g2.monopoly.engine.service.model;
 
 import java.util.Scanner;
 
+import java.lang.Math;
+
 public class Player {
     private static int id = 0;             // identification number for player
     //private static int counter;     // number of players
@@ -231,6 +233,26 @@ public class Player {
 
     public void setPasch(boolean pasch){
         this.pasch = pasch;
+    }
+
+    /*public void sellPropertyToBank(int fieldIndex){
+
+    }*/
+
+    public void endMortgage(int fieldIndex){
+        if(game.getStatus() != Status.TURN) throw new IllegalStateException("Cannot end mortgage while not being in TURN.");
+
+        Field field = game.getBoard().getFields().get(fieldIndex);
+
+        if(field.getIsHypothek() && getPossession(fieldIndex)){
+            int diff = (int) (field.getMortgageCost() + field.getMortgageCost()*0.1);    //10% aufschlag beim Zurückzahlen
+            adjustBalance(-diff);
+            field.setIsHypothek(false);
+        }
+    }
+
+    public boolean checkPossession(int fieldIndex){
+        return this.streets[fieldIndex];
     }
 
 }

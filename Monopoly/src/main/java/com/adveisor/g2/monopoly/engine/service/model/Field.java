@@ -147,23 +147,23 @@ public class Field {
     }
 
     public int determineStationStage(Player paid_pl, Board board){
-        /*if(this.isHypothek)
+        if(this.isHypothek)
             return 0;
-        else*/
+        else
         return board.countType(this, paid_pl);
     }
 
     public int determineUtilityStage(Player paid_pl, Board board){
-        /*if(this.isHypothek)
+        if(this.isHypothek)
             return 0;
-        else*/
+        else
         return board.countType(this, paid_pl);
     }
 
     public int determineStreetStage(){
-        /*if(this.isHypothek)
+        if(this.isHypothek)
             return 0;
-        else*/
+        else
         return (1 + this.numHouses);
     }
 
@@ -194,6 +194,18 @@ public class Field {
 
     public int getNumHouses(){
         return this.numHouses;
+    }
+
+    public boolean getIsHypothek(){
+        return this.isHypothek;
+    }
+
+    public int getMortgageCost(){
+        return this.rent_stages[0];
+    }
+
+    public void setIsHypothek(boolean isHypothek){
+        this.isHypothek = isHypothek;
     }
 
 }

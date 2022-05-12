@@ -181,4 +181,13 @@ public class Game {
         player.buy(field);
     }
 
+    public void sellBank(int fieldIndex){
+        if (status != Status.TURN) throw new IllegalStateException("Tried to sell despite not being in TURN");
+        Player player = players.get(currentPlayer);
+        player.sellPropertyToBank(fieldIndex);
+    }
+
+    public Status getStatus(){
+        return this.status;
+    }
 }
