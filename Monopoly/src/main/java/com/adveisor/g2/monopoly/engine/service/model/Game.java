@@ -161,6 +161,8 @@ public class Game {
         }
 
         player.moveAndEvaluate(this.getBoard());
+
+        manage();
     }
 
     public void setStatus(Status status){
@@ -189,5 +191,9 @@ public class Game {
 
     public Status getStatus(){
         return this.status;
+    }
+
+    public void manage(){
+        setStatus(Status.TURN);
     }
 }
