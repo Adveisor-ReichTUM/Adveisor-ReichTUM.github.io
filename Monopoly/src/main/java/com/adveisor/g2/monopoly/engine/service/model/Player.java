@@ -241,9 +241,21 @@ public class Player {
         Field field = game.getBoard().getFields().get(fieldIndex);
 
         if(field.getIsHypothek() && getPossession(fieldIndex)){
-            int diff = (int) (field.getMortgageCost() + field.getMortgageCost()*0.1);    //10% aufschlag beim Zurückzahlen
+            int diff = (int) (field.getMortgageValue() + field.getMortgageValue()*0.1);    //10% aufschlag beim Zurückzahlen
             adjustBalance(-diff);
             field.setIsHypothek(false);
+        }
+    }
+
+    public void startMortgage(int fieldIndex){
+        if(game.getStatus()!=Status.TURN) throw new IllegalStateException("Can not start Mortgage while not being in TURN");
+
+        Field field = game.getBoard().getFields().get(fieldIndex);
+
+        if(field.getNumHouses()>0) return;
+        if(getPossession(fieldIndex) && field.getIsHypothek()){
+            adjustBalance(field.getMortgageValue());
+            field.setIsHypothek(true);
         }
     }
 

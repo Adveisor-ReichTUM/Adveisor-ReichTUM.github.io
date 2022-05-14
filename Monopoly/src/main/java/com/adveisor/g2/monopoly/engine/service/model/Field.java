@@ -199,7 +199,7 @@ public class Field {
         return this.isHypothek;
     }
 
-    public int getMortgageCost(){
+    public int getMortgageValue(){
         return this.rent_stages[0];
     }
 
