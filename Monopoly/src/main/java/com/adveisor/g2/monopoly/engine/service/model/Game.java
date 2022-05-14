@@ -203,6 +203,24 @@ public class Game {
         return this.status;
     }
 
+    public void bankrupt(Player player){
+        numBankruptPlayers++;
+        numActivePlayers--;
+        player.setBankrupt(true);
+
+        if(numBankruptPlayers>=players.size()-1){
+            end();
+            return;
+        }
+
+        for(int i = 0; i<39; i++){
+            if(player.getPossession(i)){
+                Field field = board.getFields().get(i);
+                auctionProperty(i, field.getPrice()/2);
+            }
+        }
+    }
+
     public void manage(){
         setStatus(Status.TURN);
     }
