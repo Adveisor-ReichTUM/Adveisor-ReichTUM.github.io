@@ -75,6 +75,18 @@ public class GameController {
         return game;
     }
 
+    @RequestMapping(value="/auction", method = ResponseMethod.GET, produces="application/json")
+    public Game passProperty(@RequestParam int fieldIndex){
+        game.auctionProperty(fieldIndex, 0);
+        return game;
+    }
+
+    @RequestMapping(value="/bid", method = ResponseMethod.GET, produces="application/json")
+    public Game bid(@RequestParam String name, @RequestParam int bid){
+        game.setBid(name, bid);
+        return game;
+    }
+
     public static void main(String[] args) throws Exception{
         SpringApplication.run(GameController.class, args);
         //game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/communityDeck.txt");

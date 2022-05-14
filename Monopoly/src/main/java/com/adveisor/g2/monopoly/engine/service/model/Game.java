@@ -20,6 +20,10 @@ public class Game {
 
     private String cardDescription;
 
+    private int highestBidderIndex;
+
+    private int highestBid;
+
     // reference attributes
     private ArrayList<Player> players;
     //private ArrayList<Field> fields;
@@ -216,9 +220,63 @@ public class Game {
         for(int i = 0; i<39; i++){
             if(player.getPossession(i)){
                 Field field = board.getFields().get(i);
-                auctionProperty(i, field.getPrice()/2);
+                auctionProperty(i);
             }
         }
+    }
+
+    public void auctionProperty(int fieldIndex){
+        boolean timeout = false;
+        setStatus(Status.AUCTION);
+
+        int startingBid = board.getFields().get(fieldIndex).getPrice()/2;
+        int highestBid = startingBid;
+        int highestBidderIndex = -1;
+
+        int timer = 10;
+        while(!timeout){
+            if(timer>0) timer--;
+            else{
+                if(highestBid>startingBid){
+                    Player player = getPlayers().get(highestBidderIndex);
+                    Field field = getBoard().getFields().get(fieldIndex);
+                    player.setPossession(fieldIndex, true);
+                    field.setOwned(true);
+                    field.setOwner(highestBidderIndex);
+                }
+                timeout=true;
+            }
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+
+        for(Player p: getPlayers()){
+            p.setBid(0);
+        }
+        manage();
+    }
+
+    public void setBid(String name, int bid){
+        int bidderIndex = -1;
+        for(Player p: getPlayers()){
+            if(p.getName().equals(name)){
+                bidderIndex = getPlayers().indexOf(p);
+                break;
+            }
+        }
+        Player player = getPlayers().get(bidderIndex);
+
+        if(bidderIndex==-1) throw new IllegalArgumentException("Bidder not found");
+        if(player.getBalance()<bid) return;
+
+        player.setBid(bid);
+        if(bid>highestBid){
+            highestBidderIndex = bidderIndex;
+        }
+
     }
 
     public void manage(){

@@ -41,7 +41,7 @@ public class Player {
         this.position = 0;
         this.game = game;
         this.streets = new boolean[40];    // initializes the elements with false
-        this.bid = -1;
+        this.bid = 0;
         this.piece = piece;
         this.id = id+1;
         this.numPasch = 0;
