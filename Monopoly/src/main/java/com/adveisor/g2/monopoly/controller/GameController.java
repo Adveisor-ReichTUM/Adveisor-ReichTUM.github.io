@@ -98,6 +98,12 @@ public class GameController {
         game.endMortgage(fieldIndex);
         return game;
     }
+
+    @RequestMapping(value="/buyHouse", method = RequestMethod.GET, produces="application/json")
+    public Game buyHouse(@RequestParam int fieldIndex){
+        game.buyHouse(fieldIndex);
+        return game;
+    }
     public static void main(String[] args) throws Exception{
         SpringApplication.run(GameController.class, args);
         //game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/communityDeck.txt");

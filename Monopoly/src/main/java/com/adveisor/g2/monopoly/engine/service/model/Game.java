@@ -14,6 +14,9 @@ public class Game {
     private int numActivePlayers;
     private int numBankruptPlayers;
 
+    private int numHouses;
+
+    private int numHotels;
     private int currentPlayer;
     private int numRounds;
     private boolean running;
@@ -61,7 +64,8 @@ public class Game {
         }*/
 
         this.status = Status.WAITING;
-
+        this.numHotels = 12;
+        this.numHouses = 32;
         this.currentPlayer = 0;
 
     }
@@ -287,6 +291,44 @@ public class Game {
     public void endMortgage(int fieldIndex){
         Player player = getPlayers().get(currentPlayer);
         player.endMortgage(fieldIndex);
+    }
+
+    public void buyHouse(int fieldIndex){
+        if(status != Status.TURN) throw new IllegalStateException("Can not buy house while not being in TURN");
+        if(numHouses<=0) return;
+
+        Player player = getPlayers().get(currentPlayer);
+        if(!player.getPossession(fieldIndex)) return;
+
+        Field field = getBoard().getFields().get(fieldIndex);
+
+        if(field.getNumHouses()==4 && numHotels<=0) return;
+        if(field.getIsHypothek()) return;
+
+        Color color = field.getColor();
+        int minHouses = Integer.MAX_VALUE;
+        // check if all the properties of a color are in players possession
+        for(int i = 0; i<40; i++){
+            Field running = getBoard().getFields().get(i);
+            if(running.getColor()==color){
+                if(running.getNumHouses()<minHouses) minHouses = running.getNumHouses();
+                if(!player.getPossession(i)) return;
+            }
+        }
+
+        if(field.getNumHouses()>minHouses) return;
+
+        if(field.getNumHouses()==4){
+            player.adjustBalance(-field.getHouseCost());
+            field.setNumHouses(field.getNumHouses()+1);
+            numHotels--;
+            numHouses = numHouses +4;
+        } else{
+            player.adjustBalance(-field.getHouseCost());
+            field.setNumHouses(field.getNumHouses()+1);
+            numHouses--;
+        }
+
     }
     public void manage(){
         setStatus(Status.TURN);

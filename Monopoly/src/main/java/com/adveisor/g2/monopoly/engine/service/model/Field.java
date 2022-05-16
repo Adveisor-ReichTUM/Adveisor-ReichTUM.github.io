@@ -17,8 +17,8 @@ public class Field {
     private int[] rent_stages;      // Hypothek; Normal = 1; (Alle Farben = 2); ++houses;
     private boolean isHypothek;
 
-    private enum colorType {no_color, braun, hellblau, pink, orange, rot, gelb, gruen, dunkelblau};
-    private final colorType color;
+    //private enum colorType {no_color, braun, hellblau, pink, orange, rot, gelb, gruen, dunkelblau};
+    private final Color color;
 
     private enum fieldType {los, street, station, jail, police, parking, tax, chance, community, utilities};
     private final fieldType type;
@@ -31,7 +31,7 @@ public class Field {
         this.price = price;
         this.housecost = housecost;
         this.rent_stages = rent_stages;
-        this.color = colorType.valueOf(color);
+        this.color = Color.valueOf(color);
 
         this.owned = false;
         this.owner = -1;
@@ -183,6 +183,9 @@ public class Field {
         return this.type;
     }
 
+    public Color getColor() {
+        return this.color;
+    }
     public int getOwner(){
         return this.owner;
     }
@@ -212,6 +215,10 @@ public class Field {
         this.owner = -1;
         this.numHouses = 0;
         this.isHypothek = false;
+    }
+
+    public void setNumHouses(int numHouses){
+        this.numHouses = numHouses;
     }
 
 }
