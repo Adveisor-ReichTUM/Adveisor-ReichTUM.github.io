@@ -295,13 +295,13 @@ public class Game {
 
     public void buyHouse(int fieldIndex){
         if(status != Status.TURN) throw new IllegalStateException("Can not buy house while not being in TURN");
-        if(numHouses<=0) return;
 
         Player player = getPlayers().get(currentPlayer);
         if(!player.getPossession(fieldIndex)) return;
 
         Field field = getBoard().getFields().get(fieldIndex);
 
+        if(numHouses<=0) return;
         if(field.getNumHouses()==4 && numHotels<=0) return;
         if(field.getIsHypothek()) return;
 
@@ -328,7 +328,40 @@ public class Game {
             field.setNumHouses(field.getNumHouses()+1);
             numHouses--;
         }
+    }
 
+    public void sellHouse(int fieldIndex){
+        if(status != Status.TURN) throw new IllegalStateException("Can not buy house while not being in TURN");
+        if(numHouses<=0) return;
+
+        Player player = getPlayers().get(currentPlayer);
+        if(!player.getPossession(fieldIndex)) return;
+
+        Field field = getBoard().getFields().get(fieldIndex);
+
+        Color color = field.getColor();
+        int maxHouses = Integer.MIN_VALUE;
+        // check if all the properties of a color are in players possession
+        for(int i = 0; i<40; i++){
+            Field running = getBoard().getFields().get(i);
+            if(running.getColor()==color){
+                if(running.getNumHouses()>maxHouses) maxHouses = running.getNumHouses();
+            }
+        }
+
+        if(field.getNumHouses()<maxHouses) return;
+
+        if(field.getNumHouses()==5){
+            if(numHouses<4) return;
+            player.adjustBalance(field.getHouseCost()/2);
+            field.setNumHouses(field.getNumHouses()-1);
+            numHotels++;
+            numHouses = numHouses -4;
+        } else{
+            player.adjustBalance(field.getHouseCost()/2);
+            field.setNumHouses(field.getNumHouses()-1);
+            numHouses++;
+        }
     }
     public void manage(){
         setStatus(Status.TURN);
