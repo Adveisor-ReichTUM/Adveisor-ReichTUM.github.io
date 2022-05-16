@@ -279,6 +279,15 @@ public class Game {
 
     }
 
+    public void startMortgage(int fieldIndex){
+        Player player = getPlayers().get(currentPlayer);
+        player.startMortgage(fieldIndex);
+    }
+
+    public void endMortgage(int fieldIndex){
+        Player player = getPlayers().get(currentPlayer);
+        player.endMortgage(fieldIndex);
+    }
     public void manage(){
         setStatus(Status.TURN);
     }
