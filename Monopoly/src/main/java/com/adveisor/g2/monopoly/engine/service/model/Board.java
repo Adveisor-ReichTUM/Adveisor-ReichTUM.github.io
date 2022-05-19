@@ -4,16 +4,17 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Board {
-    private ArrayList<Field> fields;
+    private ArrayList<Field> fields = new ArrayList<>();
 
     public Board(String boardfile) {
         try{
             InputStream inputStream = getClass().getResourceAsStream(boardfile);
-            BufferedReader fieldset = new BufferedReader(new InputStreamReader(inputStream));
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader fieldset = new BufferedReader(inputStreamReader);
             String input = fieldset.readLine();
             String[] args;
             while(input != null){
-                args = input.split(" - ");
+                args = input.split(" - "); // name - type - color - price - housecost - stage1:stage2
                 int position = fields.size();
                 String name = args[0];
                 String type = args[1];
@@ -23,10 +24,11 @@ public class Board {
                 String[] stages = args[5].split(":");
                 int[] rent_stages = new int[stages.length+1];
                 rent_stages[0] = 0;
-                for(int i = 1; i<stages.length+1; i++){
+                for(int i = 1; i<stages.length; i++){
                     rent_stages[i] = Integer.parseInt(stages[i]);
                 }
                 fields.add(new Field(name, type, color, position, price, housecost, rent_stages));
+                input = fieldset.readLine();
             }
             fieldset.close();
         }

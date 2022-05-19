@@ -216,6 +216,9 @@ public class Field {
         this.isHypothek = false;
     }
 
+    public int getRentStage(int stage){
+        return this.rent_stages[stage];
+    }
     public void setNumHouses(int numHouses){
         this.numHouses = numHouses;
     }
