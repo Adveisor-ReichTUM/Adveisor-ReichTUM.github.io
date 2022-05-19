@@ -231,6 +231,15 @@ public class Game {
         }
         turn2();
     }
+
+    public void useJailCard(){
+        Player player = getPlayers().get(currentPlayer);
+        if(player.getNumJailCards()>1){
+            player.setRoundsInJail(0);
+            player.setInJail(false);
+            turn1();
+        }
+    }
     public void setStatus(Status status){
         this.status = status;
     }
