@@ -50,6 +50,7 @@ public class Deck {
         card.evaluateCard(player, game);
         game.setCardDescription(card.getDescription());
         // put card to the back of the deck
+        game.setStatus(Status.CARD);
         cards.remove(card);
         cards.add(card);
     }

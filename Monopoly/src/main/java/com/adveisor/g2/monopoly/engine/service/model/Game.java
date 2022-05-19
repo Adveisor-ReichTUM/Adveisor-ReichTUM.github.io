@@ -3,9 +3,6 @@ package com.adveisor.g2.monopoly.engine.service.model;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.FileReader;
-import java.io.BufferedReader;
 public class Game {
 
     //private enum Status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
@@ -114,7 +111,8 @@ public class Game {
 
     public void start(){
         if(status != status.WAITING) throw new IllegalStateException("Failed to start game: wrong status.");
-        if(players.size()<2 || players.size()>4) return;
+        if(players.size()>4) throw new IllegalStateException("Monopoly is limited to only a maximum of 4 players.");
+        if(players.size()<2) return;
     }
 
     public String end(){
@@ -127,12 +125,62 @@ public class Game {
         return winner;
     }
 
-    public void rollAndMove(){
+    public void turn1(){
         Player player = players.get(currentPlayer);
-        /*if(player.isInJail()){
+
+        if(status == Status.END) return;
+
+        if(player.isBankrupt()==false && player.getPasch()==true){
+            if(player.getNumPasch()==3) player.jail();
+            else if (player.getNumPasch()<3) player.setNumPasch(player.getNumPasch()+1);
+        }
+
+        if(player.getPasch()==false){
+            player.setNumPasch(0);
+            while(player.isBankrupt()){
+                currentPlayer = (currentPlayer +1)%players.size();
+            }
+        }
+
+        //Abbruch falls ins Gefägnis gekommen
+        if(player.isInJail()){
             status = Status.JAIL;
             return;
-        }*/
+        }
+
+        turn2();
+    }
+
+    public void turn2(){
+        Player player = players.get(currentPlayer);
+
+        //Würfeln
+        status = Status.DICE;
+        player.throwDices();
+
+        if(player.isInJail()){
+            if(player.getPasch()){
+                player.setPasch(false); // Nach Gefägnis führt Pasch zu keinem zweiten Zug
+                player.setRoundsInJail(0);
+                player.setInJail(false);
+                player.moveAndEvaluate(this.getBoard());
+            } else{
+                player.setRoundsInJail(player.getRoundsInJail()+1);
+                manage();
+                return;
+            }
+        }
+
+        player.moveAndEvaluate(this.getBoard());
+
+        manage();
+    }
+    /*public void rollAndMove(){
+        Player player = players.get(currentPlayer);
+        //if(player.isInJail()){
+            status = Status.JAIL;
+            return;
+        //}
         if(status == Status.END) return;
 
         if(player.isInJail()==false && player.getPasch()==true){
@@ -171,8 +219,18 @@ public class Game {
         player.moveAndEvaluate(this.getBoard());
 
         manage();
-    }
+    }*/
 
+    public void decideJail(boolean choice){
+        Player player = getPlayers().get(currentPlayer);
+        if(choice == true && player.getBalance()>=50){
+            player.adjustBalance(-50);
+            player.setRoundsInJail(0);
+            player.setInJail(false);
+            turn1();
+        }
+        turn2();
+    }
     public void setStatus(Status status){
         this.status = status;
     }

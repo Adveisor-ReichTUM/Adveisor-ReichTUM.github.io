@@ -59,7 +59,13 @@ public class GameController {
 
     @RequestMapping(value="/rollingdices", method = RequestMethod.GET, produces="application/json")
     public Game rollAndMove(){
-        game.rollAndMove();
+        game.turn2();
+        return game;
+    }
+
+    @RequestMapping(value="/jaildecision", method = RequestMethod.GET, produces="application/json")
+    public Game decideJail(@RequestParam boolean choice){
+        game.decideJail(choice);
         return game;
     }
 

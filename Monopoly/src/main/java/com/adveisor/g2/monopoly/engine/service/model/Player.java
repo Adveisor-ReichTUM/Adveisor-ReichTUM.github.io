@@ -84,6 +84,7 @@ public class Player {
         setRoundsInJail(0);
         setPosition(10);
         this.setNumPasch(0);
+        this.setPasch(false);
     }
     public void adjustBalance(int diff){
         this.balance += diff;

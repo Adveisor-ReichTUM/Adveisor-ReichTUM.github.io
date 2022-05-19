@@ -59,22 +59,21 @@ public class Field {
         switch(field.getType()){
             case los: break;
             case station:
-            case street: field.evaluateStreet(player, game); break;
-            case jail: break;
-            case police: field.evaluatePolice(player, game); break;
+            case utilities:
+            case street:
+                field.evaluateStreet(player,game);
+                if(game.getStatus()==Status.BUY_PROPERTY) return;
+                break;
+            case police: field.evaluatePolice(player, game); return;
+            case jail:
             case parking: break;
             case tax: player.adjustBalance(-field.getPrice()); break;
-            case chance: game.getChanceDeck().takeCard(player, game); break;
-            case community: game.getCommunityDeck().takeCard(player, game); break;
-            case utilities: field.evaluateUtilities(player, game);
+            case chance: game.getChanceDeck().takeCard(player, game); return;
+            case community: game.getCommunityDeck().takeCard(player, game); return;
+            //case utilities: field.evaluateUtilities(player, game);
             default: break;
         }
     }
-
-    public void evaluateUtilities(Player player, Game game){
-
-    }
-
     public void evaluateStreet(Player player, Game game){
         ArrayList<Player> players = game.getPlayers();
         if(this.owner != player.getId() && this.owned){
@@ -176,7 +175,7 @@ public class Field {
 
     public void evaluatePolice(Player player, Game game){
         player.jail();
-        game.rollAndMove();
+        game.turn1();
     }
 
     public fieldType getType(){
