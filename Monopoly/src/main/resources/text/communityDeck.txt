@@ -1,0 +1,16 @@
+out_of_jail - 0 - Sie kommen aus dem Gefängnis frei! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.
+pay_money_bank - 50 - Schulgeld. Zahlen Sie Ω 50.
+get_money_bank - 100 - Urlaubsgeld! Sie erhalten Ω 100.
+get_money_bank - 100 - Ihre Lebensversicherung wird fällig. Sie erhalten Ω 100.
+pay_money_bank - 50 - Arzt-Kosten. Zahlen Sie Ω 50.
+get_money_bank - 20 - Einkommenssteuerrückerstattung. Sie erhalten Ω 20.
+pay_money_bank - 100 - Krankenhausgebühren. Zahlen Sie Ω 100.
+move_not_GO - Gefängnis - Gehen Sie in das Gefängnis. Begeben Sie sich direkt dorthin. Gehen Sie nicht über Los. Ziehen Sie nicht Ω 200 ein.
+get_money_bank - 25 - Sie erhalten auf Vorzugs-Aktien 7% Dividende: Ω 25.
+get_money_player - 10 - Sie haben Geburtstag. Jeder Spieler schenkt Ihnen Ω 10.
+get_money_bank - 100 - Sie erben Ω 100.
+get_money_bank - 50 - Aus Lagerverkäufen erhalten Sie Ω 50.
+get_money_bank - 10 - Zweiter Preis im Schönheitswettbewerb. Sie erhalten Ω 10.
+renovation - 0 - Sie werden zu Straßenausbesserungsarbeiten herangezogen. Zahlen Sie Ω 40 je Haus und Ω 115 je Hotel an die Bank.
+move_via_GO - 0 - Rücken Sie vor bis auf Los. (Ziehe Ω 200 ein).
+get_money_bank - 200 - Bank-Irrtum zu Ihren Gunsten. Ziehen Sie Ω 200 ein.

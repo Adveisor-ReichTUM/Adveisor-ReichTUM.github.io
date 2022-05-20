@@ -1,0 +1,16 @@
+move_via_GO - Schlossallee - Rücken Sie vor bis zur Schlossallee.
+move_via_GO - Südbahnhof - Machen Sie einen Ausflug zum Südbahnhof. Wenn Sie über Los kommen, ziehen Sie Ω 200 ein.
+get_money_bank - 200 - Ihr Bausparvertrag wird fällig. Sie erhalten Ω 200.
+move_via_GO - Opernplatz - Rücken Sie vor bis zum Opernplatz. Wenn Sie über Los kommen, ziehen Sie Ω 200 ein.
+move_via_GO - 10 - Rücken Sie vor bis zum nächsten Versorgungswerk. Werfen Sie die Würfel und zahlen dem Eigentümer den zehnfachen Betrag Ihres Wurfergebnisses. Wenn das Werk noch niemandem gehört, können Sie es von der Bank kaufen.
+move_not_GO - Gefängnis - Gehen Sie in das Gefängnis. Begeben Sie sich direkt dorthin. Gehen Sie nicht über Los. Ziehen Sie nicht Ω 200 ein.
+move_via_GO - LOS - Rücken Sie vor bis auf Los. (Ziehe Ω 200 ein).
+get_money_bank - 50 - Die Bank zahlt Ihnen eine Dividende von Ω 50.
+renovation - 0 - Sie lassen Ihre Häuser renovieren. Zahlen Sie: Ω 25 pro Haus, Ω 100 pro Hotel.
+out_of_jail - 0 - Sie kommen aus dem Gefängnis frei! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.
+move_via_GO - Seestraße - Rücken Sie vor bis zur Seestraße. Wenn Sie über Los kommen, ziehen Sie Ω 200 ein.
+pay_money_player - 50 - Sie sind zum Vorstand gewählt worden. Zahlen Sie jedem Spieler Ω 50.
+get_money_bank - 200 - Ihr Bausparvertrag wird fällig. Sie erhalten Ω 200.
+move_via_GO - Rückwärts - Gehen Sie 3 Felder zurück.
+pay_money_bank - 15 - Strafzettel! Zahlen Sie Ω 15.
+move_via_GO - Bahnhof - Rücken Sie vor bis zum nächsten Verkehrsfeld. Der Eigentümer erhält das Doppelte der normalen Miete. Wenn das Verkehrsfeld noch niemandem gehört, können Sie es von der Bank kaufen.

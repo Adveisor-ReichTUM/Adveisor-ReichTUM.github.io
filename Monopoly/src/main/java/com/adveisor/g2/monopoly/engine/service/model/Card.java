@@ -1,7 +1,7 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
 public class Card {
-    private enum cardType {renovation, get_money_bank, get_money_player, pay_money_bank, pay_money_player, out_of_jail, move_via_GO, move_not_GO};
+    public enum cardType {renovation, get_money_bank, get_money_player, pay_money_bank, pay_money_player, out_of_jail, move_via_GO, move_not_GO};
     private final cardType type;
 
     //private final int id;
@@ -80,7 +80,7 @@ public class Card {
     public int identifyTargetPosition(int current_pos){
         int pos = 40;   // moving 40 fields will end up with player on the same spot
 
-        if(this.isChanceDeck) {
+        if(!this.isChanceDeck) {
             switch (value) {
                 case "Gefängnis": return 30;
                 case "LOS": return 0;

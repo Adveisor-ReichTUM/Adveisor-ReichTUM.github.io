@@ -267,4 +267,11 @@ public class Player {
         return this.streets[fieldIndex];
     }
 
+    public void setNumHouses(int numHouses){
+        this.numHouses = numHouses;
+    }
+
+    public void setNumHotels(int numHotels){
+        this.numHotels = numHotels;
+    }
 }

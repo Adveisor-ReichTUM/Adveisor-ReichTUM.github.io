@@ -10,7 +10,7 @@ import java.util.Collections;
 
 public class Deck {
     private final boolean isChanceDeck;
-    private ArrayList<Card> cards;
+    private ArrayList<Card> cards = new ArrayList<Card>();
 
     public Deck(boolean isChanceDeck, String filename){
         this.isChanceDeck = isChanceDeck;
@@ -38,7 +38,7 @@ public class Deck {
         if(cards!=null) {
             for (int i = 0; i < cards.size(); i++) {
                 Random rand = new Random();
-                int swap_index = rand.nextInt(40);
+                int swap_index = rand.nextInt(cards.size());
                 Collections.swap(cards, i, swap_index);
             }
         }
