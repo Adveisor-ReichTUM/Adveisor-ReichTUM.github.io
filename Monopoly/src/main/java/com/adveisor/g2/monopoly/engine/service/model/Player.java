@@ -142,10 +142,6 @@ public class Player {
         }
     }
 
-    public boolean checkPossession(int fieldIndex){
-        return this.streets[fieldIndex];
-    }
-
     public boolean ownsAllOfColor(Color color){
         for(int i = 0; i<40; i++){
             Field running = game.getBoard().getFields().get(i);
