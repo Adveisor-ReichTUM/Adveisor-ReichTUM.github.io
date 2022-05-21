@@ -56,7 +56,6 @@ public class Field {
             case tax: player.adjustBalance(-field.getPrice()); break;
             case chance: game.getChanceDeck().takeCard(player, game); return;
             case community: game.getCommunityDeck().takeCard(player, game); return;
-            //case utilities: field.evaluateUtilities(player, game);
             default: break;
         }
     }

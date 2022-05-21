@@ -34,12 +34,7 @@ public class Deck {
     }
 
     public void shuffleDeck(){
-        // iterate over array and swap each element once with random index
-        for (int i = 0; i < this.cards.size(); i++) {
-            Random rand = new Random();
-            int swap_index = rand.nextInt(this.cards.size());
-            Collections.swap(this.cards, i, swap_index);
-        }
+        Collections.shuffle(this.getCards());
     }
 
     public void takeCard(Player player, Game game){
