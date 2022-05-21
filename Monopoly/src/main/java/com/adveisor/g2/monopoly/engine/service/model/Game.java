@@ -29,7 +29,7 @@ public class Game {
     private int highestBid;
 
     // reference attributes
-    private ArrayList<Player> players;
+    private ArrayList<Player> players = new ArrayList<>();
     //private ArrayList<Field> fields;
     private Deck communityDeck;
     private Deck chanceDeck;
@@ -369,7 +369,6 @@ public class Game {
             numHouses--;
         }
     }
-
     public void sellHouse(int fieldIndex){
         if(status != Status.TURN) throw new IllegalStateException("Can not buy house while not being in TURN");
         if(numHouses<=0) return;
@@ -405,5 +404,9 @@ public class Game {
     }
     public void manage(){
         setStatus(Status.TURN);
+    }
+
+    public void setCurrentPlayer(int currentPlayer){
+        this.currentPlayer = currentPlayer;
     }
 }

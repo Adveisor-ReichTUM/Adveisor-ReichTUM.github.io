@@ -6,10 +6,12 @@ import java.util.Scanner;
 
 @Data
 public class Player {
+
     private static int nextId = 0;             // identification number for player
     //private static int counter;     // number of players
     private int id;
     private final int startMoney;   // amount of money available in the beginning
+
 
     private int position;       // position on the field array: 0 - 39
     private int dice;           // total value of dices
@@ -44,7 +46,9 @@ public class Player {
         this.streets = new boolean[40];    // initializes the elements with false
         this.bid = 0;
         this.piece = piece;
-        this.id = nextId++;
+
+        this.id = ++nextId;
+
         this.numPasch = 0;
     }
 
@@ -169,7 +173,8 @@ public class Player {
         Field field = game.getBoard().getFields().get(fieldIndex);
 
         if(field.getNumHouses()>0) return;
-        if(getPossession(fieldIndex) && field.isHypothek()){
+
+        if(getPossession(fieldIndex) && !field.isHypothek()){
             adjustBalance(field.getMortgageValue());
             field.setHypothek(true);
         }
@@ -179,4 +184,22 @@ public class Player {
         return this.streets[fieldIndex];
     }
 
+
+    public void setNumHouses(int numHouses){
+        this.numHouses = numHouses;
+    }
+
+    public void setNumHotels(int numHotels){
+        this.numHotels = numHotels;
+    }
+
+    public boolean ownsAllOfColor(Color color){
+        for(int i = 0; i<40; i++){
+            Field running = game.getBoard().getFields().get(i);
+            if(running.getColor()==color){
+                if(!getPossession(i)) return false;
+            }
+        }
+        return true;
+    }
 }

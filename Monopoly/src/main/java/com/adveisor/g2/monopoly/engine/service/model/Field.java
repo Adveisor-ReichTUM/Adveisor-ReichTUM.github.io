@@ -65,10 +65,11 @@ public class Field {
     }
     public void evaluateStreet(Player player, Game game){
         ArrayList<Player> players = game.getPlayers();
-        if(this.owner != player.getId() && this.owned){
+        if((this.owner != player.getId()) && this.owned){
             // Spieler nicht Besitzer des gekauften Feldes
-            if(this.owner>=0 && this.owner < players.size())
-                    payRent(player, players.get(this.owner), game.getBoard());       // Miete bezahlen
+            if(this.owner>=0 && this.owner < players.size()) {
+                payRent(player, players.get(this.owner), game.getBoard());       // Miete bezahlen
+            }
             else
                 System.err.println("Fehler: Besitzer nicht identifizierbar");
         }
@@ -78,7 +79,7 @@ public class Field {
     }
 
 
-    public void decideBuy(Player player){
+    /*public void decideBuy(Player player){
         if(player.getBalance()<this.price) {
             System.out.print("You cannot afford to buy this street. ");
             System.out.print("You may be able to increase your balance by trading, selling houses, mortgage.\n");
@@ -104,9 +105,9 @@ public class Field {
                 }
             input.close();
         }
-    }
+    }*/
 
-    public void transaction(Player paying_pl, Player paid_pl, int diff){
+    public static void transaction(Player paying_pl, Player paid_pl, int diff){
         paying_pl.adjustBalance(-diff);
         paid_pl.adjustBalance(diff);
     }
@@ -120,6 +121,7 @@ public class Field {
             case street:
                 stage = determineStreetStage();
                 diff = this.rent_stages[stage];
+                if(stage==1 && paid_pl.ownsAllOfColor(this.getColor())) diff*=2;
                 break;
             case station:
                 stage = determineStationStage(paid_pl, board);
