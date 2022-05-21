@@ -130,7 +130,7 @@ public class Field {
     }
 
     public int getMortgageValue(){
-        return this.rent_stages[0];
+        return this.getPrice()/2;
     }
 
     public void reset(){
