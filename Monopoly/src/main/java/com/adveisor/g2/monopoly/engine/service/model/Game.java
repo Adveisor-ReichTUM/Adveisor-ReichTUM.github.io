@@ -1,8 +1,12 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+@Getter
+@Setter
 public class Game {
 
     //private enum Status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
@@ -67,33 +71,6 @@ public class Game {
 
     }
 
-    public int getNumPlayers(){
-        return this.numPlayers;
-    }
-
-    public int getNumRounds(){
-        return this.numRounds;
-    }
-
-    public int getNumActivePlayers() {
-        return this.numActivePlayers;
-    }
-
-    public ArrayList<Player> getPlayers(){
-        return this.players;
-    }
-
-    public Board getBoard(){
-        return this.board;
-    }
-
-    public Deck getCommunityDeck(){
-        return this.communityDeck;
-    }
-
-    public Deck getChanceDeck(){
-        return this.chanceDeck;
-    }
 
     public void join(String name, Piece piece){
         // check for failure
@@ -130,12 +107,12 @@ public class Game {
 
         if(status == Status.END) return;
 
-        if(player.isBankrupt()==false && player.getPasch()==true){
+        if(player.isBankrupt()==false && player.isPasch()==true){
             if(player.getNumPasch()==3) player.jail();
             else if (player.getNumPasch()<3) player.setNumPasch(player.getNumPasch()+1);
         }
 
-        if(player.getPasch()==false){
+        if(player.isPasch()==false){
             player.setNumPasch(0);
             while(player.isBankrupt()){
                 currentPlayer = (currentPlayer +1)%players.size();
@@ -159,7 +136,7 @@ public class Game {
         player.throwDices();
 
         if(player.isInJail()){
-            if(player.getPasch()){
+            if(player.isPasch()){
                 player.setPasch(false); // Nach Gefägnis führt Pasch zu keinem zweiten Zug
                 player.setRoundsInJail(0);
                 player.setInJail(false);
@@ -263,7 +240,7 @@ public class Game {
         Player player = players.get(currentPlayer);
         Field field = getBoard().getFields().get(fieldIndex);
         if(player.checkPossession(fieldIndex)) throw new IllegalStateException("Tried to sell property not in possession");
-        if(field.getIsHypothek()){
+        if(field.isHypothek()){
             player.endMortgage(fieldIndex);
             return;
         }
@@ -272,10 +249,6 @@ public class Game {
         player.setPossession(fieldIndex, false);
         field.reset();
 
-    }
-
-    public Status getStatus(){
-        return this.status;
     }
 
     public void bankrupt(Player player){
@@ -370,7 +343,7 @@ public class Game {
 
         if(numHouses<=0) return;
         if(field.getNumHouses()==4 && numHotels<=0) return;
-        if(field.getIsHypothek()) return;
+        if(field.isHypothek()) return;
 
         Color color = field.getColor();
         int minHouses = Integer.MAX_VALUE;

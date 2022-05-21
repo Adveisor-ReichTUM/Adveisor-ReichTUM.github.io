@@ -1,14 +1,15 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import lombok.Data;
+
 import java.util.Scanner;
 
-import java.lang.Math;
-
+@Data
 public class Player {
-    private static int id = 0;             // identification number for player
+    private static int nextId = 0;             // identification number for player
     //private static int counter;     // number of players
-
-    private final int startmoney;   // amount of money available in the beginning
+    private int id;
+    private final int startMoney;   // amount of money available in the beginning
 
     private int position;       // position on the field array: 0 - 39
     private int dice;           // total value of dices
@@ -34,8 +35,8 @@ public class Player {
 
     // constructor
     public Player(String name, Game game, Piece piece){
-        this.startmoney = 1500;
-        this.balance = startmoney;
+        this.startMoney = 1500;
+        this.balance = startMoney;
         this.name = name;
         this.bankrupt = false;
         this.position = 0;
@@ -43,41 +44,10 @@ public class Player {
         this.streets = new boolean[40];    // initializes the elements with false
         this.bid = 0;
         this.piece = piece;
-        this.id = id+1;
+        this.id = nextId++;
         this.numPasch = 0;
     }
 
-    public int getBalance(){
-        return balance;
-    }
-
-    public boolean isBankrupt(){
-        return bankrupt;
-    }
-
-    public boolean isInJail(){
-        return inJail;
-    }
-
-    public int getNumJailCards(){
-        return numJailCards;
-    }
-
-    public void setBalance(int balance_new){
-        this.balance = balance_new;
-    }
-
-    public void setNumJailCards(int numJailCards_new){
-        this.numJailCards = numJailCards_new;
-    }
-
-    public void setBankrupt(boolean isBankrupt_new){
-        this.bankrupt = isBankrupt_new;
-    }
-
-    public void setInJail(boolean isInJail_new){
-        this.inJail = isInJail_new;
-    }
 
     public void jail(){
         setInJail(true);
@@ -90,13 +60,6 @@ public class Player {
         this.balance += diff;
     }
 
-    public int getPosition(){
-        return this.position;
-    }
-
-    public void setPosition(int position_new){
-        this.position = position_new;
-    }
 
     public void throwDices(){
         int[] dice_values = Dice.throwDices();
@@ -123,25 +86,6 @@ public class Player {
         this.streets[field_num] = ownership;
     }
 
-    public int getNumHouses(){
-        return this.numHouses;
-    }
-
-    public int getNumHotels(){
-        return this.numHotels;
-    }
-
-    public int getRoundsInJail(){
-        return this.roundsInJail;
-    }
-
-    public void setRoundsInJail(int roundsInJail){
-        this.roundsInJail = roundsInJail;
-    }
-
-    public int getId(){
-        return this.id;
-    }
 
     public void buy(Field field){
         adjustBalance(-field.getPrice());
@@ -156,13 +100,6 @@ public class Player {
         setNumPasch(0);
     }
 
-    public int getBid(){
-        return this.bid;
-    }
-
-    public void setBid(int bid){
-        this.bid = bid;
-    }
     /*public void turn(){
         int counter = 0;
         if(inJail){
@@ -199,13 +136,6 @@ public class Player {
         char selection = Character.toLowerCase(input.next().charAt(0));
     }
 
-    public String getName(){
-        return this.name;
-    }
-
-    public Piece getPiece(){
-        return this.piece;
-    }
 
     public int calculateWealth(){
         int wealth = getBalance();
@@ -220,31 +150,16 @@ public class Player {
         return wealth;
     }
 
-    public boolean getPasch(){
-        return this.pasch;
-    }
-
-    public int getNumPasch(){
-        return this.numPasch;
-    }
-
-    public void setNumPasch(int numPasch){
-        this.numPasch = numPasch;
-    }
-
-    public void setPasch(boolean pasch){
-        this.pasch = pasch;
-    }
 
     public void endMortgage(int fieldIndex){
         if(game.getStatus() != Status.TURN) throw new IllegalStateException("Cannot end mortgage while not being in TURN.");
 
         Field field = game.getBoard().getFields().get(fieldIndex);
 
-        if(field.getIsHypothek() && getPossession(fieldIndex)){
+        if(field.isHypothek() && getPossession(fieldIndex)){
             int diff = (int) (field.getMortgageValue() + field.getMortgageValue()*0.1);    //10% aufschlag beim Zurückzahlen
             adjustBalance(-diff);
-            field.setIsHypothek(false);
+            field.setHypothek(false);
         }
     }
 
@@ -254,24 +169,14 @@ public class Player {
         Field field = game.getBoard().getFields().get(fieldIndex);
 
         if(field.getNumHouses()>0) return;
-        if(getPossession(fieldIndex) && field.getIsHypothek()){
+        if(getPossession(fieldIndex) && field.isHypothek()){
             adjustBalance(field.getMortgageValue());
-            field.setIsHypothek(true);
+            field.setHypothek(true);
         }
     }
 
-    public void setId(int id){
-        this.id = id;
-    }
     public boolean checkPossession(int fieldIndex){
         return this.streets[fieldIndex];
     }
 
-    public void setNumHouses(int numHouses){
-        this.numHouses = numHouses;
-    }
-
-    public void setNumHotels(int numHotels){
-        this.numHotels = numHotels;
-    }
 }

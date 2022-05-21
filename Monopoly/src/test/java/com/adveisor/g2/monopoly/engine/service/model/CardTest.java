@@ -24,8 +24,8 @@ class CardTest {
 
     @Test
     void getCardType() {
-        Card.cardType expected = Card.cardType.move_not_GO;
-        Card.cardType actual = card1.getCardType();
+        Card.CardType expected = Card.CardType.move_not_GO;
+        Card.CardType actual = card1.getCardType();
         assertEquals(expected, actual);
     }
 

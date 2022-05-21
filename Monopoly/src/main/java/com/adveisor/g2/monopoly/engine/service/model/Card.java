@@ -1,35 +1,31 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 public class Card {
-    public enum cardType {renovation, get_money_bank, get_money_player, pay_money_bank, pay_money_player, out_of_jail, move_via_GO, move_not_GO};
-    private final cardType type;
+    public enum CardType {renovation, get_money_bank, get_money_player, pay_money_bank, pay_money_player, out_of_jail, move_via_GO, move_not_GO}
+    private final CardType cardType;
 
     //private final int id;
     private final String description;
     private final String value;
     private final boolean isChanceDeck;     // true if chance card, false if community card
 
-    public Card(String desc, String type, String value, boolean isChanceDeck) {
-        this.type = cardType.valueOf(type);
+    public Card(String desc, String cardType, String value, boolean isChanceDeck) {
+        this.cardType = CardType.valueOf(cardType);
         this.description = desc;
         //this.id = id;
         this.value = value;
         this.isChanceDeck = isChanceDeck;
     }
 
-    public cardType getCardType() {
-        return this.type;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
     public void evaluateCard(Player player, Game game) {
         System.out.println(description);
-        int diff = 0;
-        int target = 0;
-        switch (this.type) {
+        int diff;
+        int target;
+        switch (this.cardType) {
             case get_money_bank:
                 diff = Integer.parseInt(value);
                 player.adjustBalance(diff);
@@ -66,7 +62,7 @@ public class Card {
                 target = identifyTargetPosition(player.getPosition());
                 player.setPosition(target);
             case renovation:
-                int sum = 0;
+                int sum;
                 int numHouses = player.getNumHouses();
                 int numHotels = player.getNumHotels();
                 if (this.isChanceDeck)
