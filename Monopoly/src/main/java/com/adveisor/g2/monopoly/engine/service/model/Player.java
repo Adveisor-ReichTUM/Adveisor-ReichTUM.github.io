@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.lang.Math;
 
 public class Player {
-    private static int counter = -1;             // identification number for player
+    public static int counter = -1;             // identification number for player
     //private static int counter;     // number of players
     private int id;
 

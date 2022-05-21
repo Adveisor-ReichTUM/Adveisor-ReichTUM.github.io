@@ -76,10 +76,8 @@ public class Field {
     }
     public void evaluateStreet(Player player, Game game){
         ArrayList<Player> players = game.getPlayers();
-        System.out.println("Start");
         if((this.owner != player.getId()) && this.owned){
             // Spieler nicht Besitzer des gekauften Feldes
-            System.out.println("Zweig 1");
             if(this.owner>=0 && this.owner < players.size()) {
                 payRent(player, players.get(this.owner), game.getBoard());       // Miete bezahlen
             }
@@ -87,7 +85,6 @@ public class Field {
                 System.err.println("Fehler: Besitzer nicht identifizierbar");
         }
         else if(this.owned == false){
-            System.out.println("Zweig 2");
             game.setStatus(Status.BUY_PROPERTY);
         }
     }
