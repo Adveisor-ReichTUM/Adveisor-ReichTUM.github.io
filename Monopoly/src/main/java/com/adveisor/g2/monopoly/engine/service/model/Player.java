@@ -7,7 +7,7 @@ import java.util.Scanner;
 @Data
 public class Player {
 
-    private static int nextId = 0;             // identification number for player
+    public static int nextId = 0;             // identification number for player
     //private static int counter;     // number of players
     private int id;
     private final int startMoney;   // amount of money available in the beginning

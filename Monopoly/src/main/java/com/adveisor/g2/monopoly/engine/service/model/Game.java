@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 public class Game {
@@ -29,7 +31,7 @@ public class Game {
     private int highestBid;
 
     // reference attributes
-    private ArrayList<Player> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
     //private ArrayList<Field> fields;
     private Deck communityDeck;
     private Deck chanceDeck;
