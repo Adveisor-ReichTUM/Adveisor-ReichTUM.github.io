@@ -1,9 +1,13 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
+@Data
 public class Field {
+    
     private String name;
     private int position;
 
@@ -13,14 +17,14 @@ public class Field {
     private int numHouses;
     private final int price;
 
-    private final int housecost;
+    private final int houseCost;
     private int[] rent_stages;      // Hypothek; Normal = 1; (Alle Farben = 2); ++houses;
-    private boolean isHypothek;
+    private boolean Hypothek;
 
     //private enum colorType {no_color, braun, hellblau, pink, orange, rot, gelb, gruen, dunkelblau};
     private final Color color;
 
-    private enum fieldType {los, street, station, jail, police, parking, tax, chance, community, utilities};
+    private enum fieldType {los, street, station, jail, police, parking, tax, chance, community, utilities}
     private final fieldType type;
 
     // constructor
@@ -29,31 +33,16 @@ public class Field {
         this.position = position;
         this.type = fieldType.valueOf(type);
         this.price = price;
-        this.housecost = housecost;
+        this.houseCost = housecost;
         this.rent_stages = rent_stages;
         this.color = Color.valueOf(color);
 
         this.owned = false;
         this.owner = -1;
         this.numHouses = 0;
-        this.isHypothek = false;
+        this.Hypothek = false;
     }
 
-    public String getName(){
-        return this.name;
-    }
-
-    public int getPosition(){
-        return this.position;
-    }
-
-    public boolean isOwned(){
-        return owned;
-    }
-
-    public void setOwned(boolean owned){
-        this.owned = owned;
-    }
 
     public static void evaluateField(Field field, Player player, Game game){
         switch(field.getType()){
@@ -84,7 +73,7 @@ public class Field {
             else
                 System.err.println("Fehler: Besitzer nicht identifizierbar");
         }
-        else if(this.owned == false){
+        else if(!this.owned){
             game.setStatus(Status.BUY_PROPERTY);
         }
     }
@@ -124,7 +113,7 @@ public class Field {
     }
 
     public void payRent(Player paying_pl, Player paid_pl, Board board){
-        if(this.isHypothek) return;
+        if(this.Hypothek) return;
 
         int stage = 0;
         int diff = 0;
@@ -147,82 +136,44 @@ public class Field {
     }
 
     public int determineStationStage(Player paid_pl, Board board){
-        if(this.isHypothek)
+        if(this.Hypothek)
             return 0;
         else
         return board.countType(this, paid_pl);
     }
 
     public int determineUtilityStage(Player paid_pl, Board board){
-        if(this.isHypothek)
+        if(this.Hypothek)
             return 0;
         else
         return board.countType(this, paid_pl);
     }
 
     public int determineStreetStage(){
-        if(this.isHypothek)
+        if(this.Hypothek)
             return 0;
         else
         return (1 + this.numHouses);
     }
 
-    public int getPrice(){
-        return this.price;
-    }
-
-    public void setOwner(int owner_id){
-        this.owner = owner_id;
-    }
 
     public void evaluatePolice(Player player, Game game){
         player.jail();
         game.turn1();
     }
 
-    public fieldType getType(){
-        return this.type;
-    }
-
-    public Color getColor() {
-        return this.color;
-    }
-    public int getOwner(){
-        return this.owner;
-    }
-
-    public int getHouseCost(){
-        return this.housecost;
-    }
-
-    public int getNumHouses(){
-        return this.numHouses;
-    }
-
-    public boolean getIsHypothek(){
-        return this.isHypothek;
-    }
-
     public int getMortgageValue(){
         return this.rent_stages[0];
-    }
-
-    public void setIsHypothek(boolean isHypothek){
-        this.isHypothek = isHypothek;
     }
 
     public void reset(){
         this.owned = false;
         this.owner = -1;
         this.numHouses = 0;
-        this.isHypothek = false;
+        this.Hypothek = false;
     }
 
     public int getRentStage(int stage){
         return this.rent_stages[stage];
     }
-    public void setNumHouses(int numHouses){
-        this.numHouses = numHouses;
-    }
-
 }

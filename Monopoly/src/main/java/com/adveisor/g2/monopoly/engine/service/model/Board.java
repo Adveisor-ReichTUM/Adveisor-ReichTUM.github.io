@@ -2,9 +2,10 @@ package com.adveisor.g2.monopoly.engine.service.model;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
-    private ArrayList<Field> fields = new ArrayList<>();
+    private List<Field> fields = new ArrayList<>();
 
     public Board(String boardfile) {
         try{
@@ -46,7 +47,7 @@ public class Board {
         return counter;
     }
 
-    public ArrayList<Field> getFields(){
+    public List<Field> getFields(){
         return this.fields;
     }
 

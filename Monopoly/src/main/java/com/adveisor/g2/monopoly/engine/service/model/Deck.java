@@ -5,12 +5,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.util.List;
 import java.util.Random;
 import java.util.Collections;
 
 public class Deck {
     private final boolean isChanceDeck;
-    private ArrayList<Card> cards = new ArrayList<Card>();
+    private List<Card> cards = new ArrayList<Card>();
 
     public Deck(boolean isChanceDeck, String filename){
         this.isChanceDeck = isChanceDeck;
@@ -53,7 +54,7 @@ public class Deck {
         cards.add(card);
     }
 
-    public ArrayList<Card> getCards(){
+    public List<Card> getCards(){
         return this.cards;
     }
 
