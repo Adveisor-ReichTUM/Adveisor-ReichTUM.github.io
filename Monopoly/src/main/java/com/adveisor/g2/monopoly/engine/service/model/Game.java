@@ -32,7 +32,6 @@ public class Game {
 
     // reference attributes
     private List<Player> players = new ArrayList<>();
-    //private ArrayList<Field> fields;
     private Deck communityDeck;
     private Deck chanceDeck;
     private Board board;
@@ -52,19 +51,6 @@ public class Game {
 
         // set up community Deck
         this.communityDeck = new Deck(false, communityfile);
-
-        // Load players
-        /*try{
-            BufferedReader input = new BufferedReader(new FileReader(playerFile));
-            numPlayers = Integer.parseInt(input.readLine())/2;
-            for(int i = 0; i<numPlayers; i++){
-                players.add(new Player(input.readLine(), this, Piece.valueOf(input.readLine())));
-            }
-            input.close();
-        }
-        catch(java.io.IOException exception){
-            System.err.println(exception);
-        }*/
 
         this.status = Status.WAITING;
         this.numHotels = 12;
@@ -137,6 +123,7 @@ public class Game {
         status = Status.DICE;
         player.throwDices();
 
+        // Anpassen von Gefängnissituation entsprechend nach Wurfergebnis
         if(player.isInJail()){
             if(player.isPasch()){
                 player.setPasch(false); // Nach Gefägnis führt Pasch zu keinem zweiten Zug
@@ -149,56 +136,12 @@ public class Game {
                 return;
             }
         }
-
+        //Bewegen des Spielers und Evaluation der Position
         player.moveAndEvaluate(this.getBoard());
 
+        //Option zum Bauen, Tauschen, Hypothek
         manage();
     }
-    /*public void rollAndMove(){
-        Player player = players.get(currentPlayer);
-        //if(player.isInJail()){
-            status = Status.JAIL;
-            return;
-        //}
-        if(status == Status.END) return;
-
-        if(player.isInJail()==false && player.getPasch()==true){
-            if(player.getNumPasch()==3) player.jail();
-            else if (player.getNumPasch()<3) player.setNumPasch(player.getNumPasch()+1);
-        }
-
-        if(player.getPasch()==false){
-            player.setNumPasch(0);
-            while(player.isBankrupt()){
-                currentPlayer = (currentPlayer +1)%players.size();
-            }
-        }
-
-        //Abbruch falls ins Gefägnis gekommen
-        if(player.isInJail()){
-            status = Status.JAIL;
-            return;
-        }
-
-        //Würfeln
-        status = Status.DICE;
-        player.throwDices();
-
-        if(player.isInJail()){
-            if(player.getPasch()){
-                player.setPasch(false); // Nach Gefägnis führt Pasch zu keinem zweiten Zug
-                player.setRoundsInJail(0);
-                player.moveAndEvaluate(this.getBoard());
-            } else{
-                player.setRoundsInJail(player.getRoundsInJail()+1);
-                return;
-            }
-        }
-
-        player.moveAndEvaluate(this.getBoard());
-
-        manage();
-    }*/
 
     public void decideJail(boolean choice){
         Player player = getPlayers().get(currentPlayer);
@@ -221,14 +164,6 @@ public class Game {
     }
     public void setStatus(Status status){
         this.status = status;
-    }
-
-    public void setCardDescription(String desc){
-        this.cardDescription = desc;
-    }
-
-    public String getCardDescription(){
-        return this.cardDescription;
     }
 
     public void buy(){
@@ -408,7 +343,4 @@ public class Game {
         setStatus(Status.TURN);
     }
 
-    public void setCurrentPlayer(int currentPlayer){
-        this.currentPlayer = currentPlayer;
-    }
 }

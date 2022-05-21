@@ -8,7 +8,6 @@ public class Card {
     public enum CardType {renovation, get_money_bank, get_money_player, pay_money_bank, pay_money_player, out_of_jail, move_via_GO, move_not_GO}
     private final CardType cardType;
 
-    //private final int id;
     private final String description;
     private final String value;
     private final boolean isChanceDeck;     // true if chance card, false if community card
@@ -16,7 +15,6 @@ public class Card {
     public Card(String desc, String cardType, String value, boolean isChanceDeck) {
         this.cardType = CardType.valueOf(cardType);
         this.description = desc;
-        //this.id = id;
         this.value = value;
         this.isChanceDeck = isChanceDeck;
     }

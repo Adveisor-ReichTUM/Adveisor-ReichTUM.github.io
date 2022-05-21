@@ -1,6 +1,8 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Scanner;
 
@@ -97,50 +99,11 @@ public class Player {
         field.setOwned(true);
         field.setOwner(id);
     }
-
-    public void toJail(){
-        setInJail(true);
-        setPosition(10);
-        setNumPasch(0);
-    }
-
-    /*public void turn(){
-        int counter = 0;
-        if(inJail){
-            System.out.println("Willst du 50€ zahlen oder eine Aus-dem-Gefängnis Karte nutzen, um aus den Gefängnis zu kommen? y/n");
-            Scanner input = new Scanner(System.in);
-            char decision = Character.toLowerCase(input.next().charAt(0));
-            switch(decision){
-                case 'y':
-                    if(this.numJailCards>0)
-                        this.numJailCards--;
-                    else
-                        adjustBalance(-50);
-                    moveAndEvaluate(game.getBoard());
-            }
-        }
-    }*/
-
     public void moveAndEvaluate(Board board){
-        /*int counter = 0;
-        this.pasch = true;
-        while(this.pasch && (this.inJail == false) && counter <=2)
-            if(counter == 2 && this.pasch) toJail();
-            throwDices();
-            move();*/
         move();
         Field field = board.getFields().get(this.position);
         Field.evaluateField(field, this, game);
-        //buildTradeMortgage();
     }
-
-    public void buildTradeMortgage(){
-        System.out.println("Available actions: B (Bauen), T (Tausschen), H (Hypothek), F (Finish)");
-        Scanner input = new Scanner(System.in);
-        char selection = Character.toLowerCase(input.next().charAt(0));
-    }
-
-
     public int calculateWealth(){
         int wealth = getBalance();
         wealth += getNumJailCards()*50;
@@ -182,15 +145,6 @@ public class Player {
 
     public boolean checkPossession(int fieldIndex){
         return this.streets[fieldIndex];
-    }
-
-
-    public void setNumHouses(int numHouses){
-        this.numHouses = numHouses;
-    }
-
-    public void setNumHotels(int numHotels){
-        this.numHotels = numHotels;
     }
 
     public boolean ownsAllOfColor(Color color){

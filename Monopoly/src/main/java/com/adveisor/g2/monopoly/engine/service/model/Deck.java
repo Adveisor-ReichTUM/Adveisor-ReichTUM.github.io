@@ -3,7 +3,6 @@ package com.adveisor.g2.monopoly.engine.service.model;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.io.FileReader;
 import java.io.BufferedReader;
 import java.util.List;
 import java.util.Random;

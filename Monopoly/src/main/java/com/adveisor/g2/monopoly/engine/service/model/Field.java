@@ -2,8 +2,7 @@ package com.adveisor.g2.monopoly.engine.service.model;
 
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
 @Data
 public class Field {
@@ -21,7 +20,6 @@ public class Field {
     private int[] rent_stages;      // Hypothek; Normal = 1; (Alle Farben = 2); ++houses;
     private boolean Hypothek;
 
-    //private enum colorType {no_color, braun, hellblau, pink, orange, rot, gelb, gruen, dunkelblau};
     private final Color color;
 
     private enum fieldType {los, street, station, jail, police, parking, tax, chance, community, utilities}
@@ -43,7 +41,6 @@ public class Field {
         this.Hypothek = false;
     }
 
-
     public static void evaluateField(Field field, Player player, Game game){
         switch(field.getType()){
             case los: break;
@@ -64,7 +61,7 @@ public class Field {
         }
     }
     public void evaluateStreet(Player player, Game game){
-        ArrayList<Player> players = game.getPlayers();
+        List<Player> players = game.getPlayers();
         if((this.owner != player.getId()) && this.owned){
             // Spieler nicht Besitzer des gekauften Feldes
             if(this.owner>=0 && this.owner < players.size()) {
@@ -77,35 +74,6 @@ public class Field {
             game.setStatus(Status.BUY_PROPERTY);
         }
     }
-
-
-    /*public void decideBuy(Player player){
-        if(player.getBalance()<this.price) {
-            System.out.print("You cannot afford to buy this street. ");
-            System.out.print("You may be able to increase your balance by trading, selling houses, mortgage.\n");
-        }
-        else {
-            System.out.println("Would you like to buy this street? y/n");
-            char decision = 'n';
-            Scanner input = new Scanner(System.in);
-            decision = Character.toLowerCase(input.next().charAt(0));
-
-            boolean valid = false;
-            while(!valid)
-                switch(decision){
-                    case 'y':
-                        valid = true;
-                        player.buy(this); break;
-                    case 'n':
-                        valid = true;
-                        break;
-                    default:
-                        System.out.println("Falsche Eingabe! Would you like to buy this street? y/n");
-                        break;
-                }
-            input.close();
-        }
-    }*/
 
     public static void transaction(Player paying_pl, Player paid_pl, int diff){
         paying_pl.adjustBalance(-diff);
