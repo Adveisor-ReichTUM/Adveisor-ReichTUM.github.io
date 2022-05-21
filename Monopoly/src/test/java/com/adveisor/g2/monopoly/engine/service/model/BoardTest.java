@@ -1,17 +1,7 @@
-package com.adveisor.g2.monopoly.engine.service.model.tests;
+package com.adveisor.g2.monopoly.engine.service.model;
 
-import com.adveisor.g2.monopoly.engine.service.model.Board;
-import com.adveisor.g2.monopoly.engine.service.model.Game;
-import com.adveisor.g2.monopoly.engine.service.model.Piece;
-import com.adveisor.g2.monopoly.engine.service.model.Player;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import static org.junit.jupiter.api.Assertions.*;
 

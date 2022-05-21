@@ -30,17 +30,15 @@ public class Deck {
             System.err.println(exception);
         }
 
-        shuffleDeck(cards);
+        shuffleDeck();
     }
 
-    public static void shuffleDeck(ArrayList<Card> cards){
-        // iterate over array an swap each array element once with random index
-        if(cards!=null) {
-            for (int i = 0; i < cards.size(); i++) {
-                Random rand = new Random();
-                int swap_index = rand.nextInt(cards.size());
-                Collections.swap(cards, i, swap_index);
-            }
+    public void shuffleDeck(){
+        // iterate over array and swap each element once with random index
+        for (int i = 0; i < this.cards.size(); i++) {
+            Random rand = new Random();
+            int swap_index = rand.nextInt(this.cards.size());
+            Collections.swap(this.cards, i, swap_index);
         }
     }
 
@@ -53,6 +51,10 @@ public class Deck {
         game.setStatus(Status.CARD);
         cards.remove(card);
         cards.add(card);
+    }
+
+    public ArrayList<Card> getCards(){
+        return this.cards;
     }
 
 }
