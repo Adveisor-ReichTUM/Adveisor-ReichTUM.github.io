@@ -5,8 +5,9 @@ import java.util.Scanner;
 import java.lang.Math;
 
 public class Player {
-    private static int id = 0;             // identification number for player
+    private static int counter = -1;             // identification number for player
     //private static int counter;     // number of players
+    private int id;
 
     private final int startmoney;   // amount of money available in the beginning
 
@@ -43,7 +44,8 @@ public class Player {
         this.streets = new boolean[40];    // initializes the elements with false
         this.bid = 0;
         this.piece = piece;
-        this.id = id+1;
+        this.counter++;
+        this.id = counter;
         this.numPasch = 0;
     }
 
@@ -254,7 +256,7 @@ public class Player {
         Field field = game.getBoard().getFields().get(fieldIndex);
 
         if(field.getNumHouses()>0) return;
-        if(getPossession(fieldIndex) && field.getIsHypothek()){
+        if(getPossession(fieldIndex) && field.getIsHypothek()==false){
             adjustBalance(field.getMortgageValue());
             field.setIsHypothek(true);
         }
@@ -273,5 +275,15 @@ public class Player {
 
     public void setNumHotels(int numHotels){
         this.numHotels = numHotels;
+    }
+
+    public boolean ownsAllOfColor(Color color){
+        for(int i = 0; i<40; i++){
+            Field running = game.getBoard().getFields().get(i);
+            if(running.getColor()==color){
+                if(!getPossession(i)) return false;
+            }
+        }
+        return true;
     }
 }
