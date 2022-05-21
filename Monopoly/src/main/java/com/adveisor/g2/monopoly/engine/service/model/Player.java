@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class Player {
 
     public static int nextId = 0;             // identification number for player
-    //private static int counter;     // number of players
     private int id;
     private final int startMoney;   // amount of money available in the beginning
 
@@ -49,7 +48,7 @@ public class Player {
         this.bid = 0;
         this.piece = piece;
 
-        this.id = ++nextId;
+        this.id = nextId++;
 
         this.numPasch = 0;
     }

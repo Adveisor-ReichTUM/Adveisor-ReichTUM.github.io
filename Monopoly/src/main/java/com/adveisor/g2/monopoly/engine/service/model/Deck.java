@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.util.List;
-import java.util.Random;
 import java.util.Collections;
 
 public class Deck {

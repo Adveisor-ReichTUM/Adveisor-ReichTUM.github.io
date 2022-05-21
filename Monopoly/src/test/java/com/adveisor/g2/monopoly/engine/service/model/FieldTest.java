@@ -1,6 +1,5 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +15,7 @@ class FieldTest {
         game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
         game.join("Mr. Monopoly", Piece.GREEN);
         game.join("Mr. Monopoly 2", Piece.BLUE);
+        Player.nextId=0;
         paying_pl = game.getPlayers().get(0);
         paid_pl = game.getPlayers().get(1);
         field = game.getBoard().getFields().get(39);
