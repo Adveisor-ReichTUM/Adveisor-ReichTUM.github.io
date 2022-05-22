@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="ReichTUM" pattern="src:*..*||file[monopoly]:src/main/java/com/adveisor/g2/monopoly/engine/service/model/status/*" />
+</component>

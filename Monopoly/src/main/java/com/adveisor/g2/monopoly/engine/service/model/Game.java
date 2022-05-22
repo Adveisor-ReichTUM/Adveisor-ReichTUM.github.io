@@ -1,5 +1,6 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import com.adveisor.g2.monopoly.engine.service.model.status.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,20 @@ public class Game {
     private Deck chanceDeck;
     private Board board;
 
+    // all the possible statuses initialized here
+    private AbstractStatus auctionStatus = new AuctionStatus(this);
+    private AbstractStatus buyPropertyStatus = new BuyPropertyStatus(this);
+    private AbstractStatus cardStatus = new CardStatus(this);
+    private AbstractStatus diceStatus = new DiceStatus(this);
+    private AbstractStatus endStatus = new EndStatus(this);
+    private AbstractStatus jailStatus = new JailStatus(this);
+    private AbstractStatus startStatus = new StartStatus(this);
+    private AbstractStatus turnStatus = new TurnStatus(this);
+    private AbstractStatus waitingStatus = new WaitingStatus(this);
+    //
+
+    private AbstractStatus currentStatus;
+
     // constructor
     @Autowired
     public Game(String boardfile, String chancefile, String communityfile){
@@ -57,27 +72,18 @@ public class Game {
         this.numHouses = 32;
         this.currentPlayer = 0;
 
+        // game start at this status
+        this.currentStatus = this.waitingStatus;
+
     }
 
 
     public void join(String name, Piece piece){
-        // check for failure
-        if(status != status.WAITING) throw new IllegalStateException("Failed to join game: already running.");
-
-        for(Player player : players){
-            if(player.getName().equals(name)) throw new IllegalArgumentException("This name already exists.");
-            if(player.getPiece().equals(piece)) throw new IllegalArgumentException("This color is already used by another player.");
-        }
-
-        // create player
-        Player player = new Player(name, this, piece);
-        players.add(player);
+       currentStatus.join(name, piece);
     }
 
     public void start(){
-        if(status != status.WAITING) throw new IllegalStateException("Failed to start game: wrong status.");
-        if(players.size()>4) throw new IllegalStateException("Monopoly is limited to only a maximum of 4 players.");
-        if(players.size()<2) return;
+        currentStatus.start();
     }
 
     public String end(){

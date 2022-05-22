@@ -106,21 +106,21 @@ public class Field {
         if(this.Hypothek)
             return 0;
         else
-        return board.countType(this, paid_pl);
+            return board.countType(this, paid_pl);
     }
 
     public int determineUtilityStage(Player paid_pl, Board board){
         if(this.Hypothek)
             return 0;
         else
-        return board.countType(this, paid_pl);
+            return board.countType(this, paid_pl);
     }
 
     public int determineStreetStage(){
         if(this.Hypothek)
             return 0;
         else
-        return (1 + this.numHouses);
+            return (1 + this.numHouses);
     }
 
 
