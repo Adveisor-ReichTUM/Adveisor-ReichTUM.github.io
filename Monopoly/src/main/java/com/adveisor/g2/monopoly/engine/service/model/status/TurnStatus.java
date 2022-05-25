@@ -101,4 +101,16 @@ public class TurnStatus extends AbstractStatus {
             game.setNumHouses(game.getNumHouses()+1);
         }
     }
+
+    @Override
+    public void endMortgage(int fieldIndex){
+        Player player = game.getPlayers().get(game.getCurrentPlayer());
+        player.endMortgage(fieldIndex);
+    }
+
+    @Override
+    public void startMortgage(int fieldIndex){
+        Player player = game.getPlayers().get(game.getCurrentPlayer());
+        player.startMortgage(fieldIndex);
+    }
 }

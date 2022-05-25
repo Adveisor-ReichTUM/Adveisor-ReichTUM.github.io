@@ -1,5 +1,6 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import com.adveisor.g2.monopoly.engine.service.model.status.AbstractStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -65,8 +66,8 @@ class FieldTest {
     @Test
     void evaluateStreet2() {
         field.evaluateStreet(paying_pl, game);
-        Status expected = Status.BUY_PROPERTY;
-        Status actual = game.getStatus();
+        AbstractStatus expected = game.getBuyPropertyStatus();
+        AbstractStatus actual = game.getCurrentStatus();
         assertEquals(expected, actual);
     }
 
@@ -123,7 +124,7 @@ class FieldTest {
         station2.setOwned(true);
         paid_pl.setPossession(15, true);
 
-        game.setStatus(Status.TURN);
+        game.setCurrentStatus(game.getTurnStatus());
         game.setCurrentPlayer(paid_pl.getId());
         game.startMortgage(15);
 

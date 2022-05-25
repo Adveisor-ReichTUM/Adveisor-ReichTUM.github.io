@@ -118,8 +118,6 @@ public class Player {
 
 
     public void endMortgage(int fieldIndex){
-        if(game.getStatus() != Status.TURN) throw new IllegalStateException("Cannot end mortgage while not being in TURN.");
-
         Field field = game.getBoard().getFields().get(fieldIndex);
 
         if(field.isHypothek() && getPossession(fieldIndex)){
@@ -130,8 +128,6 @@ public class Player {
     }
 
     public void startMortgage(int fieldIndex){
-        if(game.getStatus()!=Status.TURN) throw new IllegalStateException("Can not start Mortgage while not being in TURN");
-
         Field field = game.getBoard().getFields().get(fieldIndex);
 
         if(field.getNumHouses()>0) return;

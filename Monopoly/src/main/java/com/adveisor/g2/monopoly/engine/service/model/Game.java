@@ -268,14 +268,21 @@ public class Game {
     }
 
     public void startMortgage(int fieldIndex){
+        currentStatus.startMortgage(fieldIndex);
+    }
+    /*public void startMortgage(int fieldIndex){
         Player player = getPlayers().get(currentPlayer);
         player.startMortgage(fieldIndex);
-    }
+    }*/
 
     public void endMortgage(int fieldIndex){
+        currentStatus.endMortgage(fieldIndex);
+    }
+    /*public void endMortgage(int fieldIndex){
+        if(game.getStatus() != Status.TURN) throw new IllegalStateException("Cannot end mortgage while not being in TURN.");
         Player player = getPlayers().get(currentPlayer);
         player.endMortgage(fieldIndex);
-    }
+    }*/
 
     public void buyHouse(int fieldIndex){
         currentStatus.buyHouse(fieldIndex);

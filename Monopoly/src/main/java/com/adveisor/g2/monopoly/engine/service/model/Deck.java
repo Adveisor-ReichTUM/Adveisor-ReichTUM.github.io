@@ -38,11 +38,10 @@ public class Deck {
 
     public void takeCard(Player player, Game game){
         Card card = cards.get(0);
-        game.setStatus(Status.CARD);
+        game.setCurrentStatus(game.getCardStatus());
         card.evaluateCard(player, game);
         game.setCardDescription(card.getDescription());
         // put card to the back of the deck
-        game.setStatus(Status.CARD);
         cards.remove(card);
         cards.add(card);
     }

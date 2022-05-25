@@ -62,7 +62,7 @@ class PlayerTest {
         Field field = game.getBoard().getFields().get(5);
         field.setHypothek(true);
         player.setPossession(5, true);
-        game.setStatus(Status.TURN);
+        game.setCurrentStatus(game.getTurnStatus());
         player.endMortgage(5);
         int expected = 1390;
         int actual = player.getBalance();
@@ -73,7 +73,7 @@ class PlayerTest {
     void startMortgage1() {
         Field field = game.getBoard().getFields().get(5);
         player.setPossession(5, true);
-        game.setStatus(Status.TURN);
+        game.setCurrentStatus(game.getTurnStatus());
         player.startMortgage(5);
         int expected = 1600;
         int actual = player.getBalance();
@@ -85,7 +85,7 @@ class PlayerTest {
         Field field = game.getBoard().getFields().get(5);
         field.setNumHouses(1);
         player.setPossession(5, true);
-        game.setStatus(Status.TURN);
+        game.setCurrentStatus(game.getTurnStatus());
         player.startMortgage(5);
         boolean expected = false;
         boolean actual = field.isHypothek();

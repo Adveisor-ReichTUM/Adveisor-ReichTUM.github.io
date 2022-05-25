@@ -48,7 +48,7 @@ public class Field {
             case utilities:
             case street:
                 field.evaluateStreet(player,game);
-                if(game.getStatus()==Status.BUY_PROPERTY) return;
+                if(game.getCurrentStatus()==game.getBuyPropertyStatus()) return;
                 break;
             case police: field.evaluatePolice(player, game); return;
             case jail:
@@ -70,7 +70,7 @@ public class Field {
                 System.err.println("Fehler: Besitzer nicht identifizierbar");
         }
         else if(!this.owned){
-            game.setStatus(Status.BUY_PROPERTY);
+            game.setCurrentStatus(game.getBuyPropertyStatus());
         }
     }
 
