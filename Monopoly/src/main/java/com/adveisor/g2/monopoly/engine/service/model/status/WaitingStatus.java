@@ -19,6 +19,8 @@ public class WaitingStatus extends AbstractStatus {
     @Override
     public void join(String name, Piece piece){
 
+        // check for player limit
+        if(game.getPlayers().size()==4) return;
         // get players from the game
         List<Player> players = game.getPlayers();
 
@@ -34,10 +36,8 @@ public class WaitingStatus extends AbstractStatus {
 
     @Override
     public void start() {
-
-        if(game.getPlayers().size()>4) throw new IllegalStateException("Monopoly is limited to only a maximum of 4 players.");
         //start the game
-        if(game.getPlayers().size()>2) {
+        if(game.getPlayers().size()>=2) {
             // state transfer here?
             game.setCurrentStatus(game.getStartStatus());
         }

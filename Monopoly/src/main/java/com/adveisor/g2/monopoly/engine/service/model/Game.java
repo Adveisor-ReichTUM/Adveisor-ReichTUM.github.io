@@ -13,7 +13,7 @@ import java.util.List;
 public class Game {
 
     //private enum Status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
-    private Status status;
+    //private Status status;
     private int numPlayers;
     private int numActivePlayers;
     private int numBankruptPlayers;
@@ -57,17 +57,13 @@ public class Game {
         // set up board
         this.board = new Board(boardfile);
 
-        // set up fields
-        /*fields = new ArrayList<Field>;
-        Field.setup(fields, fieldsFile);*/
-
         // set up chance Deck
         this.chanceDeck = new Deck(true, chancefile);
 
         // set up community Deck
         this.communityDeck = new Deck(false, communityfile);
 
-        this.status = Status.WAITING;
+        //this.status = Status.WAITING;
         this.numHotels = 12;
         this.numHouses = 32;
         this.currentPlayer = 0;
@@ -87,7 +83,7 @@ public class Game {
     }
 
     public String end(){
-        status = Status.END;
+        this.currentStatus = this.endStatus;
         String winner = "";
         int greatestWealth = 0;
         for(int i = 0; i<players.size(); i++){
@@ -97,9 +93,12 @@ public class Game {
     }
 
     public void turn1(){
-        Player player = players.get(currentPlayer);
-
+        currentStatus.turn1();
+    }
+    /*public void turn1(){
         if(status == Status.END) return;
+
+        Player player = players.get(currentPlayer);
 
         if(player.isBankrupt()==false && player.isPasch()==true){
             if(player.getNumPasch()==3) player.jail();
@@ -120,13 +119,13 @@ public class Game {
         }
 
         turn2();
-    }
+    }*/
 
     public void turn2(){
         Player player = players.get(currentPlayer);
 
         //Würfeln
-        status = Status.DICE;
+        setCurrentStatus(getDiceStatus());
         player.throwDices();
 
         // Anpassen von Gefängnissituation entsprechend nach Wurfergebnis
@@ -168,9 +167,9 @@ public class Game {
             turn1();
         }
     }
-    public void setStatus(Status status){
+    /*public void setStatus(Status status){
         this.status = status;
-    }
+    }*/
 
     public void buy(){
         Player player = players.get(currentPlayer);
@@ -179,6 +178,9 @@ public class Game {
     }
 
     public void sellBank(int fieldIndex){
+        currentStatus.sellBank(fieldIndex);
+    }
+    /*public void sellBank(int fieldIndex){
         if (status != Status.TURN) throw new IllegalStateException("Tried to sell despite not being in TURN");
         Player player = players.get(currentPlayer);
         Field field = getBoard().getFields().get(fieldIndex);
@@ -191,8 +193,7 @@ public class Game {
         player.adjustBalance(field.getPrice()/2);
         player.setPossession(fieldIndex, false);
         field.reset();
-
-    }
+    }*/
 
     public void bankrupt(Player player){
         numBankruptPlayers++;
@@ -214,7 +215,7 @@ public class Game {
 
     public void auctionProperty(int fieldIndex){
         boolean timeout = false;
-        setStatus(Status.AUCTION);
+        setCurrentStatus(getAuctionStatus());
 
         int startingBid = board.getFields().get(fieldIndex).getPrice()/2;
         int highestBid = startingBid;
@@ -277,6 +278,9 @@ public class Game {
     }
 
     public void buyHouse(int fieldIndex){
+        currentStatus.buyHouse(fieldIndex);
+    }
+    /*public void buyHouse(int fieldIndex){
         if(status != Status.TURN) throw new IllegalStateException("Can not buy house while not being in TURN");
 
         Player player = getPlayers().get(currentPlayer);
@@ -311,9 +315,13 @@ public class Game {
             field.setNumHouses(field.getNumHouses()+1);
             numHouses--;
         }
-    }
+    }*/
+
     public void sellHouse(int fieldIndex){
-        if(status != Status.TURN) throw new IllegalStateException("Can not buy house while not being in TURN");
+        currentStatus.sellHouse(fieldIndex);
+    }
+    /*public void sellHouse(int fieldIndex){
+        if(status != Status.TURN) throw new IllegalStateException("Can not sell house while not being in TURN");
         if(numHouses<=0) return;
 
         Player player = getPlayers().get(currentPlayer);
@@ -344,9 +352,9 @@ public class Game {
             field.setNumHouses(field.getNumHouses()-1);
             numHouses++;
         }
-    }
+    }*/
     public void manage(){
-        setStatus(Status.TURN);
+        setCurrentStatus(getTurnStatus());
     }
 
 }
