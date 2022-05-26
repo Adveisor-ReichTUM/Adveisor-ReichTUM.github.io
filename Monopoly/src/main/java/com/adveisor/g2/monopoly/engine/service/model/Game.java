@@ -220,7 +220,6 @@ public class Game {
         int startingBid = board.getFields().get(fieldIndex).getPrice()/2;
         int highestBid = startingBid;
         int highestBidderIndex = -1;
-
         int timer = 10;
         while(!timeout){
             if(timer>0) timer--;
@@ -264,7 +263,6 @@ public class Game {
         if(bid>highestBid){
             highestBidderIndex = bidderIndex;
         }
-
     }
 
     public void startMortgage(int fieldIndex){

@@ -20,7 +20,7 @@ public class TurnStatus extends AbstractStatus {
         int currentPlayer = game.getCurrentPlayer();
         Player player = game.getPlayers().get(currentPlayer);
         Field field = game.getBoard().getFields().get(fieldIndex);
-        if(player.getPossession(fieldIndex)) throw new IllegalStateException("Tried to sell property not in possession");
+        if(!player.getPossession(fieldIndex)) throw new IllegalStateException("Tried to sell property not in possession");
         if(field.isHypothek()){
             player.endMortgage(fieldIndex);
             return;
