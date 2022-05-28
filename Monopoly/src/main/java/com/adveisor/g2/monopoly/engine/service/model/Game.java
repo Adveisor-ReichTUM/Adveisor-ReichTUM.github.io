@@ -1,6 +1,7 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
 import com.adveisor.g2.monopoly.engine.service.model.status.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import java.util.List;
 @Setter
 public class Game {
 
-    //private enum Status {START, WAITING, DICE, CARD, PROPERTY, TURN, AUCTION, JAIL, END}
-    //private Status status;
+    // numbering of the current game status
+    // increment every time the game status update
+    private Long statusId = 0L;
+
     private int numPlayers;
     private int numActivePlayers;
     private int numBankruptPlayers;
@@ -38,17 +41,27 @@ public class Game {
     private Board board;
 
     // all the possible statuses initialized here
+    @JsonIgnore
     private AbstractStatus auctionStatus = new AuctionStatus(this);
+    @JsonIgnore
     private AbstractStatus buyPropertyStatus = new BuyPropertyStatus(this);
+    @JsonIgnore
     private AbstractStatus cardStatus = new CardStatus(this);
+    @JsonIgnore
     private AbstractStatus diceStatus = new DiceStatus(this);
+    @JsonIgnore
     private AbstractStatus endStatus = new EndStatus(this);
+    @JsonIgnore
     private AbstractStatus jailStatus = new JailStatus(this);
+    @JsonIgnore
     private AbstractStatus startStatus = new StartStatus(this);
+    @JsonIgnore
     private AbstractStatus turnStatus = new TurnStatus(this);
+    @JsonIgnore
     private AbstractStatus waitingStatus = new WaitingStatus(this);
     //
 
+    @JsonIgnore
     private AbstractStatus currentStatus;
 
     // constructor
@@ -73,6 +86,9 @@ public class Game {
 
     }
 
+    public void incrementId() {
+        this.statusId++;
+    }
 
     public void join(String name, Piece piece){
        currentStatus.join(name, piece);
@@ -95,31 +111,7 @@ public class Game {
     public void turn1(){
         currentStatus.turn1();
     }
-    /*public void turn1(){
-        if(status == Status.END) return;
 
-        Player player = players.get(currentPlayer);
-
-        if(player.isBankrupt()==false && player.isPasch()==true){
-            if(player.getNumPasch()==3) player.jail();
-            else if (player.getNumPasch()<3) player.setNumPasch(player.getNumPasch()+1);
-        }
-
-        if(player.isPasch()==false){
-            player.setNumPasch(0);
-            while(player.isBankrupt()){
-                currentPlayer = (currentPlayer +1)%players.size();
-            }
-        }
-
-        //Abbruch falls ins Gefägnis gekommen
-        if(player.isInJail()){
-            status = Status.JAIL;
-            return;
-        }
-
-        turn2();
-    }*/
 
     public void turn2(){
         Player player = players.get(currentPlayer);

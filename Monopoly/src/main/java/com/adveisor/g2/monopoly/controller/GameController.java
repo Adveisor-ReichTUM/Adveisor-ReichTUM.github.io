@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @EnableAutoConfiguration
@@ -29,8 +33,11 @@ public class GameController {
     // -------------------------
 
     @RequestMapping(value="/game", method = RequestMethod.GET, produces="application/json")
-    public Game getGame(){
-        return game;
+    public Object getGame(@RequestParam(required = false) Long id){
+        if (id != null && id.equals(game.getStatusId()))
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        else
+            return game;
     }
 
     @RequestMapping(value="/join", method = RequestMethod.GET, produces="application/json")

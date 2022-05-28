@@ -17,6 +17,7 @@ public class TurnStatus extends AbstractStatus {
 
     @Override
     public void sellBank(int fieldIndex){
+        updateGame();
         int currentPlayer = game.getCurrentPlayer();
         Player player = game.getPlayers().get(currentPlayer);
         Field field = game.getBoard().getFields().get(fieldIndex);
@@ -33,6 +34,7 @@ public class TurnStatus extends AbstractStatus {
 
     @Override
     public void buyHouse(int fieldIndex){
+        updateGame();
         int currentPlayer = game.getCurrentPlayer();
         Player player = game.getPlayers().get(currentPlayer);
         if(!player.getPossession(fieldIndex)) return;
@@ -70,6 +72,7 @@ public class TurnStatus extends AbstractStatus {
 
     @Override
     public void sellHouse(int fieldIndex){
+        updateGame();
         if(game.getNumHouses()<=0) return;
 
         Player player = game.getPlayers().get(game.getCurrentPlayer());
@@ -104,12 +107,14 @@ public class TurnStatus extends AbstractStatus {
 
     @Override
     public void endMortgage(int fieldIndex){
+        updateGame();
         Player player = game.getPlayers().get(game.getCurrentPlayer());
         player.endMortgage(fieldIndex);
     }
 
     @Override
     public void startMortgage(int fieldIndex){
+        updateGame();
         Player player = game.getPlayers().get(game.getCurrentPlayer());
         player.startMortgage(fieldIndex);
     }

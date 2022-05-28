@@ -19,6 +19,7 @@ public class WaitingStatus extends AbstractStatus {
     @Override
     public void join(String name, Piece piece){
 
+        updateGame();
         // check for player limit
         if(game.getPlayers().size()==4) return;
         // get players from the game
@@ -36,6 +37,7 @@ public class WaitingStatus extends AbstractStatus {
 
     @Override
     public void start() {
+        updateGame();
         //start the game
         if(game.getPlayers().size()>=2) {
             // state transfer here?

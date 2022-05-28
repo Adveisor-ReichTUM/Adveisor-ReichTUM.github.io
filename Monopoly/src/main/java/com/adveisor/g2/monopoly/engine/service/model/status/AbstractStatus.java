@@ -17,6 +17,10 @@ public abstract class AbstractStatus {
         this.game = game;
     }
 
+    public void updateGame() {
+        game.incrementId();
+    }
+
     // default method throw exception, overridden in concrete statuses
     public void join(String name, Piece piece) {
         throw new IllegalStateException("Failed to join game: already running.");

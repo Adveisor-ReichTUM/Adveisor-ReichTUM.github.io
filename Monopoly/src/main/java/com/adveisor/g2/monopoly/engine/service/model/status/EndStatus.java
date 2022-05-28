@@ -14,6 +14,6 @@ public class EndStatus extends AbstractStatus {
 
     @Override
     public void turn1(){
-        return;
+        updateGame();
     }
 }
