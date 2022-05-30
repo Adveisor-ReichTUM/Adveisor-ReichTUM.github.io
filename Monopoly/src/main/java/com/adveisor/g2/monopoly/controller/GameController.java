@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @EnableAutoConfiguration
 public class GameController {
@@ -93,6 +95,11 @@ public class GameController {
         return game;
     }
 
+    @RequestMapping(value="/trading", method = RequestMethod.GET, produces="application/json")
+    public Game trade(@RequestParam ArrayList<Integer> offer, @RequestParam ArrayList<Integer> receive, int moneyOffer, int moneyReceive, int partnerId){
+        game.trade(offer, receive, moneyOffer, moneyReceive, partnerId);
+        return game;
+    }
     @RequestMapping(value="/bid", method = RequestMethod.GET, produces="application/json")
     public Game bid(@RequestParam String name, @RequestParam int bid){
         game.setBid(name, bid);

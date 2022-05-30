@@ -9,6 +9,8 @@ import com.adveisor.g2.monopoly.engine.service.model.Piece;
 import com.adveisor.g2.monopoly.engine.service.model.Player;
 import com.adveisor.g2.monopoly.engine.service.model.Status;
 
+import java.util.ArrayList;
+
 public abstract class AbstractStatus {
 
     protected Game game;
@@ -20,6 +22,10 @@ public abstract class AbstractStatus {
     // default method throw exception, overridden in concrete statuses
     public void join(String name, Piece piece) {
         throw new IllegalStateException("Failed to join game: already running.");
+    }
+
+    public void trade(ArrayList<Integer> offer, ArrayList<Integer> receive, int moneyOffer, int moneyReceive, int partnerId){
+        throw new IllegalStateException("Can not trade while not being in TURN");
     }
 
     public void turn1(){

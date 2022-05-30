@@ -4,6 +4,8 @@ import com.adveisor.g2.monopoly.engine.service.model.status.AbstractStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
@@ -264,6 +266,35 @@ class GameTest {
         game.manage();
         AbstractStatus expected = game.getTurnStatus();
         AbstractStatus actual = game.getCurrentStatus();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void trade(){
+        game.setCurrentStatus(game.getTurnStatus());
+
+        Field field_offer = game.getBoard().getFields().get(39);
+        Field field_receive = game.getBoard().getFields().get(34);
+        Player p1 = game.getPlayers().get(0);
+        Player p2 = game.getPlayers().get(1);
+
+        field_offer.setOwner(0);
+        field_offer.setOwned(true);
+        field_receive.setOwner(1);
+        field_receive.setOwned(true);
+        p1.setPossession(39, true);
+        p2.setPossession(34, true);
+
+        ArrayList<Integer> offer = new ArrayList<Integer>();
+        offer.add(39);
+        ArrayList<Integer> receive = new ArrayList<Integer>();
+        receive.add(34);
+
+        game.trade(offer, receive, 0, 200, 1);
+
+        boolean expected = true;
+        boolean actual = p2.getPossession(39);
+
         assertEquals(expected, actual);
     }
 }

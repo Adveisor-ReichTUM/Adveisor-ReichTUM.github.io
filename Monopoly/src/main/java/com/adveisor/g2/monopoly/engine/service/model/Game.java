@@ -47,6 +47,7 @@ public class Game {
     private AbstractStatus startStatus = new StartStatus(this);
     private AbstractStatus turnStatus = new TurnStatus(this);
     private AbstractStatus waitingStatus = new WaitingStatus(this);
+
     //
 
     private AbstractStatus currentStatus;
@@ -322,6 +323,9 @@ public class Game {
         }
     }*/
 
+    public void trade(ArrayList<Integer> offer, ArrayList<Integer> receive, int moneyOffer, int moneyReceive, int partnerId){
+        currentStatus.trade(offer, receive, moneyOffer, moneyReceive, partnerId);
+    }
     public void sellHouse(int fieldIndex){
         currentStatus.sellHouse(fieldIndex);
     }
@@ -361,5 +365,7 @@ public class Game {
     public void manage(){
         setCurrentStatus(getTurnStatus());
     }
+
+
 
 }

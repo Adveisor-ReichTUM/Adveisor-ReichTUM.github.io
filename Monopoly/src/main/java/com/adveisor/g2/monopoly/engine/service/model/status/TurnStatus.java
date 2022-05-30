@@ -9,6 +9,9 @@ import com.adveisor.g2.monopoly.engine.service.model.Field;
 import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TurnStatus extends AbstractStatus {
 
     public TurnStatus(Game game) {
@@ -112,5 +115,25 @@ public class TurnStatus extends AbstractStatus {
     public void startMortgage(int fieldIndex){
         Player player = game.getPlayers().get(game.getCurrentPlayer());
         player.startMortgage(fieldIndex);
+    }
+
+    @Override
+    public void trade(ArrayList<Integer> offer, ArrayList<Integer> receive, int moneyOffer, int moneyReceive, int partnerId){
+        int currentPlayer = game.getCurrentPlayer();
+        Player player1 = game.getPlayers().get(currentPlayer);
+        Player player2 = game.getPlayers().get(partnerId);
+        int diff = moneyOffer - moneyReceive;
+        player1.adjustBalance(-diff);
+        player2.adjustBalance(diff);
+
+        List<Field> field = game.getBoard().getFields();
+        for(int index: offer){
+            field.get(index).setOwner(partnerId);
+            player2.setPossession(index, true);
+        }
+        for(int index: receive){
+            field.get(index).setOwner(currentPlayer);
+            player1.setPossession(index, true);
+        }
     }
 }
