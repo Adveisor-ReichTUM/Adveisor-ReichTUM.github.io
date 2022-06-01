@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -93,6 +94,15 @@ public class GameService {
 
     }
 
+    public Player getPlayer(String target) {
+        for(Player player : players) {
+            if (Objects.equals(player.getPlayerId(), target)) {
+                return player;
+            }
+        }
+        return new Player();
+    }
+
     public void incrementId() {
         this.statusId++;
     }
@@ -109,8 +119,8 @@ public class GameService {
         this.currentStatus = this.endStatus;
         String winner = "";
         int greatestWealth = 0;
-        for(int i = 0; i<players.size(); i++){
-            if(players.get(i).calculateWealth()>greatestWealth) winner = players.get(i).getName();
+        for (Player player : players) {
+            if (player.calculateWealth() > greatestWealth) winner = player.getName();
         }
         return winner;
     }
@@ -149,7 +159,7 @@ public class GameService {
 
     public void decideJail(boolean choice){
         Player player = getPlayers().get(currentPlayer);
-        if(choice == true && player.getBalance()>=50){
+        if(choice && player.getBalance()>=50){
             player.adjustBalance(-50);
             player.setRoundsInJail(0);
             player.setInJail(false);
@@ -213,35 +223,35 @@ public class GameService {
     }
 
     public void auctionProperty(int fieldIndex){
-        boolean timeout = false;
-        setCurrentStatus(getAuctionStatus());
-
-        int startingBid = board.getFields().get(fieldIndex).getPrice()/2;
-        int highestBid = startingBid;
-        int highestBidderIndex = -1;
-        int timer = 10;
-        while(!timeout){
-            if(timer>0) timer--;
-            else{
-                if(highestBid>startingBid){
-                    Player player = getPlayers().get(highestBidderIndex);
-                    Field field = getBoard().getFields().get(fieldIndex);
-                    player.setPossession(fieldIndex, true);
-                    field.setOwned(true);
-                    field.setOwner(highestBidderIndex);
-                }
-                timeout=true;
-            }
-            try {
-                Thread.sleep(1000);
-            } catch(InterruptedException e){
-                e.printStackTrace();
-            }
-        }
-
-        for(Player p: getPlayers()){
-            p.setBid(0);
-        }
+//        boolean timeout = false;
+//        setCurrentStatus(getAuctionStatus());
+//
+//        int startingBid = board.getFields().get(fieldIndex).getPrice()/2;
+//        int highestBid = startingBid;
+//        int highestBidderIndex = -1;
+//        int timer = 10;
+//        while(!timeout){
+//            if(timer>0) timer--;
+//            else{
+//                if(highestBid>startingBid){
+//                    Player player = getPlayers().get(highestBidderIndex);
+//                    Field field = getBoard().getFields().get(fieldIndex);
+//                    player.setPossession(fieldIndex, true);
+//                    field.setOwned(true);
+//                    field.setOwner(highestBidderIndex);
+//                }
+//                timeout=true;
+//            }
+//            try {
+//                Thread.sleep(1000);
+//            } catch(InterruptedException e){
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        for(Player p: getPlayers()){
+//            p.setBid(0);
+//        }
         manage();
     }
 

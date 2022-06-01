@@ -4,6 +4,7 @@ import com.adveisor.g2.monopoly.engine.service.GameService;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Objects;
 
 @Data
 public class Field {
@@ -12,7 +13,7 @@ public class Field {
     private int position;
 
     private boolean owned;
-    private int owner;
+    private Player owner;
 
     private int numHouses;
     private final int price;
@@ -37,7 +38,6 @@ public class Field {
         this.color = Color.valueOf(color);
 
         this.owned = false;
-        this.owner = -1;
         this.numHouses = 0;
         this.Hypothek = false;
     }
@@ -61,16 +61,10 @@ public class Field {
         }
     }
     public void evaluateStreet(Player player, GameService gameService){
-        List<Player> players = gameService.getPlayers();
-        if((this.owner != player.getId()) && this.owned){
+        if((this.owned && !Objects.equals(this.owner.getPlayerId(), player.getPlayerId()))){
             // Spieler nicht Besitzer des gekauften Feldes
-            if(this.owner>=0 && this.owner < players.size()) {
-                payRent(player, players.get(this.owner), gameService.getBoard());       // Miete bezahlen
-            }
-            else
-                System.err.println("Fehler: Besitzer nicht identifizierbar");
-        }
-        else if(!this.owned){
+                payRent(player, this.owner, gameService.getBoard());       // Miete bezahlen
+        } else if(!this.owned){
             gameService.setCurrentStatus(gameService.getBuyPropertyStatus());
         }
     }
@@ -136,7 +130,7 @@ public class Field {
 
     public void reset(){
         this.owned = false;
-        this.owner = -1;
+        this.owner = null;
         this.numHouses = 0;
         this.Hypothek = false;
     }

@@ -2,12 +2,15 @@ package com.adveisor.g2.monopoly.engine.service.model;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Data
+@NoArgsConstructor
 public class Player {
 
-    public static int nextId = 0;             // identification number for player
-    private int id;
+    private String playerId;
     private static final int START_MONEY = 1500;   // amount of money available in the beginning
 
 
@@ -18,7 +21,7 @@ public class Player {
     private int numPasch;
     private int bid;
 
-    private final Piece piece;
+    private Piece piece;
     private int balance;        // amount of money the player owns
     private boolean bankrupt;   // criteria defining if player is still in the game
     private String name;        // name of player
@@ -44,10 +47,11 @@ public class Player {
         this.bid = 0;
         this.piece = piece;
 
-        this.id = nextId++;
+        this.playerId = UUID.randomUUID().toString();
 
         this.numPasch = 0;
     }
+
 
 
     public void jail(){
@@ -92,7 +96,7 @@ public class Player {
         adjustBalance(-field.getPrice());
         streets[field.getPosition()] = true;
         field.setOwned(true);
-        field.setOwner(id);
+        field.setOwner(this);
     }
     public void moveAndEvaluate(Board board){
         move();
