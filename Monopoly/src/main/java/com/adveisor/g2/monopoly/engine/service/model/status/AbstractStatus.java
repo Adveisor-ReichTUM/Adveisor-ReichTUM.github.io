@@ -4,21 +4,20 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.status;
 
-import com.adveisor.g2.monopoly.engine.service.model.Game;
+import com.adveisor.g2.monopoly.engine.service.GameService;
 import com.adveisor.g2.monopoly.engine.service.model.Piece;
 import com.adveisor.g2.monopoly.engine.service.model.Player;
-import com.adveisor.g2.monopoly.engine.service.model.Status;
 
 public abstract class AbstractStatus {
 
-    protected Game game;
+    protected GameService gameService;
 
-    AbstractStatus(Game game) {
-        this.game = game;
+    AbstractStatus(GameService gameService) {
+        this.gameService = gameService;
     }
 
     public void updateGame() {
-        game.incrementId();
+        gameService.incrementId();
     }
 
     // default method throw exception, overridden in concrete statuses
@@ -27,8 +26,8 @@ public abstract class AbstractStatus {
     }
 
     public void turn1(){
-        int currentPlayer = game.getCurrentPlayer();
-        Player player = game.getPlayers().get(currentPlayer);
+        int currentPlayer = gameService.getCurrentPlayer();
+        Player player = gameService.getPlayers().get(currentPlayer);
 
         if(player.isBankrupt()==false && player.isPasch()==true){
             if(player.getNumPasch()==3) player.jail();
@@ -38,17 +37,17 @@ public abstract class AbstractStatus {
         if(player.isPasch()==false){
             player.setNumPasch(0);
             while(player.isBankrupt()){
-                currentPlayer = (currentPlayer +1)%game.getPlayers().size();
+                currentPlayer = (currentPlayer +1)% gameService.getPlayers().size();
             }
         }
 
         //Abbruch falls ins Gefägnis gekommen
         if(player.isInJail()){
-            game.setCurrentStatus(game.getJailStatus());
+            gameService.setCurrentStatus(gameService.getJailStatus());
             return;
         }
 
-        game.turn2();
+        gameService.turn2();
     }
 
     public void sellBank(int fieldIndex){

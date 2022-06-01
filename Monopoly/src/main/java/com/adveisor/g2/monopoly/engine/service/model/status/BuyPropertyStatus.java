@@ -4,11 +4,11 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.status;
 
-import com.adveisor.g2.monopoly.engine.service.model.Game;
+import com.adveisor.g2.monopoly.engine.service.GameService;
 
 public class BuyPropertyStatus extends AbstractStatus {
 
-    public BuyPropertyStatus(Game game) {
-        super(game);
+    public BuyPropertyStatus(GameService gameService) {
+        super(gameService);
     }
 }

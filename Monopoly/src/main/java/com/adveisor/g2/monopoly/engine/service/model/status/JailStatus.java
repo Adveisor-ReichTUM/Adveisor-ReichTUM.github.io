@@ -4,11 +4,11 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.status;
 
-import com.adveisor.g2.monopoly.engine.service.model.Game;
+import com.adveisor.g2.monopoly.engine.service.GameService;
 
 public class JailStatus extends AbstractStatus {
 
-    public JailStatus(Game game) {
-        super(game);
+    public JailStatus(GameService gameService) {
+        super(gameService);
     }
 }

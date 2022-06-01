@@ -4,12 +4,12 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.status;
 
-import com.adveisor.g2.monopoly.engine.service.model.Game;
+import com.adveisor.g2.monopoly.engine.service.GameService;
 
 public class EndStatus extends AbstractStatus {
 
-    public EndStatus(Game game) {
-        super(game);
+    public EndStatus(GameService gameService) {
+        super(gameService);
     }
 
     @Override

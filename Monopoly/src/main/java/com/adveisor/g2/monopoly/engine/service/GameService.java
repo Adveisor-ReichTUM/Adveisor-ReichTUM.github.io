@@ -1,17 +1,24 @@
-package com.adveisor.g2.monopoly.engine.service.model;
+/*
+ * Copyright (c) ReichTUM 2022.
+ */
 
+package com.adveisor.g2.monopoly.engine.service;
+
+import com.adveisor.g2.monopoly.engine.service.model.*;
 import com.adveisor.g2.monopoly.engine.service.model.status.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-public class Game {
+@Service
+public class GameService {
 
     // numbering of the current game status
     // increment every time the game status update
@@ -66,7 +73,7 @@ public class Game {
 
     // constructor
     @Autowired
-    public Game(String boardfile, String chancefile, String communityfile){
+    public GameService(String boardfile, String chancefile, String communityfile){
         // set up board
         this.board = new Board(boardfile);
 

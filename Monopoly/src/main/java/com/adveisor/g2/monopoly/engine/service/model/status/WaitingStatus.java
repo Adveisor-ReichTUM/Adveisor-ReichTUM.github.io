@@ -4,7 +4,7 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.status;
 
-import com.adveisor.g2.monopoly.engine.service.model.Game;
+import com.adveisor.g2.monopoly.engine.service.GameService;
 import com.adveisor.g2.monopoly.engine.service.model.Piece;
 import com.adveisor.g2.monopoly.engine.service.model.Player;
 
@@ -12,8 +12,8 @@ import java.util.List;
 
 public class WaitingStatus extends AbstractStatus {
 
-    public WaitingStatus(Game game) {
-        super(game);
+    public WaitingStatus(GameService gameService) {
+        super(gameService);
     }
 
     @Override
@@ -21,9 +21,9 @@ public class WaitingStatus extends AbstractStatus {
 
         updateGame();
         // check for player limit
-        if(game.getPlayers().size()==4) return;
+        if(gameService.getPlayers().size()==4) return;
         // get players from the game
-        List<Player> players = game.getPlayers();
+        List<Player> players = gameService.getPlayers();
 
         for(Player player : players){
             if(player.getName().equals(name)) throw new IllegalArgumentException("This name already exists.");
@@ -31,7 +31,7 @@ public class WaitingStatus extends AbstractStatus {
         }
 
         // create player
-        Player player = new Player(name, game, piece);
+        Player player = new Player(name, gameService, piece);
         players.add(player);
     }
 
@@ -39,9 +39,9 @@ public class WaitingStatus extends AbstractStatus {
     public void start() {
         updateGame();
         //start the game
-        if(game.getPlayers().size()>=2) {
+        if(gameService.getPlayers().size()>=2) {
             // state transfer here?
-            game.setCurrentStatus(game.getStartStatus());
+            gameService.setCurrentStatus(gameService.getStartStatus());
         }
 
     }

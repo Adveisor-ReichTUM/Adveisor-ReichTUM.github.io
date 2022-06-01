@@ -1,7 +1,7 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import com.adveisor.g2.monopoly.engine.service.GameService;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class Card {
@@ -19,7 +19,7 @@ public class Card {
         this.isChanceDeck = isChanceDeck;
     }
 
-    public void evaluateCard(Player player, Game game) {
+    public void evaluateCard(Player player, GameService gameService) {
         System.out.println(description);
         int diff;
         int target;
@@ -30,8 +30,8 @@ public class Card {
                 break;
             case get_money_player:
                 diff = Integer.parseInt(value);
-                player.adjustBalance((game.getNumActivePlayers() - 1) * diff);
-                for (Player p : game.getPlayers()) {
+                player.adjustBalance((gameService.getNumActivePlayers() - 1) * diff);
+                for (Player p : gameService.getPlayers()) {
                     if (p != player)
                         p.adjustBalance(-diff);
                 }
@@ -41,8 +41,8 @@ public class Card {
                 break;
             case pay_money_player:
                 diff = -Integer.parseInt(value);
-                player.adjustBalance((game.getNumActivePlayers() - 1) * diff);
-                for (Player p : game.getPlayers()) {
+                player.adjustBalance((gameService.getNumActivePlayers() - 1) * diff);
+                for (Player p : gameService.getPlayers()) {
                     if (p != player)
                         p.adjustBalance(-diff);
                 }

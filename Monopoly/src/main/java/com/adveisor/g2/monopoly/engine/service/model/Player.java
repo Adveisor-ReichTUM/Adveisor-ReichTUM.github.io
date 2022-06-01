@@ -1,17 +1,14 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import com.adveisor.g2.monopoly.engine.service.GameService;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Scanner;
 
 @Data
 public class Player {
 
     public static int nextId = 0;             // identification number for player
     private int id;
-    private final int startMoney;   // amount of money available in the beginning
+    private static final int START_MONEY = 1500;   // amount of money available in the beginning
 
 
     private int position;       // position on the field array: 0 - 39
@@ -34,16 +31,15 @@ public class Player {
     private int numJailCards;   // number of Out-of-jail cards in players possession
 
     // reference attribute
-    private Game game;          // reference object to interact with game
+    private GameService gameService;          // reference object to interact with game
 
     // constructor
-    public Player(String name, Game game, Piece piece){
-        this.startMoney = 1500;
-        this.balance = startMoney;
+    public Player(String name, GameService gameService, Piece piece){
+        this.balance = Player.START_MONEY;
         this.name = name;
         this.bankrupt = false;
         this.position = 0;
-        this.game = game;
+        this.gameService = gameService;
         this.streets = new boolean[40];    // initializes the elements with false
         this.bid = 0;
         this.piece = piece;
@@ -101,14 +97,14 @@ public class Player {
     public void moveAndEvaluate(Board board){
         move();
         Field field = board.getFields().get(this.position);
-        Field.evaluateField(field, this, game);
+        Field.evaluateField(field, this, gameService);
     }
     public int calculateWealth(){
         int wealth = getBalance();
         wealth += getNumJailCards()*50;
         for(int i = 0; i<streets.length; i++){
             if(streets[i]){
-                Field field = game.getBoard().getFields().get(i);
+                Field field = gameService.getBoard().getFields().get(i);
                 wealth += field.getPrice();
                 wealth += field.getNumHouses() * field.getHouseCost();
             }
@@ -118,7 +114,7 @@ public class Player {
 
 
     public void endMortgage(int fieldIndex){
-        Field field = game.getBoard().getFields().get(fieldIndex);
+        Field field = gameService.getBoard().getFields().get(fieldIndex);
 
         if(field.isHypothek() && getPossession(fieldIndex)){
             int diff = (int) (field.getMortgageValue() + field.getMortgageValue()*0.1);    //10% aufschlag beim Zurückzahlen
@@ -128,7 +124,7 @@ public class Player {
     }
 
     public void startMortgage(int fieldIndex){
-        Field field = game.getBoard().getFields().get(fieldIndex);
+        Field field = gameService.getBoard().getFields().get(fieldIndex);
 
         if(field.getNumHouses()>0) return;
 
@@ -140,7 +136,7 @@ public class Player {
 
     public boolean ownsAllOfColor(Color color){
         for(int i = 0; i<40; i++){
-            Field running = game.getBoard().getFields().get(i);
+            Field running = gameService.getBoard().getFields().get(i);
             if(running.getColor()==color){
                 if(!getPossession(i)) return false;
             }

@@ -1,5 +1,6 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import com.adveisor.g2.monopoly.engine.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {
     Card card1, card2, card3, card4;
-    Game game;
+    GameService gameService;
     Player player;
 
     @BeforeEach
@@ -18,8 +19,8 @@ class CardTest {
         card3 = new Card("Sie lassen Ihre Häuser renovieren. Zahlen Sie: Ω 25 pro Haus, Ω 100 pro Hotel.", "renovation", "0", true);
         card4 = new Card("Rücken Sie vor bis zum nächsten Verkehrsfeld. Der Eigentümer erhält das Doppelte der normalen Miete. " +
                 "Wenn das Verkehrsfeld noch niemandem gehört, können Sie es von der Bank kaufen.", "move_via_GO", "Bahnhof", true);
-        game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        player = new Player("Mr. Monopoly", game, Piece.GREEN);
+        gameService = new GameService("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
+        player = new Player("Mr. Monopoly", gameService, Piece.GREEN);
     }
 
     @Test
@@ -38,7 +39,7 @@ class CardTest {
 
     @Test
     void evaluateCard1() {
-        card2.evaluateCard(player, game);
+        card2.evaluateCard(player, gameService);
         int expected = 1400;
         int actual = player.getBalance();
         assertEquals(expected, actual);
@@ -48,7 +49,7 @@ class CardTest {
     void evaluateCard2() {
         player.setNumHouses(4);
         player.setNumHotels(2);
-        card3.evaluateCard(player, game);
+        card3.evaluateCard(player, gameService);
         int expected = 1200;
         int actual = player.getBalance();
         assertEquals(expected, actual);

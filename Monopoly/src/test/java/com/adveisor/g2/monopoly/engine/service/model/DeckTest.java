@@ -1,9 +1,8 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import com.adveisor.g2.monopoly.engine.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,10 +40,10 @@ class DeckTest {
 
     @Test
     void takeCard() {
-        Game game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        Player player = new Player("Mr. Monopoly", game, Piece.GREEN);
+        GameService gameService = new GameService("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
+        Player player = new Player("Mr. Monopoly", gameService, Piece.GREEN);
         Card expected = communityDeck.getCards().get(0);
-        communityDeck.takeCard(player, game);
+        communityDeck.takeCard(player, gameService);
         Card actual = communityDeck.getCards().get(communityDeck.getCards().size()-1);
         assertEquals(expected, actual);
     }

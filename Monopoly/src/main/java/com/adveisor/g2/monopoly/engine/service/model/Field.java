@@ -1,5 +1,6 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import com.adveisor.g2.monopoly.engine.service.GameService;
 import lombok.Data;
 
 import java.util.List;
@@ -41,36 +42,36 @@ public class Field {
         this.Hypothek = false;
     }
 
-    public static void evaluateField(Field field, Player player, Game game){
+    public static void evaluateField(Field field, Player player, GameService gameService){
         switch(field.getType()){
             case los: break;
             case station:
             case utilities:
             case street:
-                field.evaluateStreet(player,game);
-                if(game.getCurrentStatus()==game.getBuyPropertyStatus()) return;
+                field.evaluateStreet(player, gameService);
+                if(gameService.getCurrentStatus()== gameService.getBuyPropertyStatus()) return;
                 break;
-            case police: field.evaluatePolice(player, game); return;
+            case police: field.evaluatePolice(player, gameService); return;
             case jail:
             case parking: break;
             case tax: player.adjustBalance(-field.getPrice()); break;
-            case chance: game.getChanceDeck().takeCard(player, game); return;
-            case community: game.getCommunityDeck().takeCard(player, game); return;
+            case chance: gameService.getChanceDeck().takeCard(player, gameService); return;
+            case community: gameService.getCommunityDeck().takeCard(player, gameService); return;
             default: break;
         }
     }
-    public void evaluateStreet(Player player, Game game){
-        List<Player> players = game.getPlayers();
+    public void evaluateStreet(Player player, GameService gameService){
+        List<Player> players = gameService.getPlayers();
         if((this.owner != player.getId()) && this.owned){
             // Spieler nicht Besitzer des gekauften Feldes
             if(this.owner>=0 && this.owner < players.size()) {
-                payRent(player, players.get(this.owner), game.getBoard());       // Miete bezahlen
+                payRent(player, players.get(this.owner), gameService.getBoard());       // Miete bezahlen
             }
             else
                 System.err.println("Fehler: Besitzer nicht identifizierbar");
         }
         else if(!this.owned){
-            game.setCurrentStatus(game.getBuyPropertyStatus());
+            gameService.setCurrentStatus(gameService.getBuyPropertyStatus());
         }
     }
 
@@ -124,9 +125,9 @@ public class Field {
     }
 
 
-    public void evaluatePolice(Player player, Game game){
+    public void evaluatePolice(Player player, GameService gameService){
         player.jail();
-        game.turn1();
+        gameService.turn1();
     }
 
     public int getMortgageValue(){

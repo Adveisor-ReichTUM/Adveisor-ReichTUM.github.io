@@ -1,10 +1,14 @@
-package com.adveisor.g2.monopoly.engine.service.model;
+/*
+ * Copyright (c) ReichTUM 2022.
+ */
+
+package com.adveisor.g2.monopoly.util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-public class Json {
+public class JsonUtil {
 
     static Gson gson = new Gson();
 
