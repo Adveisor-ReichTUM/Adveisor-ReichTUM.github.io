@@ -1,7 +1,10 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
-import com.adveisor.g2.monopoly.engine.service.model.status.AbstractStatus;
+import com.adveisor.g2.monopoly.engine.service.model.board.Field;
+import com.adveisor.g2.monopoly.engine.service.model.deck.Deck;
+import com.adveisor.g2.monopoly.engine.service.model.player.Player;
+import com.adveisor.g2.monopoly.engine.service.status.AbstractStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,19 +18,19 @@ class FieldTest {
     @BeforeEach
     void setUp() {
         gameService = new GameService("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        gameService.join("Mr. Monopoly", Piece.GREEN);
-        gameService.join("Mr. Monopoly 2", Piece.BLUE);
-        Player.nextId=0;
+//        gameService.join("Mr. Monopoly", Piece.GREEN);
+//        gameService.join("Mr. Monopoly 2", Piece.BLUE);
+//        Player.nextId=0;
         paying_pl = gameService.getPlayers().get(0);
         paid_pl = gameService.getPlayers().get(1);
-        field = gameService.getBoard().getFields().get(39);
-        field2 = gameService.getBoard().getFields().get(4);
+        field = gameService.getGame().getBoard().getFields().get(39);
+        field2 = gameService.getGame().getBoard().getFields().get(4);
     }
 
     @Test
     void evaluateField1() {
         paid_pl.setPossession(39, true);
-        field.setOwner(paid_pl.getId());
+//        field.setOwner(paid_pl.getId());
         field.setOwned(true);
         Field.evaluateField(field, paying_pl, gameService);
         int expected = 1450;
@@ -45,18 +48,18 @@ class FieldTest {
 
     @Test
     void evaluateField3() {
-        Deck deck = gameService.getChanceDeck();
-        Card unexpected = deck.getCards().get(0);
-        Field field3 = gameService.getBoard().getFields().get(7);
-        Field.evaluateField(field3, paying_pl, gameService);
-        Card actual = deck.getCards().get(0);
+        Deck deck = gameService.getGame().getChanceDeck();
+//        Card unexpected = deck.getCards().get(0);
+//        Field field3 = gameService.getBoard().getFields().get(7);
+//        Field.evaluateField(field3, paying_pl, gameService);
+//        Card actual = deck.getCards().get(0);
         assertNotEquals(unexpected, actual);
     }
 
     @Test
     void evaluateStreet1() {
         paid_pl.setPossession(39, true);
-        field.setOwner(paid_pl.getId());
+//        field.setOwner(paid_pl.getId());
         field.setOwned(true);
         field.evaluateStreet(paying_pl, gameService);
         int expected = 1450;
@@ -102,11 +105,11 @@ class FieldTest {
     @Test
     void determineStationStage1() {
         Field station1 = gameService.getBoard().getFields().get(5);
-        station1.setOwner(1);
+//        station1.setOwner(1);
         station1.setOwned(true);
         paid_pl.setPossession(5, true);
         Field station2 = gameService.getBoard().getFields().get(15);
-        station2.setOwner(1);
+//        station2.setOwner(1);
         station2.setOwned(true);
         paid_pl.setPossession(15, true);
         int expected = 2;
@@ -117,16 +120,16 @@ class FieldTest {
     @Test
     void determineStationStage2() {
         Field station1 = gameService.getBoard().getFields().get(5);
-        station1.setOwner(1);
+//        station1.setOwner(1);
         station1.setOwned(true);
         paid_pl.setPossession(5, true);
         Field station2 = gameService.getBoard().getFields().get(15);
-        station2.setOwner(1);
+//        station2.setOwner(1);
         station2.setOwned(true);
         paid_pl.setPossession(15, true);
 
         gameService.setCurrentStatus(gameService.getTurnStatus());
-        gameService.setCurrentPlayer(paid_pl.getId());
+//        gameService.setCurrentPlayer(paid_pl.getId());
         gameService.startMortgage(15);
 
         int expected = 0;
@@ -137,7 +140,7 @@ class FieldTest {
     @Test
     void determineUtilityStage() {
         Field utility = gameService.getBoard().getFields().get(12);
-        utility.setOwner(1);
+//        utility.setOwner(1);
         utility.setOwned(true);
         paid_pl.setPossession(12, true);
 

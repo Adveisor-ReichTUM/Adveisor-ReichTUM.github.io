@@ -1,6 +1,9 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
+import com.adveisor.g2.monopoly.engine.service.model.board.Field;
+import com.adveisor.g2.monopoly.engine.service.model.player.Piece;
+import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +22,7 @@ class PlayerTest {
     void move() {
         player.setPosition(39);
         player.setDice(10);
-        player.move();
+        player.moveForward();
         int expected = 9;
         int actual = player.getPosition();
         assertEquals(expected, actual);
@@ -29,7 +32,7 @@ class PlayerTest {
     void moveGO() {
         player.setPosition(39);
         player.setDice(10);
-        player.move();
+        player.moveForward();
         int expected = 1700;
         int actual = player.getBalance();
         assertEquals(expected, actual);

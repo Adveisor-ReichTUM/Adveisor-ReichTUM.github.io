@@ -1,25 +1,34 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Random;
 
+@Getter
+@Setter
+@Service
 public class Dice {
 
-    private static final Random rand = new Random();
-    public static int[] throwDices(){
-        int[] dices = new int[2];
+    @Max(6)
+    @Min(1)
+    private int firstThrow;
+    @Max(6)
+    @Min(1)
+    private int secondThrow;
+    private boolean pasch;
 
-        for(int i = 0; i<2; i++){
-            dices[i] = rand.nextInt(6) + 1;
-        }
-        return dices;
+
+    public int getTotal() {
+        return firstThrow + secondThrow;
     }
 
-    public static int getTotal(int[] dices){
-        return dices[0] + dices[1];
-    }
-
-    public static boolean isPasch(int[] dices){
-        return dices[0] == dices[1];
+    // automatically set pasch based on the throwd number
+    public void setIfPasch() {
+        this.pasch = firstThrow == secondThrow;
     }
 
 }

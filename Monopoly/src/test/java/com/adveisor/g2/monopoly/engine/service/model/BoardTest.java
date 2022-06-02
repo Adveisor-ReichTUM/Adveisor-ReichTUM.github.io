@@ -1,6 +1,9 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
+import com.adveisor.g2.monopoly.engine.service.model.board.Board;
+import com.adveisor.g2.monopoly.engine.service.model.player.Piece;
+import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

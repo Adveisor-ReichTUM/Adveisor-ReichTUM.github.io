@@ -5,7 +5,7 @@ public enum Status {
     WAITING,
     DICE,
     CARD,
-    BUY_PROPERTY,
+    BUY_POPERTY,
     TURN,
     AUCTION,
     JAIL,

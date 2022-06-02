@@ -1,4 +1,8 @@
-package com.adveisor.g2.monopoly.engine.service.model;
+/*
+ * Copyright (c) ReichTUM 2022.
+ */
+
+package com.adveisor.g2.monopoly.engine.service.model.board;
 
 public enum Color {
     no_color,

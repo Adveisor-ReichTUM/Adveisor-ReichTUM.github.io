@@ -1,9 +1,13 @@
-package com.adveisor.g2.monopoly.engine.service.model;
+/*
+ * Copyright (c) ReichTUM 2022.
+ */
+
+package com.adveisor.g2.monopoly.engine.service.model.board;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
+import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -13,7 +17,7 @@ public class Field {
     private int position;
 
     private boolean owned;
-    private Player owner;
+    private String ownerId;
 
     private int numHouses;
     private final int price;
@@ -24,16 +28,15 @@ public class Field {
 
     private final Color color;
 
-    private enum fieldType {los, street, station, jail, police, parking, tax, chance, community, utilities}
-    private final fieldType type;
+    private final FieldType type;
 
     // constructor
-    public Field(String name, String type, String color, int position, int price, int housecost, int[] rent_stages){
+    public Field(String name, String type, String color, int position, int price, int houseCost, int[] rent_stages){
         this.name = name;
         this.position = position;
-        this.type = fieldType.valueOf(type);
+        this.type = FieldType.valueOf(type);
         this.price = price;
-        this.houseCost = housecost;
+        this.houseCost = houseCost;
         this.rent_stages = rent_stages;
         this.color = Color.valueOf(color);
 
@@ -44,28 +47,22 @@ public class Field {
 
     public static void evaluateField(Field field, Player player, GameService gameService){
         switch(field.getType()){
-            case los: break;
             case station:
             case utilities:
             case street:
                 field.evaluateStreet(player, gameService);
-                if(gameService.getCurrentStatus()== gameService.getBuyPropertyStatus()) return;
                 break;
             case police: field.evaluatePolice(player, gameService); return;
-            case jail:
-            case parking: break;
             case tax: player.adjustBalance(-field.getPrice()); break;
-            case chance: gameService.getChanceDeck().takeCard(player, gameService); return;
-            case community: gameService.getCommunityDeck().takeCard(player, gameService); return;
             default: break;
         }
     }
     public void evaluateStreet(Player player, GameService gameService){
-        if((this.owned && !Objects.equals(this.owner.getPlayerId(), player.getPlayerId()))){
+        if((this.owned && !Objects.equals(this.ownerId, player.getPlayerId()))){
             // Spieler nicht Besitzer des gekauften Feldes
-                payRent(player, this.owner, gameService.getBoard());       // Miete bezahlen
+//                payRent(player, this.ownerId, gameService.getBoard());       // Miete bezahlen
         } else if(!this.owned){
-            gameService.setCurrentStatus(gameService.getBuyPropertyStatus());
+//            gameService.setCurrentStatus(gameService.getBuyPropertyStatus());
         }
     }
 
@@ -83,7 +80,7 @@ public class Field {
             case street:
                 stage = determineStreetStage();
                 diff = this.rent_stages[stage];
-                if(stage==1 && paid_pl.ownsAllOfColor(this.getColor())) diff*=2;
+                if(stage==1 && paid_pl.monopolyOverColor(this.getColor())) diff*=2;
                 break;
             case station:
                 stage = determineStationStage(paid_pl, board);
@@ -91,7 +88,7 @@ public class Field {
                 break;
             case utilities:
                 stage = determineUtilityStage(paid_pl, board);
-                diff = this.rent_stages[stage] * paying_pl.getDiceResult();
+//                diff = this.rent_stages[stage] * paying_pl.getDiceResult();
                 break;
         }
         transaction(paying_pl, paid_pl, diff);
@@ -121,7 +118,7 @@ public class Field {
 
     public void evaluatePolice(Player player, GameService gameService){
         player.jail();
-        gameService.turn1();
+//        gameService.turn1();
     }
 
     public int getMortgageValue(){
@@ -130,7 +127,7 @@ public class Field {
 
     public void reset(){
         this.owned = false;
-        this.owner = null;
+//        this.owner = null;
         this.numHouses = 0;
         this.Hypothek = false;
     }
