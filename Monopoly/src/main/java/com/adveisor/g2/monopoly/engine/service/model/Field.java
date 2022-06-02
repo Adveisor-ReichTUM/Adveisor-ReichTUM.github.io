@@ -143,4 +143,5 @@ public class Field {
     public int getRentStage(int stage){
         return this.rent_stages[stage];
     }
+
 }

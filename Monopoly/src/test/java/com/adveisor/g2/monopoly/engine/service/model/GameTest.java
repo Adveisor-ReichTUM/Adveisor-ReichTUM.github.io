@@ -285,10 +285,10 @@ class GameTest {
         p1.setPossession(39, true);
         p2.setPossession(34, true);
 
-        ArrayList<Integer> offer = new ArrayList<Integer>();
-        offer.add(39);
-        ArrayList<Integer> receive = new ArrayList<Integer>();
-        receive.add(34);
+        ArrayList<String> offer = new ArrayList<String>();
+        offer.add("Ohmplatz");
+        ArrayList<String> receive = new ArrayList<String>();
+        receive.add("Tayl-Tor");
 
         game.trade(offer, receive, 0, 200, 1);
 

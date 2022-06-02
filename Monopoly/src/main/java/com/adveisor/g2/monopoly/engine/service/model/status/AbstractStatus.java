@@ -24,7 +24,7 @@ public abstract class AbstractStatus {
         throw new IllegalStateException("Failed to join game: already running.");
     }
 
-    public void trade(ArrayList<Integer> offer, ArrayList<Integer> receive, int moneyOffer, int moneyReceive, int partnerId){
+    public void trade(ArrayList<String> offer, ArrayList<String> receive, int moneyOffer, int moneyReceive, int partnerId){
         throw new IllegalStateException("Can not trade while not being in TURN");
     }
 

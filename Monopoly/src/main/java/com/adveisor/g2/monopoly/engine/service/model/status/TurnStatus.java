@@ -118,7 +118,7 @@ public class TurnStatus extends AbstractStatus {
     }
 
     @Override
-    public void trade(ArrayList<Integer> offer, ArrayList<Integer> receive, int moneyOffer, int moneyReceive, int partnerId){
+    public void trade(ArrayList<String> offer, ArrayList<String> receive, int moneyOffer, int moneyReceive, int partnerId){
         int currentPlayer = game.getCurrentPlayer();
         Player player1 = game.getPlayers().get(currentPlayer);
         Player player2 = game.getPlayers().get(partnerId);
@@ -127,11 +127,13 @@ public class TurnStatus extends AbstractStatus {
         player2.adjustBalance(diff);
 
         List<Field> field = game.getBoard().getFields();
-        for(int index: offer){
+        for(String street: offer){
+            int index = game.getBoard().getIdFromString(street);
             field.get(index).setOwner(partnerId);
             player2.setPossession(index, true);
         }
-        for(int index: receive){
+        for(String street: receive){
+            int index = game.getBoard().getIdFromString(street);
             field.get(index).setOwner(currentPlayer);
             player1.setPossession(index, true);
         }

@@ -51,4 +51,11 @@ public class Board {
         return this.fields;
     }
 
+    public int getIdFromString(String name){
+        for(Field field: this.fields){
+            if(field.getName().equals(name)) return field.getPosition();
+        }
+        throw new IllegalArgumentException("Street name not found");
+    }
+
 }

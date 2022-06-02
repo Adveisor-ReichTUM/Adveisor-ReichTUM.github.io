@@ -96,7 +96,8 @@ public class GameController {
     }
 
     @RequestMapping(value="/trading", method = RequestMethod.GET, produces="application/json")
-    public Game trade(@RequestParam ArrayList<Integer> offer, @RequestParam ArrayList<Integer> receive, int moneyOffer, int moneyReceive, int partnerId){
+    public Game trade(@RequestParam ArrayList<String> offer, @RequestParam ArrayList<String> receive,
+                      @RequestParam int moneyOffer, @RequestParam int moneyReceive, @RequestParam int partnerId){
         game.trade(offer, receive, moneyOffer, moneyReceive, partnerId);
         return game;
     }

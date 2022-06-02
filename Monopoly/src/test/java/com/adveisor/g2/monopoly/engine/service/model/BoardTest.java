@@ -55,4 +55,11 @@ class BoardTest {
         int actual = board.getFields().get(35).getRentStage(4);
         assertEquals(expected, actual);
     }
+
+    @Test
+    void getIdFromString(){
+        int expected = 39;
+        int actual = board.getIdFromString("Ohmplatz");
+        assertEquals(expected, actual);
+    }
 }
