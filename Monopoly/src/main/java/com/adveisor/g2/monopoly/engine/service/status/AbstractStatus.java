@@ -34,23 +34,23 @@ public abstract class AbstractStatus {
     }
 
     public void sellBank(int fieldIndex){
-        throw new IllegalStateException("Tried to sell despite not being in TURN");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tried to sell despite not being in TURN");
     }
 
     public void buyHouse(int fieldIndex){
-        throw new IllegalStateException("Can not buy house while not being in TURN");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can not buy house while not being in TURN");
     }
 
     public void sellHouse(int fieldIndex){
-        throw new IllegalStateException("Can not sell house while not being in TURN");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can not sell house while not being in TURN");
     }
 
     public void endMortgage(int fieldIndex){
-        throw new IllegalStateException("Cannot end mortgage while not being in TURN.");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot end mortgage while not being in TURN.");
     }
 
     public void startMortgage(int fieldIndex){
-        throw new IllegalStateException("Can not start Mortgage while not being in TURN");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can not start Mortgage while not being in TURN");
     }
 
     public PlayerBid startAuction(int fieldIndex){
@@ -62,7 +62,7 @@ public abstract class AbstractStatus {
     }
 
     public void start() {
-        throw new IllegalStateException("Failed to start game: wrong status.");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to start game: wrong status.");
     }
 
     public Card takeCard(Player player) {
