@@ -75,7 +75,9 @@ public abstract class AbstractStatus {
 
 
 
-    public void continueGame(){}
+    public void continueGame(){
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "must be in turn status to continue");
+    }
     public void endGame() {
         gameService.setCurrentStatus(gameService.getEndStatus());
     }

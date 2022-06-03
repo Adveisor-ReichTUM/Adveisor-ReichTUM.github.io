@@ -110,6 +110,10 @@ public class GameService {
         currentStatus.diceThrow(dice);
     }
 
+    public void continueGame(Player player) {
+        validateActivePlayer(player);
+        currentStatus.continueGame();
+    }
     public void useJailCard(Player player){
         validateActivePlayer(player);
         getCurrentPlayer().useJailCard();

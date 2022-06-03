@@ -57,16 +57,22 @@ public class GameController {
         gameService.end();
         return gameService.getGame();
     }
-    @RequestMapping(value="api/join", method = RequestMethod.POST, produces="application/json")
+    @PostMapping(value="api/join", produces="application/json")
     @ResponseBody
     public Player join(@RequestBody Player player){
         return gameService.join(player);
     }
 
-    @RequestMapping(value="api/dice-throw", method = RequestMethod.POST, produces="application/json")
+    @PostMapping(value="api/dice-throw", produces="application/json")
     @ResponseBody
     public Game rollAndMove(@Valid @RequestBody(required = false)Dice dice){
         gameService.diceThrow(dice);
+        return gameService.getGame();
+    }
+    @PostMapping(value="api/end-round", produces="application/json")
+    @ResponseBody
+    public Game endCurrentRound(@RequestBody Player player){
+        gameService.continueGame(player);
         return gameService.getGame();
     }
     @PostMapping(value = "/api/take-card", produces = "application/json")
