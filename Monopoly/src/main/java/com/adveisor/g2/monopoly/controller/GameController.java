@@ -80,11 +80,6 @@ public class GameController {
         return gameService.takeCard(player);
     }
 
-    @PostMapping(value = "/api/take-card-instruction", produces = "application/json")
-    @ResponseBody
-    public Player takeCardInstruction(@RequestBody Player player) {
-        return gameService.takeCardInstruction(player);
-    }
 
     @GetMapping("/api/current-player-field")
     @ResponseBody

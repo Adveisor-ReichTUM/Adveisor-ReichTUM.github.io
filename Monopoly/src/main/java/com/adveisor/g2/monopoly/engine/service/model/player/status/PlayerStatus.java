@@ -27,15 +27,12 @@ public abstract class PlayerStatus {
 
     public void setFree() {}
 
-    public void handlePasch(boolean inPausch){};
+    public void handlePasch(boolean inPausch){}
 
     public Card takeCard() {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not allowed to take card");
     }
 
-    public Player takeCardInstruction() {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No card to be evaluated");
-    }
 
     public boolean inPausch() {
         return false;

@@ -32,16 +32,15 @@ public class CardObligatedStatus extends PlayerStatus {
             case community -> game.getCommunityDeck().takeCard();
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not in a take card field");
         };
+        takeCardInstruction();
         return cardTaken;
     }
 
-    @Override
-    public Player takeCardInstruction() {
-        if (cardTaken == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No card taken yet");
-        }
+    private void takeCardInstruction() {
+//        if (cardTaken == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No card taken yet");
+//        }
         player.consumeCard(cardTaken);
         player.setCurrentStatus(player.getFreeStatus()); // The player is free after taking the card action
-        return player;
     }
 }

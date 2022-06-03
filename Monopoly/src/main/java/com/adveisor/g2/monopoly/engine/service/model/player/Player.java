@@ -133,10 +133,6 @@ public class Player {
         return currentStatus.takeCard();
     }
 
-    public Player takeCardInstruction() {
-        return currentStatus.takeCardInstruction();
-    }
-
     public void consumeCard(Card card) {
         int diff;
         int target;

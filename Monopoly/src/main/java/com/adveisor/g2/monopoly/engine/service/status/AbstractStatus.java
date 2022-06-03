@@ -69,10 +69,6 @@ public abstract class AbstractStatus {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong status to take card");
     }
 
-    public Player takeCardInstruction(Player player) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No card instruction can be taken in this status");
-    }
-
 
 
     public void continueGame(){

@@ -126,11 +126,6 @@ public class TurnStatus extends AbstractStatus {
         return gameService.getCurrentPlayer().takeCard();
     }
 
-    @Override
-    public Player takeCardInstruction(Player player) {
-        gameService.validateActivePlayer(player);
-        return gameService.getCurrentPlayer().takeCardInstruction();
-    }
 
     @Override
     public void continueGame() {

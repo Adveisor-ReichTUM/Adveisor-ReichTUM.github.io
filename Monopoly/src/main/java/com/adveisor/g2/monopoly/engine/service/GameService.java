@@ -98,10 +98,6 @@ public class GameService {
         return this.currentStatus.takeCard(player);
     }
 
-    public Player takeCardInstruction(Player player) {
-        return this.currentStatus.takeCardInstruction(player);
-    }
-
     public void end(){
         currentStatus = endStatus;
     }
