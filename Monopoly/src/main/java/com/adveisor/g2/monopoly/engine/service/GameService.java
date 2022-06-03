@@ -82,10 +82,11 @@ public class GameService {
      * if not, the access will be blocked with HTTP 401 Unauthorized
      * @param player a player object of which only the playId field must be specified for validation
      */
-    public void validateActivePlayer(Player player) {
+    public Player validateActivePlayer(Player player) {
         if (!Objects.equals(player.getPlayerId(), getCurrentPlayerId())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Player validation failed, non active player cannot take action");
         }
+        return getCurrentPlayer();
     }
 
     // player action below
@@ -121,7 +122,7 @@ public class GameService {
      * @return a Card object representing the card taken
      */
     public Card takeCard(Player player) {
-        return this.currentStatus.takeCard(player);
+        return this.currentStatus.takeCard(validateActivePlayer(player));
     }
 
     /**
@@ -157,8 +158,7 @@ public class GameService {
      * @param player playerId required for validation.
      */
     public void useJailCard(Player player){
-        validateActivePlayer(player);
-        getCurrentPlayer().useJailCard();
+        validateActivePlayer(player).useJailCard();
     }
 
     /**
@@ -167,15 +167,14 @@ public class GameService {
      * @param player playerId required for validation.
      */
     public void buyOutOfJail(Player player) {
-        validateActivePlayer(player);
-        getCurrentPlayer().buyOutOfJail();
+        validateActivePlayer(player).buyOutOfJail();
     }
 
 
-    public void buy(){
-        Player player = game.findCurrentPlayer();
+    public void buy(Player player) {
+        Player currentPlayer = validateActivePlayer(player);
         Field field = game.getBoard().getFields().get(player.getPosition());
-        player.buy(field);
+        currentPlayer.buy(field);
     }
 
     public void sellBank(int fieldIndex){
