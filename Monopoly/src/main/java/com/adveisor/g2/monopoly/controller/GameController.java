@@ -8,9 +8,6 @@ import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.deck.Card;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -91,33 +88,32 @@ public class GameController {
 
     @RequestMapping(value="api/buy-out-of-jail", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
-    public Game decideJail(@RequestBody Player player){
+    public Game buyOutOfJail(@RequestBody Player player){
         gameService.buyOutOfJail(player);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/jailcard", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="api/use-jail-card", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     public Game useJailCard(@RequestBody Player player){
         gameService.useJailCard(player);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/buyproperty", method = RequestMethod.GET, produces="application/json")
+    @PostMapping(value="/api/buy-property", produces="application/json")
     @ResponseBody
-    public Game buy(){
-        gameService.buy();
-        return gameService.getGame();
+    public Field buy(@RequestBody Player player){
+        return gameService.buyProperty(player);
     }
 
-    @RequestMapping(value="/sellpropertybank", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/api/sell-property-to-bank", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     public Game sellProp2Bank(@RequestParam int fieldIndex){
         gameService.sellBank(fieldIndex);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/auction", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/api/auction", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     public Game passProperty(@RequestParam int fieldIndex){
         gameService.auctionProperty(fieldIndex);
@@ -131,28 +127,28 @@ public class GameController {
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/startmortgage", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/api/start-mortgage", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     public Game startMortgage(@RequestParam int fieldIndex){
         gameService.startMortgage(fieldIndex);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/endmortgage", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/api/end-mortgage", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     public Game endMortgage(@RequestParam int fieldIndex){
         gameService.endMortgage(fieldIndex);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/buyHouse", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/api/buy-house", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     public Game buyHouse(@RequestParam int fieldIndex){
         gameService.buyHouse(fieldIndex);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/sellHouse", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/api/sell-House", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     public Game sellHouse(@RequestParam int fieldIndex){
         gameService.sellHouse(fieldIndex);

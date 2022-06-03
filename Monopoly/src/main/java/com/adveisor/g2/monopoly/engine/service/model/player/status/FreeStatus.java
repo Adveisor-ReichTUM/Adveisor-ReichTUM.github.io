@@ -4,7 +4,10 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.player.status;
 
+import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 public class FreeStatus extends PlayerStatus {
 
@@ -47,4 +50,15 @@ public class FreeStatus extends PlayerStatus {
         return consecutivePasch > 0;
     }
 
+    @Override
+    public Field buyProperty(Field field) {
+        if (field.isOwned()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Property already owned by another player");
+        }
+        player.adjustBalance(-field.getPrice());
+        player.getStreets()[field.getPosition()] = true;
+        field.setOwned(true);
+        field.setOwnerId(player.getPlayerId());
+        return field;
+    }
 }

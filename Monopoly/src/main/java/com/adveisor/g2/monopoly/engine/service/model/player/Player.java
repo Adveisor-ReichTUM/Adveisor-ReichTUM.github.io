@@ -122,11 +122,8 @@ public class Player {
     }
 
 
-    public void buy(Field field){
-        adjustBalance(-field.getPrice());
-        streets[field.getPosition()] = true;
-        field.setOwned(true);
-        field.setOwnerId(this.getPlayerId());
+    public Field buyProperty(Field field) {
+        return currentStatus.buyProperty(field);
     }
 
     public Card takeCard() {

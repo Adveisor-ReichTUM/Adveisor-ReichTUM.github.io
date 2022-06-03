@@ -4,6 +4,7 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.player.status;
 
+import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.deck.Card;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import org.springframework.http.HttpStatus;
@@ -44,5 +45,9 @@ public abstract class PlayerStatus {
 
     public void buyOutOfJail() {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not in jail.");
+    }
+
+    public Field buyProperty(Field field) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't buy property now");
     }
 }

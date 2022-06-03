@@ -170,11 +170,12 @@ public class GameService {
         validateActivePlayer(player).buyOutOfJail();
     }
 
-
-    public void buy(Player player) {
-        Player currentPlayer = validateActivePlayer(player);
-        Field field = game.getBoard().getFields().get(player.getPosition());
-        currentPlayer.buy(field);
+    /**
+     * current player buy the field he/she is currently standing on
+     * @param player playerId required for validation.
+     */
+    public Field buyProperty(Player player) {
+        return validateActivePlayer(player).buyProperty(currentPlayerStandingField());
     }
 
     public void sellBank(int fieldIndex){
