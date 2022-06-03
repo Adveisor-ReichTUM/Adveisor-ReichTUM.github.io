@@ -29,7 +29,7 @@ public abstract class AbstractStatus {
         throw new IllegalStateException("Failed to join game: already running.");
     }
 
-    public void diceThrow(Dice dice) {
+    public Dice diceThrow(Dice dice) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dice throw not possible in current state");
     }
 

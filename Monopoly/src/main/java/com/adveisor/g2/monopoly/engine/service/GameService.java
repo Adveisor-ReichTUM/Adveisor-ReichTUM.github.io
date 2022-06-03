@@ -106,8 +106,8 @@ public class GameService {
         currentStatus = endStatus;
     }
 
-    public void diceThrow(Dice dice) {
-        currentStatus.diceThrow(dice);
+    public Dice diceThrow(Dice dice) {
+        return currentStatus.diceThrow(dice);
     }
 
     public void continueGame(Player player) {

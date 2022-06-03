@@ -16,7 +16,7 @@ public class DiceStatus extends AbstractStatus {
     }
 
     @Override
-    public void diceThrow(Dice dice) {
+    public Dice diceThrow(Dice dice) {
         Player player = gameService.getCurrentPlayer();
 
         // Würfeln
@@ -35,5 +35,6 @@ public class DiceStatus extends AbstractStatus {
         //manage();
 
         gameService.setCurrentStatus(gameService.getTurnStatus());
+        return dice;
     }
 }

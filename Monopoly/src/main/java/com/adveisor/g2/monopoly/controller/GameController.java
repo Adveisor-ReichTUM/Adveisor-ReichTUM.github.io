@@ -65,9 +65,8 @@ public class GameController {
 
     @PostMapping(value="api/dice-throw", produces="application/json")
     @ResponseBody
-    public Game rollAndMove(@Valid @RequestBody(required = false)Dice dice){
-        gameService.diceThrow(dice);
-        return gameService.getGame();
+    public Dice throwDice(@Valid @RequestBody(required = false)Dice dice){
+        return gameService.diceThrow(dice);
     }
     @PostMapping(value="api/end-round", produces="application/json")
     @ResponseBody
