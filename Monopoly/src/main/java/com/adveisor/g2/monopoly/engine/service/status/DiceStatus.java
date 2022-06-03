@@ -6,6 +6,7 @@ package com.adveisor.g2.monopoly.engine.service.status;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
 import com.adveisor.g2.monopoly.engine.service.model.Dice;
+import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import com.adveisor.g2.monopoly.util.SimulatedDice;
 
@@ -34,7 +35,15 @@ public class DiceStatus extends AbstractStatus {
         //Option zum Bauen, Tauschen, Hypothek
         //manage();
 
+        evaluateStandingField(player);
         gameService.setCurrentStatus(gameService.getTurnStatus());
         return dice;
+    }
+
+    private void evaluateStandingField(Player player) {
+        Field standingField = player.standingOnField();
+        switch (standingField.getType()) {
+            case chance, community -> player.setCurrentStatus(player.getCardObligatedStatus());
+        }
     }
 }
