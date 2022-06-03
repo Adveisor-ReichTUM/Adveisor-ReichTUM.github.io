@@ -75,46 +75,97 @@ public class GameService {
     public String getCurrentPlayerId() {
         return game.getCurrentPlayerId();
     }
+    // util above to get game info
 
-    public Player join(Player player){
-       return currentStatus.join(player);
-    }
-
-    public void start(){
-        currentStatus.start();
-    }
-
+    /**
+     * The method is used to validate if the player trying to make action is the current player
+     * if not, the access will be blocked with HTTP 401 Unauthorized
+     * @param player a player object of which only the playId field must be specified for validation
+     */
     public void validateActivePlayer(Player player) {
         if (!Objects.equals(player.getPlayerId(), getCurrentPlayerId())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Player validation failed, non active player cannot take action");
         }
     }
 
+    // player action below
+
+    /**
+     * When the game is in waiting status, new player can attempt to join
+     * returned is a player that has been initialized
+     * @param player a player object of which only the playerName and piece field is required
+     * @return  an initialized player that has a generated playerId and all the initial data determined by the game
+     */
+    public Player join(Player player) {
+       return currentStatus.join(player);
+    }
+
+    /**
+     * Put the game from waiting status to start.
+     * Will only take effect in waiting status, otherwise exception is thrown
+     */
+    public void start(){
+        currentStatus.start();
+    }
+
+    /**
+     * @return a Field object describing the field that the current player is standing on
+     */
     public Field currentPlayerStandingField() {
         return getCurrentPlayer().standingOnField();
     }
 
+    /**
+     *
+     * @param player The player who is intending to take a card
+     * @return a Card object representing the card taken
+     */
     public Card takeCard(Player player) {
         return this.currentStatus.takeCard(player);
     }
 
+    /**
+     * Put the game in end status
+     */
     public void end(){
         currentStatus = endStatus;
     }
 
+    /**
+     * A dice-throw and move according to the throw result.
+     * only possible when game is in dice status
+     * @param dice a `Dice` object representing the result of the two dice.
+     *             if it is not present(null passed), a simulated dice will be used
+     * @return a complete `Dice` object containing boolean field `pasch` to indicate whether the throw is a double
+     */
     public Dice diceThrow(Dice dice) {
         return currentStatus.diceThrow(dice);
     }
 
+    /**
+     * End the current player's round
+     * @param player playerId required for validation
+     */
     public void continueGame(Player player) {
         validateActivePlayer(player);
         currentStatus.continueGame();
     }
+
+    /**
+     * use jail card to get out of jail immediately.
+     * throw exception if player is not in jail or do not have jail cards.
+     * @param player playerId required for validation.
+     */
     public void useJailCard(Player player){
         validateActivePlayer(player);
         getCurrentPlayer().useJailCard();
     }
 
+    /**
+     * player hands in 50 currency units to get out of jail immediately.
+     * throw exception if player is not in jail.
+     * @param player playerId required for validation.
+     */
     public void buyOutOfJail(Player player) {
         validateActivePlayer(player);
         getCurrentPlayer().buyOutOfJail();
