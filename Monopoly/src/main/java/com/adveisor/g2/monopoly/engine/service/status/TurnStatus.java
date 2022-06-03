@@ -140,4 +140,9 @@ public class TurnStatus extends AbstractStatus {
             gameService.setCurrentStatus(gameService.getDiceStatus());
         }
     }
+
+    @Override
+    public String toString() {
+        return "Turn-Status";
+    }
 }

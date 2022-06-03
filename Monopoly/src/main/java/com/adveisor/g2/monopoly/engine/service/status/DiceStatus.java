@@ -46,4 +46,9 @@ public class DiceStatus extends AbstractStatus {
             case chance, community -> player.setCurrentStatus(player.getCardObligatedStatus());
         }
     }
+
+    @Override
+    public String toString() {
+        return "Dice-Status";
+    }
 }

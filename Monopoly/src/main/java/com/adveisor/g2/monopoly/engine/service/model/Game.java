@@ -10,7 +10,10 @@ import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 @Setter
+@Component
 public class Game {
 
     // numbering of the current game status
@@ -43,6 +47,7 @@ public class Game {
     @JsonIgnore
     private Board board;
 
+    @Autowired
     public Game(String boardFile, String chanceFile, String communityFile){
         // set up board
         this.board = new Board(boardFile);

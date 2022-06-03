@@ -44,4 +44,9 @@ public class WaitingStatus extends AbstractStatus {
 
     }
 
+    @Override
+    public String toString() {
+        return "Waiting-Status";
+    }
+
 }

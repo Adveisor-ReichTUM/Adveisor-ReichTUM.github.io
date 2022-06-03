@@ -11,4 +11,8 @@ public class EndStatus extends AbstractStatus {
     public EndStatus(GameService gameService) {
         super(gameService);
     }
+    @Override
+    public String toString() {
+        return "End-Status";
+    }
 }

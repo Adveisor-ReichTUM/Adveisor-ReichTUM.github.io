@@ -108,7 +108,7 @@ public class GameController {
 
     @RequestMapping(value="/api/sell-property-to-bank", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
-    public Game sellProp2Bank(@RequestParam int fieldIndex){
+    public Game sellPropertyToBank(@RequestParam int fieldIndex){
         gameService.sellBank(fieldIndex);
         return gameService.getGame();
     }

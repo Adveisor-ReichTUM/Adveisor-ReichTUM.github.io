@@ -11,6 +11,7 @@ import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.deck.Card;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import com.adveisor.g2.monopoly.engine.service.status.*;
+import com.adveisor.g2.monopoly.util.Logger;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,8 @@ public class GameService {
     private AbstractStatus currentStatus;
 
     @Autowired
-    public GameService(String boardFile, String chanceFile, String communityFile) {
-
-        this.game = new Game(boardFile, chanceFile, communityFile);
+    public GameService(Game game) {
+        this.game = game;
         // game start at this status
         this.currentStatus = this.waitingStatus;
     }
@@ -122,7 +122,7 @@ public class GameService {
      * @return a Card object representing the card taken
      */
     public Card takeCard(Player player) {
-        return this.currentStatus.takeCard(validateActivePlayer(player));
+        return currentStatus.takeCard(validateActivePlayer(player));
     }
 
     /**
@@ -140,7 +140,9 @@ public class GameService {
      * @return a complete `Dice` object containing boolean field `pasch` to indicate whether the throw is a double
      */
     public Dice diceThrow(Dice dice) {
-        return currentStatus.diceThrow(dice);
+        var toBeReturned = currentStatus.diceThrow(dice);
+        Logger.log(this);
+        return toBeReturned;
     }
 
     /**

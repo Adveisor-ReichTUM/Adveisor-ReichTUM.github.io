@@ -64,4 +64,9 @@ public class AuctionStatus extends AbstractStatus {
         gameService.setCurrentStatus(gameService.getTurnStatus());
         return highestBid;
     }
+
+    @Override
+    public String toString() {
+        return "Auction-Status";
+    }
 }
