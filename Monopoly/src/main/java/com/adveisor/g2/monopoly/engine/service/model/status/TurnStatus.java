@@ -8,10 +8,12 @@ import com.adveisor.g2.monopoly.engine.service.model.Color;
 import com.adveisor.g2.monopoly.engine.service.model.Field;
 import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.Player;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class TurnStatus extends AbstractStatus {
 
     public TurnStatus(Game game) {

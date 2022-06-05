@@ -7,9 +7,11 @@ package com.adveisor.g2.monopoly.engine.service.model.status;
 import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.Piece;
 import com.adveisor.g2.monopoly.engine.service.model.Player;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class WaitingStatus extends AbstractStatus {
 
     public WaitingStatus(Game game) {

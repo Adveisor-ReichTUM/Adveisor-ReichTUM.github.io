@@ -8,9 +8,11 @@ import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.Piece;
 import com.adveisor.g2.monopoly.engine.service.model.Player;
 import com.adveisor.g2.monopoly.engine.service.model.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public abstract class AbstractStatus {
 
     protected Game game;
