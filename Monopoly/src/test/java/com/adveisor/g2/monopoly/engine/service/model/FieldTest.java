@@ -14,8 +14,8 @@ class FieldTest {
     @BeforeEach
     void setUp() {
         game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        game.join("Mr. Monopoly", Piece.GREEN);
-        game.join("Mr. Monopoly 2", Piece.BLUE);
+        game.join("Mr. Monopoly", Piece.DOG);
+        game.join("Mr. Monopoly 2", Piece.SHIP);
         Player.nextId=0;
         paying_pl = game.getPlayers().get(0);
         paid_pl = game.getPlayers().get(1);

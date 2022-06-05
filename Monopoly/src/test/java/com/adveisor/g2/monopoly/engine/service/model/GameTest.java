@@ -13,8 +13,8 @@ class GameTest {
     @BeforeEach
     void setUp() {
         game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        game.join("Mr. Monopoly", Piece.GREEN);
-        game.join("Mr. Monopoly 2", Piece.BLUE);
+        game.join("Mr. Monopoly", Piece.DOG);
+        game.join("Mr. Monopoly 2", Piece.SHIP);
     }
 
     @Test
@@ -27,7 +27,7 @@ class GameTest {
     @Test()
     void joinException(){
         try{
-            game.join("Mr. Monopoly", Piece.RED);
+            game.join("Mr. Monopoly", Piece.SHOE);
         } catch(IllegalArgumentException e){
         }
     }

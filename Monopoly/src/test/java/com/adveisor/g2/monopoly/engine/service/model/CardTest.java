@@ -19,7 +19,7 @@ class CardTest {
         card4 = new Card("Rücken Sie vor bis zum nächsten Verkehrsfeld. Der Eigentümer erhält das Doppelte der normalen Miete. " +
                 "Wenn das Verkehrsfeld noch niemandem gehört, können Sie es von der Bank kaufen.", "move_via_GO", "Bahnhof", true);
         game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        player = new Player("Mr. Monopoly", game, Piece.GREEN);
+        player = new Player("Mr. Monopoly", game, Piece.DOG);
     }
 
     @Test
