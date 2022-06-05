@@ -196,8 +196,8 @@ public class Player {
         currentStatus.sellPropertyToBank(fieldIndex);
     }
 
-    public void buyHouse(int fieldIndex) {
-        currentStatus.buyHouse(fieldIndex);
+    public void investRealEstate(int fieldIndex) {
+        currentStatus.investRealEstate(fieldIndex);
     }
 
     public void sellHouse(int fieldIndex){

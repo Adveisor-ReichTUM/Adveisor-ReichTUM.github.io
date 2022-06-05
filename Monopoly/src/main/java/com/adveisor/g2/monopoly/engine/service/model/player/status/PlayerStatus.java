@@ -55,7 +55,7 @@ public abstract class PlayerStatus {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't sell property while not being free");
     }
 
-    public void buyHouse(int fieldIndex) {
+    public void investRealEstate(int fieldIndex) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't buy house while not being free");
     }
 

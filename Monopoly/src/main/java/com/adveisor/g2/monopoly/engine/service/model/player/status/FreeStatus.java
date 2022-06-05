@@ -79,15 +79,19 @@ public class FreeStatus extends PlayerStatus {
     }
 
     @Override
-    public void buyHouse(int fieldIndex) {
+    public void investRealEstate(int fieldIndex) {
         Game game = player.getGame();
-        if (!player.getPossession(fieldIndex)) return;
+        if (!player.getPossession(fieldIndex))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Must own the property before buying house");
 
         Field field = player.getGame().getBoard().getFields().get(fieldIndex);
 
-        if (game.getNumHouses() <= 0) return;
-        if (field.getNumHouses() == 4 && game.getNumHotels() <= 0) return;
-        if (field.isHypothek()) return;
+        if (game.getNumHouses() <= 0)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No house left in the bank");
+        if (field.getNumHouses() == 4 && game.getNumHotels() <= 0)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No hotel left in the bank");
+        if (field.isHypothek())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You can't build house on mortgaged property");
 
         Color color = field.getColor();
         int minHouses = Integer.MAX_VALUE;
@@ -118,11 +122,15 @@ public class FreeStatus extends PlayerStatus {
     @Override
     public void sellHouse(int fieldIndex){
         Game game = player.getGame();
-        if(game.getNumHouses()<=0) return;
+        Field field = game.getBoard().getField(fieldIndex);
 
-        if(!player.getPossession(fieldIndex)) return;
+        if(!player.getPossession(fieldIndex))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You do not own this property, can't sell house");
 
-        Field field = game.getBoard().getFields().get(fieldIndex);
+        if(field.getNumHouses() <= 0)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No houses on this property to sell");
+
+
 
         Color color = field.getColor();
         int maxHouses = Integer.MIN_VALUE;

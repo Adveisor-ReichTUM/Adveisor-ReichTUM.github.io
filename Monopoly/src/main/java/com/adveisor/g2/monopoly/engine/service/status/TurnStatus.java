@@ -21,7 +21,7 @@ public class TurnStatus extends AbstractStatus {
 
     @Override
     public void buyHouse(int fieldIndex){
-        gameService.getCurrentPlayer().buyHouse(fieldIndex);
+        gameService.getCurrentPlayer().investRealEstate(fieldIndex);
     }
 
     @Override
