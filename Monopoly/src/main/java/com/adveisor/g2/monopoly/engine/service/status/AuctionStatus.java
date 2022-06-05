@@ -6,17 +6,16 @@ package com.adveisor.g2.monopoly.engine.service.status;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
 import com.adveisor.g2.monopoly.engine.service.model.PlayerBid;
+import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AuctionStatus extends AbstractStatus {
 
     public static final int MAX_AUCTION_TIME = 10 * 1000;
+
+    Field auctionedProperty;
     private PlayerBid highestBid;
     private boolean auctionRunning;
     public AuctionStatus(GameService gameService) {
@@ -28,6 +27,7 @@ public class AuctionStatus extends AbstractStatus {
 
     @Override
     public PlayerBid startAuction(int fieldIndex) throws InterruptedException{
+        auctionedProperty = gameService.getGame().getBoard().getField(fieldIndex);
         Thread timer = new Thread(() ->
         {
             try {
@@ -37,7 +37,7 @@ public class AuctionStatus extends AbstractStatus {
             }
         });
         timer.start();
-        highestBid.setBid(gameService.getGame().getBoard().getFields().get(fieldIndex).getPrice()/2);
+        highestBid.setBid(auctionedProperty.getPrice()/2);
         auctionRunning = true;
         timer.join();
         auctionRunning = false;
@@ -56,6 +56,10 @@ public class AuctionStatus extends AbstractStatus {
 
 
     public PlayerBid exitAuction() {
+        Player winner = gameService.getGame().findPlayerById(highestBid.getPlayerId()).orElseThrow();
+        winner.adjustBalance(-highestBid.getBid());
+        auctionedProperty.setOwned(true);
+        auctionedProperty.setOwnerId(winner.getPlayerId());
         gameService.setCurrentStatus(gameService.getTurnStatus());
         return highestBid;
     }
