@@ -130,6 +130,10 @@ public class Player {
         return currentStatus.takeCard();
     }
 
+    /**
+     *
+     * @param card the card that should take its effect on the player.
+     */
     public void consumeCard(Card card) {
         int diff;
         int target;
@@ -186,21 +190,19 @@ public class Player {
 //        Field field = board.getFields().get(this.position);
 //        Field.evaluateField(field, this, game);
 //    }
-    public int calculateWealth(){
 
-        int wealth = getBalance();
-        wealth += getNumJailCards() * 50;
 
-        for(int i = 0; i < streets.length; i++){
-            if(streets[i]){
-                Field field = game.getBoard().getFields().get(i);
-                wealth += field.getPrice();
-                wealth += field.getNumHouses() * field.getHouseCost();
-            }
-        }
-        return wealth;
+    public void sellPropertyToBank(int fieldIndex) {
+        currentStatus.sellPropertyToBank(fieldIndex);
     }
 
+    public void buyHouse(int fieldIndex) {
+        currentStatus.buyHouse(fieldIndex);
+    }
+
+    public void sellHouse(int fieldIndex){
+        currentStatus.sellHouse(fieldIndex);
+    }
 
     public void endMortgage(int fieldIndex){
         Field field = game.getBoard().getFields().get(fieldIndex);
@@ -233,5 +235,20 @@ public class Player {
             }
         }
         return true;
+    }
+
+    public int calculateWealth(){
+
+        int wealth = getBalance();
+        wealth += getNumJailCards() * 50;
+
+        for(int i = 0; i < streets.length; i++){
+            if(streets[i]){
+                Field field = game.getBoard().getFields().get(i);
+                wealth += field.getPrice();
+                wealth += field.getNumHouses() * field.getHouseCost();
+            }
+        }
+        return wealth;
     }
 }

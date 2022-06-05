@@ -24,6 +24,7 @@ public class InJailStatus extends PlayerStatus{
 
     @Override
     public void moveForward(int steps) {
+        // if player stays in jail for more than 3 rounds, automatically buy out of jail
         if (++roundsInJail > 3) {
             buyOutOfJail();
             player.moveForward(steps);

@@ -5,15 +5,13 @@
 package com.adveisor.g2.monopoly.engine.service.status;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
-import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-
 public class WaitingStatus extends AbstractStatus {
 
+    public static final int MAX_PLAYER_COUNT = 4;
     public WaitingStatus(GameService gameService) {
         super(gameService);
     }
@@ -23,7 +21,7 @@ public class WaitingStatus extends AbstractStatus {
 
         updateGameVersionId();
         // check for player limit
-        if(gameService.getPlayerCount() >= 4) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player number limit exceeded");
+        if(gameService.getPlayerCount() >= MAX_PLAYER_COUNT) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player number limit exceeded");
         // get players from the game
 
         // create player

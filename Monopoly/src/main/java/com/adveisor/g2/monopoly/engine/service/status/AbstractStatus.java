@@ -33,7 +33,7 @@ public abstract class AbstractStatus {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dice throw not possible in current state");
     }
 
-    public void sellBank(int fieldIndex){
+    public void sellPropertyToBank(int fieldIndex){
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tried to sell despite not being in TURN");
     }
 
@@ -53,7 +53,7 @@ public abstract class AbstractStatus {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can not start Mortgage while not being in TURN");
     }
 
-    public PlayerBid startAuction(int fieldIndex){
+    public PlayerBid startAuction(int fieldIndex) throws InterruptedException {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 

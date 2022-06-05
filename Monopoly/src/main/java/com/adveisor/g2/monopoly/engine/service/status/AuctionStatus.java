@@ -27,7 +27,7 @@ public class AuctionStatus extends AbstractStatus {
 
 
     @Override
-    public PlayerBid startAuction(int fieldIndex){
+    public PlayerBid startAuction(int fieldIndex) throws InterruptedException{
         Thread timer = new Thread(() ->
         {
             try {
@@ -39,12 +39,7 @@ public class AuctionStatus extends AbstractStatus {
         timer.start();
         highestBid.setBid(gameService.getGame().getBoard().getFields().get(fieldIndex).getPrice()/2);
         auctionRunning = true;
-
-        try {
-            timer.join();
-        } catch (InterruptedException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        timer.join();
         auctionRunning = false;
         return exitAuction();
     }

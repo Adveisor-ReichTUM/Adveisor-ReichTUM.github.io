@@ -1,7 +1,6 @@
 package com.adveisor.g2.monopoly.controller;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
-import com.adveisor.g2.monopoly.engine.service.model.Message;
 import com.adveisor.g2.monopoly.engine.service.model.Dice;
 import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.PlayerBid;
@@ -11,10 +10,6 @@ import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -114,7 +109,7 @@ public class GameController {
     @RequestMapping(value="/api/sell-property-to-bank", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     public Game sellPropertyToBank(@RequestParam int fieldIndex){
-        gameService.sellBank(fieldIndex);
+        gameService.sellPropertyToBank(fieldIndex);
         return gameService.getGame();
     }
 

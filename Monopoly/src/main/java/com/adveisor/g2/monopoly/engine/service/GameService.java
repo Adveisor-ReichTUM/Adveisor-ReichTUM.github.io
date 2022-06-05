@@ -181,12 +181,16 @@ public class GameService {
         return validateActivePlayer(player).buyProperty(currentPlayerStandingField());
     }
 
-    public void sellBank(int fieldIndex){
-        currentStatus.sellBank(fieldIndex);
+    public void sellPropertyToBank(int fieldIndex){
+        currentStatus.sellPropertyToBank(fieldIndex);
     }
 
 
-    public void bankrupt(Player player){
+    /**
+     *
+     * @param player the player to be bankrupted
+     */
+    public void bankruptPlayer(Player player){
         game.bankrupt(player);
         if (game.getNumActivePlayers() < 1) {
             this.setCurrentStatus(endStatus);
@@ -194,7 +198,6 @@ public class GameService {
 
         for(int i = 0; i<39; i++){
             if(player.getPossession(i)){
-                //Field field = game.getBoard().getFields().get(i);
                 auctionProperty(i);
             }
         }
@@ -202,7 +205,11 @@ public class GameService {
 
     public void auctionProperty(int fieldIndex){
         currentStatus = auctionStatus;
-        currentStatus.startAuction(fieldIndex);
+        try {
+            currentStatus.startAuction(fieldIndex);
+        } catch (InterruptedException e) {
+            Logger.log("InterruptedException occurred. Auction ended.");
+        }
     }
 
     public void tryHighestBid(PlayerBid playerBid){
