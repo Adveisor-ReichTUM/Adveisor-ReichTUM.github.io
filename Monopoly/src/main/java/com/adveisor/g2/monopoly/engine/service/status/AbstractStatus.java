@@ -20,9 +20,6 @@ public abstract class AbstractStatus {
         this.gameService = gameService;
     }
 
-    public void updateGameVersionId() {
-        gameService.incrementGameVersionId();
-    }
 
     // default method throw exception, overridden in concrete statuses
     public Player join(Player player) {

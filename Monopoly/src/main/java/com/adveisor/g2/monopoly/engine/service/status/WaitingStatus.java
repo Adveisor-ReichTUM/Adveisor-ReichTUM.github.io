@@ -19,7 +19,6 @@ public class WaitingStatus extends AbstractStatus {
     @Override
     public Player join(Player player){
 
-        updateGameVersionId();
         // check for player limit
         if(gameService.getPlayerCount() >= MAX_PLAYER_COUNT) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player number limit exceeded");
         // get players from the game
@@ -33,7 +32,6 @@ public class WaitingStatus extends AbstractStatus {
 
     @Override
     public void start() {
-        updateGameVersionId();
         //start the game
         if(gameService.getPlayers().size()>=2) {
             gameService.getGame().setCurrentPlayerId(gameService.getPlayers().get(0).getPlayerId());

@@ -99,7 +99,8 @@ public class GameService {
      * @return  an initialized player that has a generated playerId and all the initial data determined by the game
      */
     public Player join(Player player) {
-       return currentStatus.join(player);
+        incrementGameVersionId();
+        return currentStatus.join(player);
     }
 
     /**
@@ -107,6 +108,7 @@ public class GameService {
      * Will only take effect in waiting status, otherwise exception is thrown
      */
     public void start(){
+        incrementGameVersionId();
         currentStatus.start();
     }
 
@@ -114,6 +116,7 @@ public class GameService {
      * @return a Field object describing the field that the current player is standing on
      */
     public Field currentPlayerStandingField() {
+        incrementGameVersionId();
         return getCurrentPlayer().standingOnField();
     }
 
@@ -123,6 +126,7 @@ public class GameService {
      * @return a Card object representing the card taken
      */
     public Card takeCard(Player player) {
+        incrementGameVersionId();
         return currentStatus.takeCard(validateActivePlayer(player));
     }
 
@@ -130,6 +134,7 @@ public class GameService {
      * Put the game in end status
      */
     public void end(){
+        incrementGameVersionId();
         currentStatus = endStatus;
     }
 
@@ -141,6 +146,7 @@ public class GameService {
      * @return a complete `Dice` object containing boolean field `pasch` to indicate whether the throw is a double
      */
     public Dice diceThrow(Dice dice) {
+        incrementGameVersionId();
         var toBeReturned = currentStatus.diceThrow(dice);
         Logger.log(this);
         return toBeReturned;
@@ -151,6 +157,7 @@ public class GameService {
      * @param player playerId required for validation
      */
     public void continueGame(Player player) {
+        incrementGameVersionId();
         validateActivePlayer(player);
         currentStatus.continueGame();
     }
@@ -161,6 +168,7 @@ public class GameService {
      * @param player playerId required for validation.
      */
     public void useJailCard(Player player){
+        incrementGameVersionId();
         validateActivePlayer(player).useJailCard();
     }
 
@@ -170,6 +178,7 @@ public class GameService {
      * @param player playerId required for validation.
      */
     public void buyOutOfJail(Player player) {
+        incrementGameVersionId();
         validateActivePlayer(player).buyOutOfJail();
     }
 
@@ -178,10 +187,12 @@ public class GameService {
      * @param player playerId required for validation.
      */
     public Field buyProperty(Player player) {
+        incrementGameVersionId();
         return validateActivePlayer(player).buyProperty(currentPlayerStandingField());
     }
 
     public void sellPropertyToBank(int fieldIndex){
+        incrementGameVersionId();
         currentStatus.sellPropertyToBank(fieldIndex);
     }
 
@@ -191,6 +202,7 @@ public class GameService {
      * @param player the player to be bankrupted
      */
     public void bankruptPlayer(Player player){
+        incrementGameVersionId();
         game.bankrupt(player);
         if (game.getNumActivePlayers() < 1) {
             this.setCurrentStatus(endStatus);
@@ -204,6 +216,7 @@ public class GameService {
     }
 
     public void auctionProperty(int fieldIndex){
+        incrementGameVersionId();
         currentStatus = auctionStatus;
         try {
             currentStatus.startAuction(fieldIndex);
@@ -213,25 +226,30 @@ public class GameService {
     }
 
     public void tryHighestBid(PlayerBid playerBid){
+        incrementGameVersionId();
         currentStatus.tryHighestBid(playerBid);
     }
 
     public void startMortgage(int fieldIndex){
+        incrementGameVersionId();
         currentStatus.startMortgage(fieldIndex);
     }
 
 
     public void endMortgage(int fieldIndex){
+        incrementGameVersionId();
         currentStatus.endMortgage(fieldIndex);
     }
 
 
     public void buyHouse(int fieldIndex){
+        incrementGameVersionId();
         currentStatus.buyHouse(fieldIndex);
     }
 
 
     public void sellHouse(int fieldIndex){
+        incrementGameVersionId();
         currentStatus.sellHouse(fieldIndex);
     }
 

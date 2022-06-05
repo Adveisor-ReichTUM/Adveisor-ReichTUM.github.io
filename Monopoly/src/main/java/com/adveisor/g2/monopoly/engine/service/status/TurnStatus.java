@@ -31,14 +31,12 @@ public class TurnStatus extends AbstractStatus {
 
     @Override
     public void endMortgage(int fieldIndex){
-        updateGameVersionId();
         Player player = gameService.getCurrentPlayer();
         player.endMortgage(fieldIndex);
     }
 
     @Override
     public void startMortgage(int fieldIndex){
-        updateGameVersionId();
         Player player = gameService.getCurrentPlayer();
         player.startMortgage(fieldIndex);
     }
