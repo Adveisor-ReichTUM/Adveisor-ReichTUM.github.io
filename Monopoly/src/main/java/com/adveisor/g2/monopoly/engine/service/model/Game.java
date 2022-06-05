@@ -87,7 +87,7 @@ public class Game {
 
     public Player findCurrentPlayer() {
         return findPlayerById(getCurrentPlayerId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player data lost"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find requested player"));
     }
 
     public void bankrupt(Player player){

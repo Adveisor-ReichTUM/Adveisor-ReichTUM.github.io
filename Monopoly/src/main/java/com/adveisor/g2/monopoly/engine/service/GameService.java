@@ -73,6 +73,7 @@ public class GameService {
     }
 
     public String getCurrentPlayerId() {
+
         return game.getCurrentPlayerId();
     }
     // util above to get game info

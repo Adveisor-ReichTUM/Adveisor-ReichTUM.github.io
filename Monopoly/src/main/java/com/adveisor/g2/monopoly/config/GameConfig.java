@@ -2,7 +2,7 @@
  * Copyright (c) ReichTUM 2022.
  */
 
-package com.adveisor.g2.monopoly;
+package com.adveisor.g2.monopoly.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

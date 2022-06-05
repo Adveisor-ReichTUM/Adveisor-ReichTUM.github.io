@@ -1,19 +1,18 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Message {
-    String sender;
-    String message;
+    private String content;
+    private String sender;
+    private MessageType type;
 
-    public Message(String sender, String message){
-        this.sender = sender;
-        this.message = message;
+    public enum MessageType {
+        CHAT, JOIN, LEAVE
+
     }
 
-    public String getSender(){
-        return this.sender;
-    }
-
-    public String getMessage(){
-        return this.message;
-    }
 }
