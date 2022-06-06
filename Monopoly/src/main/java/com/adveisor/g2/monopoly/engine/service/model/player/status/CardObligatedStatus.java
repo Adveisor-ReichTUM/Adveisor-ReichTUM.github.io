@@ -36,8 +36,15 @@ public class CardObligatedStatus extends PlayerStatus {
         return cardTaken;
     }
 
+    @Override
+    public void endCurrentRound() {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are obligated to take a card");
+    }
+
     private void takeCardInstruction() {
         player.consumeCard(cardTaken);
         player.setCurrentStatus(player.getFreeStatus()); // The player is free after taking the card action
     }
+
+
 }

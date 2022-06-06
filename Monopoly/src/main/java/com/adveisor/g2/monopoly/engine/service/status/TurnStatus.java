@@ -50,6 +50,7 @@ public class TurnStatus extends AbstractStatus {
     @Override
     public void continueGame() {
         int bankruptPlayerCount = 0;
+        gameService.getCurrentPlayer().endCurrentRound();
         if (!this.gameService.getCurrentPlayer().inPausch()) {
             do {
                 gameService.setNextPlayer();

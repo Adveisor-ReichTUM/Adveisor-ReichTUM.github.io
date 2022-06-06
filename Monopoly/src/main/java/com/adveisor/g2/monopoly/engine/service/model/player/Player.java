@@ -8,10 +8,7 @@ import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.board.Color;
 import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.deck.Card;
-import com.adveisor.g2.monopoly.engine.service.model.player.status.CardObligatedStatus;
-import com.adveisor.g2.monopoly.engine.service.model.player.status.FreeStatus;
-import com.adveisor.g2.monopoly.engine.service.model.player.status.InJailStatus;
-import com.adveisor.g2.monopoly.engine.service.model.player.status.PlayerStatus;
+import com.adveisor.g2.monopoly.engine.service.model.player.status.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -61,6 +58,8 @@ public class Player {
     private PlayerStatus inJailStatus = new InJailStatus(this);
     @JsonIgnore
     private PlayerStatus cardObligatedStatus = new CardObligatedStatus(this);
+    @JsonIgnore
+    private PlayerStatus bankruptWarning = new BankruptWarning(this);
     @JsonIgnore
     private PlayerStatus currentStatus;
 
@@ -261,5 +260,25 @@ public class Player {
             }
         }
         return wealth;
+    }
+
+    public void endCurrentRound() {
+        currentStatus.endCurrentRound();
+    }
+
+    public int getPotentialAbilityToPay() {
+        int potential = 0;
+        for (int i = 0; i < streets.length; i++) {
+            Field field = game.getBoard().getField(i);
+            if (streets[i]) {
+                if (!field.isHypothek()) {
+                    if (field.getNumHouses() > 0) {
+                        potential += field.getHouseCost() * field.getNumHouses() / 2;
+                    }
+                    potential += game.getBoard().getField(i).getMortgageValue();
+                }
+            }
+        }
+        return potential;
     }
 }

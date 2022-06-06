@@ -62,4 +62,12 @@ public abstract class PlayerStatus {
     public void sellHouse(int fieldIndex) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't sell house while not being free");
     }
+
+    public void endCurrentRound() {
+        if (player.getBalance() < 0) {
+            player.setCurrentStatus(player.getBankruptWarning());
+            player.endCurrentRound();
+        }
+    }
+
 }
