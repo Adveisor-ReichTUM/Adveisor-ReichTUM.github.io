@@ -51,12 +51,11 @@ public class Field {
             case utilities:
             case street:
                 field.evaluateStreet(player, gameService);
-                break;
-            case police: field.evaluatePolice(player, gameService); return;
+                return;
             case tax: player.adjustBalance(-field.getPrice()); break;
-            default: break;
         }
     }
+
     public void evaluateStreet(Player player, GameService gameService){
         if((this.owned && !Objects.equals(this.ownerId, player.getPlayerId()))){
             // Spieler nicht Besitzer des gekauften Feldes
@@ -66,10 +65,6 @@ public class Field {
         }
     }
 
-    public static void transaction(Player paying_pl, Player paid_pl, int diff){
-        paying_pl.adjustBalance(-diff);
-        paid_pl.adjustBalance(diff);
-    }
 
     public void payRent(Player paying_pl, Player paid_pl, Board board){
         if(this.Hypothek) return;
@@ -91,7 +86,7 @@ public class Field {
 //                diff = this.rent_stages[stage] * paying_pl.getDiceResult();
                 break;
         }
-        transaction(paying_pl, paid_pl, diff);
+        GameService.transaction(paying_pl, paid_pl, diff);
     }
 
     public int determineStationStage(Player paid_pl, Board board){
@@ -115,19 +110,13 @@ public class Field {
             return (1 + this.numHouses);
     }
 
-
-    public void evaluatePolice(Player player, GameService gameService){
-        player.jail();
-//        gameService.turn1();
-    }
-
     public int getMortgageValue(){
         return this.getPrice()/2;
     }
 
     public void reset(){
         this.owned = false;
-//        this.owner = null;
+        this.ownerId = null;
         this.numHouses = 0;
         this.Hypothek = false;
     }

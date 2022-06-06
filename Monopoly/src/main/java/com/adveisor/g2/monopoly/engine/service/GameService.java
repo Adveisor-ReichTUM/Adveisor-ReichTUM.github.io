@@ -253,4 +253,8 @@ public class GameService {
         currentStatus.sellHouse(fieldIndex);
     }
 
+    public static void transaction(Player paying_pl, Player paid_pl, int diff){
+        paying_pl.adjustBalance(-diff);
+        paid_pl.adjustBalance(diff);
+    }
 }
