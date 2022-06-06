@@ -141,4 +141,8 @@ public class GameRestController {
         gameService.startBankruptAuction(player);
     }
 
+    @GetMapping(value = "/get-game-result", produces = "application/json")
+    public List<Player> getGameResult() {
+        return gameService.getGameResult();
+    }
 }

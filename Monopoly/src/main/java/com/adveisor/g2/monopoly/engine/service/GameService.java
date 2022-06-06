@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -138,10 +139,21 @@ public class GameService {
         incrementGameVersionId();
         currentStatus = endStatus;
 
-        List<Player> playerRank = endStatus.getPlayersList();
+        List<Player> playerRank = endStatus.getPlayersList().subList(0, endStatus.getPlayersList().size());
+        Collections.reverse(playerRank);
+
+        return playerRank;
+    }
+
+    public List<Player> getGameResult() {
+        if (currentStatus != endStatus) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Game not ended yet");
+        }
+        List<Player> playerRank = endStatus.getPlayersList().subList(0, endStatus.getPlayersList().size());
         Collections.reverse(playerRank);
         return playerRank;
     }
+
 
     /**
      * A dice-throw and move according to the throw result.
