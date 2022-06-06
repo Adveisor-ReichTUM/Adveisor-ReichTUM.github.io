@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,10 +31,10 @@ public class GameService {
 
     // all the possible statuses initialized here
     private AbstractStatus auctionStatus = new AuctionStatus(this);
-    private AbstractStatus diceStatus = new DiceStatus(this);
+    private DiceStatus diceStatus = new DiceStatus(this);
     private AbstractStatus turnStatus = new TurnStatus(this);
-    private AbstractStatus endStatus = new EndStatus(this);
-    private AbstractStatus waitingStatus = new WaitingStatus(this);
+    private EndStatus endStatus = new EndStatus(this);
+    private WaitingStatus waitingStatus = new WaitingStatus(this);
     //
 
     private AbstractStatus currentStatus;
@@ -133,9 +134,13 @@ public class GameService {
     /**
      * Put the game in end status
      */
-    public void end(){
+    public List<Player> end(){
         incrementGameVersionId();
         currentStatus = endStatus;
+
+        List<Player> playerRank = endStatus.getPlayersList();
+        Collections.reverse(playerRank);
+        return playerRank;
     }
 
     /**
@@ -210,6 +215,8 @@ public class GameService {
         Player targetPlayer = game.findPlayerById(player.getPlayerId()).orElseThrow();
         if (!targetPlayer.isBankrupt()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player is not bankrupt");
+        } else {
+            endStatus.addPlayer(player);
         }
 
         for(int i = 0; i<39; i++) {

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -46,9 +47,8 @@ public class GameRestController {
     }
 
     @RequestMapping(value="/end", method = RequestMethod.GET, produces="application/json")
-    public Game end(){
-        gameService.end();
-        return gameService.getGame();
+    public List<Player> end(){
+        return gameService.end();
     }
     @PostMapping(value="/join", produces="application/json")
     public Player join(@RequestBody Player player){
