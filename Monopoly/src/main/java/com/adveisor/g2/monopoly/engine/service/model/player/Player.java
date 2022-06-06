@@ -4,6 +4,7 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.player;
 
+import com.adveisor.g2.monopoly.engine.service.GameService;
 import com.adveisor.g2.monopoly.engine.service.model.*;
 import com.adveisor.g2.monopoly.engine.service.model.board.Color;
 import com.adveisor.g2.monopoly.engine.service.model.board.Field;
@@ -19,7 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
 import java.util.UUID;
+
+import static com.adveisor.g2.monopoly.engine.service.model.board.FieldType.tax;
 
 @Data
 @NoArgsConstructor
@@ -44,6 +48,8 @@ public class Player {
 
     // other details
     private int numJailCards;   // number of Out-of-jail cards in players possession
+
+    private int lastDiceThrow;
 
     // reference attribute
     @JsonIgnore
@@ -98,13 +104,11 @@ public class Player {
     }
 
     public void moveForward(int steps) {
+        lastDiceThrow = steps;
         currentStatus.moveForward(steps);
+        evaluateStandingField();
     }
 
-    public void moveAndEvaluate(int steps) {
-        moveForward(steps);
-
-    }
     public boolean getPossession(int field_num){
         return this.streets[field_num];
     }
@@ -185,11 +189,19 @@ public class Player {
         }
     }
 
-//    public void moveAndEvaluate(Board board, int steps){
-//        moveForward(steps);
-//        Field field = board.getFields().get(this.position);
-//        Field.evaluateField(field, this, game);
-//    }
+    public void evaluateStandingField(){
+        Field currentField = game.getBoard().getField(position);
+        if (currentField.getType() == tax) {
+            adjustBalance(-currentField.getPrice());
+        } else if (currentField.isOwned() && !Objects.equals(currentField.getOwnerId(), playerId)) {
+            payRentTo(game.findPlayerById(currentField.getOwnerId()).orElseThrow());
+        }
+    }
+
+    public void payRentTo(Player landLord) {
+        Field currentField = game.getBoard().getField(position);
+        currentField.payRent(this, landLord, game.getBoard());
+    }
 
 
     public void sellPropertyToBank(int fieldIndex) {

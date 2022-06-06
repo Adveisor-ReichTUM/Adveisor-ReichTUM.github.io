@@ -45,26 +45,6 @@ public class Field {
         this.Hypothek = false;
     }
 
-    public static void evaluateField(Field field, Player player, GameService gameService){
-        switch(field.getType()){
-            case station:
-            case utilities:
-            case street:
-                field.evaluateStreet(player, gameService);
-                return;
-            case tax: player.adjustBalance(-field.getPrice()); break;
-        }
-    }
-
-    public void evaluateStreet(Player player, GameService gameService){
-        if((this.owned && !Objects.equals(this.ownerId, player.getPlayerId()))){
-            // Spieler nicht Besitzer des gekauften Feldes
-//                payRent(player, this.ownerId, gameService.getBoard());       // Miete bezahlen
-        } else if(!this.owned){
-//            gameService.setCurrentStatus(gameService.getBuyPropertyStatus());
-        }
-    }
-
 
     public void payRent(Player paying_pl, Player paid_pl, Board board){
         if(this.Hypothek) return;
@@ -83,7 +63,7 @@ public class Field {
                 break;
             case utilities:
                 stage = determineUtilityStage(paid_pl, board);
-//                diff = this.rent_stages[stage] * paying_pl.getDiceResult();
+                diff = this.rent_stages[stage] * paying_pl.getLastDiceThrow();
                 break;
         }
         GameService.transaction(paying_pl, paid_pl, diff);
