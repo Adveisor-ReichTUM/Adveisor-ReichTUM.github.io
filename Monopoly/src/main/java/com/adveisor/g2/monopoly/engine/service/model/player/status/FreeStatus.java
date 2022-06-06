@@ -43,7 +43,7 @@ public class FreeStatus extends PlayerStatus {
         }
         if (consecutivePasch >= 3) {
             consecutivePasch = 0;
-            jail();
+            player.jail();
         }
     }
 

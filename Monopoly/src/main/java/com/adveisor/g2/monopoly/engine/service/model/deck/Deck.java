@@ -23,6 +23,7 @@ public class Deck {
         this.isChanceDeck = isChanceDeck;
         try{
             InputStream inputStream = getClass().getResourceAsStream(filename);
+            assert inputStream != null;
             BufferedReader cardSet = new BufferedReader(new InputStreamReader(inputStream));
             String input = cardSet.readLine();
             String[] args;
@@ -45,9 +46,6 @@ public class Deck {
 
     public Card takeCard(){
         Card card = cards.remove(0);
-//        gameService.setCurrentStatus(gameService.getCardStatus());
-//        card.evaluateCard(player, gameService);
-//        gameService.getGame().setCardDescription(card.getDescription());
         // put card to the back of the deck
         cards.add(card);
         return card;

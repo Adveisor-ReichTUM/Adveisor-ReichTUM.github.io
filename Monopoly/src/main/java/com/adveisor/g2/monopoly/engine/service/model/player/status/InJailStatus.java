@@ -26,7 +26,7 @@ public class InJailStatus extends PlayerStatus{
     public void moveForward(int steps) {
         // if player stays in jail for more than 3 rounds, automatically buy out of jail
         if (++roundsInJail > 3) {
-            buyOutOfJail();
+            player.buyOutOfJail();
             player.moveForward(steps);
         }
     }
@@ -41,7 +41,7 @@ public class InJailStatus extends PlayerStatus{
     public void handlePasch(boolean isPausch) {
         if (isPausch){
             this.roundsInJail = 0;
-            setFree();
+            player.setFree();
         }
     }
 
@@ -50,7 +50,7 @@ public class InJailStatus extends PlayerStatus{
         int numJailCards = player.getNumJailCards();
         if (numJailCards > 0) {
             player.setNumJailCards(--numJailCards);
-            setFree();
+            player.setFree();
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough jail cards");
         }
@@ -59,6 +59,6 @@ public class InJailStatus extends PlayerStatus{
     @Override
     public void buyOutOfJail() {
         player.adjustBalance(-50);
-        setFree();
+        player.setFree();
     }
 }

@@ -37,9 +37,6 @@ public class CardObligatedStatus extends PlayerStatus {
     }
 
     private void takeCardInstruction() {
-//        if (cardTaken == null) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No card taken yet");
-//        }
         player.consumeCard(cardTaken);
         player.setCurrentStatus(player.getFreeStatus()); // The player is free after taking the card action
     }

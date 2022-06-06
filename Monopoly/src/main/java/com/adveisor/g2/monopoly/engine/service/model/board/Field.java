@@ -8,8 +8,6 @@ import com.adveisor.g2.monopoly.engine.service.GameService;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import lombok.Data;
 
-import java.util.Objects;
-
 @Data
 public class Field {
     
@@ -49,22 +47,22 @@ public class Field {
     public void payRent(Player paying_pl, Player paid_pl, Board board){
         if(this.Hypothek) return;
 
-        int stage = 0;
+        int stage;
         int diff = 0;
-        switch(this.type) {
-            case street:
+        switch (this.type) {
+            case street -> {
                 stage = determineStreetStage();
                 diff = this.rent_stages[stage];
-                if(stage==1 && paid_pl.monopolyOverColor(this.getColor())) diff*=2;
-                break;
-            case station:
+                if (stage == 1 && paid_pl.monopolyOverColor(this.getColor())) diff *= 2;
+            }
+            case station -> {
                 stage = determineStationStage(paid_pl, board);
                 diff = this.rent_stages[stage];
-                break;
-            case utilities:
+            }
+            case utilities -> {
                 stage = determineUtilityStage(paid_pl, board);
                 diff = this.rent_stages[stage] * paying_pl.getLastDiceThrow();
-                break;
+            }
         }
         GameService.transaction(paying_pl, paid_pl, diff);
     }
@@ -101,7 +99,4 @@ public class Field {
         this.Hypothek = false;
     }
 
-    public int getRentStage(int stage){
-        return this.rent_stages[stage];
-    }
 }

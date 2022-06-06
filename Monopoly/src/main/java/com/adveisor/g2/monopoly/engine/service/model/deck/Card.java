@@ -4,8 +4,7 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.deck;
 
-import com.adveisor.g2.monopoly.engine.service.GameService;
-import com.adveisor.g2.monopoly.engine.service.model.player.Player;
+import com.adveisor.g2.monopoly.util.Logger;
 import lombok.Data;
 
 @Data
@@ -24,7 +23,6 @@ public class Card {
 
 
     public int identifyTargetPosition(int current_pos){
-        int pos = 40;   // moving 40 fields will end up with player on the same spot
 
         if(!this.chanceCard) {
             switch (value) {
@@ -50,7 +48,7 @@ public class Card {
                 case "LOS": return 0;
                 case "Seestraße": return 11;
                 case "Rückwärts": return (current_pos-3);
-                default: System.out.println("Ungültige Karte"); return -1;
+                default: Logger.log("Ungültige Karte"); return current_pos;
             }
         }
     }

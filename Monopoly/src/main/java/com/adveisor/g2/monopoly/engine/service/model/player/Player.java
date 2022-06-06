@@ -4,8 +4,7 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.player;
 
-import com.adveisor.g2.monopoly.engine.service.GameService;
-import com.adveisor.g2.monopoly.engine.service.model.*;
+import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.board.Color;
 import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.deck.Card;

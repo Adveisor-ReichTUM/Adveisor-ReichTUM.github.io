@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.util.Random;
 
 @Getter
 @Setter
