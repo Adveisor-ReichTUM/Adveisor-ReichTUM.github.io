@@ -169,7 +169,8 @@ public class GameService {
      */
     public void useJailCard(Player player){
         incrementGameVersionId();
-        validateActivePlayer(player).useJailCard();
+        validateActivePlayer(player);
+        currentStatus.useJailCard();
     }
 
     /**
@@ -179,7 +180,8 @@ public class GameService {
      */
     public void buyOutOfJail(Player player) {
         incrementGameVersionId();
-        validateActivePlayer(player).buyOutOfJail();
+        validateActivePlayer(player);
+        currentStatus.buyOutOfJail();
     }
 
     /**
@@ -188,28 +190,30 @@ public class GameService {
      */
     public Field buyProperty(Player player) {
         incrementGameVersionId();
-        return validateActivePlayer(player).buyProperty(currentPlayerStandingField());
+        validateActivePlayer(player);
+        return currentStatus.buyProperty(currentPlayerStandingField());
     }
 
-    public void sellPropertyToBank(int fieldIndex){
+    public void sellPropertyToBank(int fieldIndex, Player player){
         incrementGameVersionId();
+        validateActivePlayer(player);
         currentStatus.sellPropertyToBank(fieldIndex);
     }
 
 
     /**
      *
-     * @param player the player to be bankrupted
+     * @param player the player who has bankrupted
      */
-    public void bankruptPlayer(Player player){
+    public void startBankruptAuction(Player player){
         incrementGameVersionId();
-        game.bankrupt(player);
-        if (game.getNumActivePlayers() < 1) {
-            this.setCurrentStatus(endStatus);
+        Player targetPlayer = game.findPlayerById(player.getPlayerId()).orElseThrow();
+        if (!targetPlayer.isBankrupt()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player is not bankrupt");
         }
 
-        for(int i = 0; i<39; i++){
-            if(player.getPossession(i)){
+        for(int i = 0; i<39; i++) {
+            if(targetPlayer.getPossession(i)){
                 auctionProperty(i);
             }
         }
@@ -230,26 +234,30 @@ public class GameService {
         currentStatus.tryHighestBid(playerBid);
     }
 
-    public void startMortgage(int fieldIndex){
+    public void startMortgage(int fieldIndex, Player player){
         incrementGameVersionId();
+        validateActivePlayer(player);
         currentStatus.startMortgage(fieldIndex);
     }
 
 
-    public void endMortgage(int fieldIndex){
+    public void endMortgage(int fieldIndex, Player player){
         incrementGameVersionId();
+        validateActivePlayer(player);
         currentStatus.endMortgage(fieldIndex);
     }
 
 
-    public void buyHouse(int fieldIndex){
+    public void buyHouse(int fieldIndex, Player player){
         incrementGameVersionId();
+        validateActivePlayer(player);
         currentStatus.buyHouse(fieldIndex);
     }
 
 
-    public void sellHouse(int fieldIndex){
+    public void sellHouse(int fieldIndex, Player player){
         incrementGameVersionId();
+        validateActivePlayer(player);
         currentStatus.sellHouse(fieldIndex);
     }
 

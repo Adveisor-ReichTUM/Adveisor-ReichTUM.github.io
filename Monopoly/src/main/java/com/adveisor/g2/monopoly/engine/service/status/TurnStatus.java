@@ -5,6 +5,7 @@
 package com.adveisor.g2.monopoly.engine.service.status;
 
 import com.adveisor.g2.monopoly.engine.service.GameService;
+import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.deck.Card;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 
@@ -61,6 +62,21 @@ public class TurnStatus extends AbstractStatus {
         } else {
             gameService.setCurrentStatus(gameService.getDiceStatus());
         }
+    }
+
+    @Override
+    public void useJailCard() {
+        gameService.getCurrentPlayer().useJailCard();
+    }
+
+    @Override
+    public void buyOutOfJail() {
+        gameService.getCurrentPlayer().buyOutOfJail();
+    }
+
+    @Override
+    public Field buyProperty(Field currentPlayerStandingField) {
+        return gameService.getCurrentPlayer().buyProperty(currentPlayerStandingField);
     }
 
     @Override

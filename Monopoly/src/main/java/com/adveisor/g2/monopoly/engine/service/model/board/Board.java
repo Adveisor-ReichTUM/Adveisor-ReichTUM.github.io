@@ -55,18 +55,6 @@ public class Board {
         return counter;
     }
 
-    // tell if the player has monopoly over the color field
-    public boolean isMonopoly(Color color, Player player) {
-        for (Field field : fields) {
-            if (field.getColor() == color) {
-                if (!Objects.equals(player.getPlayerId(), field.getOwnerId())) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public List<Field> getFields(){
         return this.fields;
     }

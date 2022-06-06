@@ -7,6 +7,7 @@ package com.adveisor.g2.monopoly.engine.service.status;
 import com.adveisor.g2.monopoly.engine.service.GameService;
 import com.adveisor.g2.monopoly.engine.service.model.Dice;
 import com.adveisor.g2.monopoly.engine.service.model.PlayerBid;
+import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.deck.Card;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import org.springframework.http.HttpStatus;
@@ -74,8 +75,21 @@ public abstract class AbstractStatus {
         gameService.setCurrentStatus(gameService.getEndStatus());
     }
 
+    public void useJailCard() {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Must be in turn to take action");
+    }
+
+    public void buyOutOfJail() {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Must be in turn to take action");
+    }
+
+    public Field buyProperty(Field currentPlayerStandingField) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Must be in turn to take action");
+    }
+
     @Override
     public String toString() {
         return "unspecified";
     }
+
 }
