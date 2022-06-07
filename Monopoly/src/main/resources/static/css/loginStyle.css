@@ -1,0 +1,231 @@
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.text {
+    padding-left: .41176rem;
+}
+.spielfigur {
+    float: left;
+    margin-top: .82353rem;
+    padding-left: .41176rem;
+    padding-right: .41176rem;
+}
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    border: solid #d2d2d7 1px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default radio button */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+.image {
+    width: 100%;
+}
+  
+  /* Create a custom radio button */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the radio button is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: #0065bd;
+  }
+  
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the indicator (dot/circle) when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the indicator (dot/circle) */
+  .container .checkmark:after {
+       top: 9px;
+      left: 9px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+  }
+
+  .btn {
+    border: none;
+    margin-top: .82353rem;
+    margin-right: .41176rem;
+    color: white;
+    background-color: #0065bd;
+    opacity: 0.6;
+    float: right;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .btn:hover {
+      opacity: 1;
+  }
+
+  /* Simple Responsive Framework. */
+.row {
+    width: 100%;
+}
+  
+/* Desktop Version */
+@media (min-width: 992px) {
+    .figurenwahl {
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+    .col-lg-1 {
+    width: 8.33%;
+    }
+    .col-lg-2 {
+    width: 16.66%;
+    }
+    .col-lg-3 {
+    width: 25%;
+    }
+    .col-lg-4 {
+    width: 33.33%;
+    }
+    .col-lg-5 {
+    width: 41.66%;
+    }
+    .col-lg-6 {
+    width: 50%;
+    }
+    .col-lg-7 {
+    width: 58.33%;
+    }
+    .col-lg-8 {
+    width: 66.66%;
+    }
+    .col-lg-9 {
+    width: 74.99%;
+    }
+    .col-lg-10 {
+    width: 83.33%;
+    }
+    .col-lg-11 {
+    width: 91.66%;
+    }
+    .col-lg-12 {
+    width: 100%;
+    }
+}
+
+/* Tablet Version */
+@media (min-width: 768px) and (max-width: 991px) {
+    .figurenwahl {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+    .col-md-1 {
+    width: 8.33%;
+    }
+    .col-md-2 {
+        width: 16.66%;
+    }
+    .col-md-3 {
+        width: 25%;
+    }
+    .col-md-4 {
+        width: 33.33%;
+    }
+    .col-md-5 {
+        width: 41.66%;
+    }
+    .col-md-6 {
+        width: 50%;
+    }
+    .col-md-7 {
+        width: 58.33%;
+    }
+    .col-md-8 {
+        width: 66.66%;
+    }
+    .col-md-9 {
+        width: 74.99%;
+    }
+    .col-md-10 {
+        width: 83.33%;
+    }
+    .col-md-11 {
+        width: 91.66%;
+    }
+    .col-md-12 {
+        width: 100%;
+    }
+}
+
+/* Mobile Version */
+@media (max-width: 767) {
+    .figurenwahl {
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+    .col-sm-1 {
+        width: 8.33%;
+    }
+    .col-sm-2 {
+        width: 16.66%;
+    }
+    .col-sm-3 {
+        width: 25%;
+    }
+    .col-sm-4 {
+        width: 33.33%;
+    }
+    .col-sm-5 {
+        width: 41.66%;
+    }
+    .col-sm-6 {
+        width: 50%;
+    }
+    .col-sm-7 {
+        width: 58.33%;
+    }
+    .col-sm-8 {
+        width: 66.66%;
+    }
+    .col-sm-9 {
+        width: 74.99%;
+    }
+    .col-sm-10 {
+        width: 83.33%;
+    }
+    .col-sm-11 {
+        width: 91.66%;
+    }
+    .col-sm-12 {
+        width: 100%;
+    }
+}
