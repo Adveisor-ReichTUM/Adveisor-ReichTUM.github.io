@@ -77,13 +77,13 @@ public class GameRestController {
 
 
 
-    @RequestMapping(value="/buy-out-of-jail", method = RequestMethod.GET, produces="application/json")
+    @PostMapping(value="/buy-out-of-jail", produces="application/json")
     public Game buyOutOfJail(@RequestBody Player player){
         gameService.buyOutOfJail(player);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/use-jail-card", method = RequestMethod.GET, produces="application/json")
+    @PostMapping(value="/use-jail-card", produces="application/json")
     public Game useJailCard(@RequestBody Player player){
         gameService.useJailCard(player);
         return gameService.getGame();
@@ -94,43 +94,43 @@ public class GameRestController {
         return gameService.buyProperty(player);
     }
 
-    @RequestMapping(value="/sell-property-to-bank", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/sell-property-to-bank", method = RequestMethod.POST, produces="application/json")
     public Game sellPropertyToBank(@RequestParam int fieldIndex, @RequestBody Player player){
         gameService.sellPropertyToBank(fieldIndex, player);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/start-auction", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/start-auction", method = RequestMethod.POST, produces="application/json")
     public Game passProperty(@RequestParam int fieldIndex){
         gameService.auctionProperty(fieldIndex);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/bid", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/bid", method = RequestMethod.POST, produces="application/json")
     public Game bid(@RequestBody PlayerBid playerBid){
         gameService.tryHighestBid(playerBid);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/start-mortgage", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/start-mortgage", method = RequestMethod.POST, produces="application/json")
     public Game startMortgage(@RequestParam int fieldIndex, @RequestBody Player player){
         gameService.startMortgage(fieldIndex, player);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/end-mortgage", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/end-mortgage", method = RequestMethod.POST, produces="application/json")
     public Game endMortgage(@RequestParam int fieldIndex, @RequestBody Player player){
         gameService.endMortgage(fieldIndex, player);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/buy-house", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/buy-house", method = RequestMethod.POST, produces="application/json")
     public Game buyHouse(@RequestParam int fieldIndex, @RequestBody Player player){
         gameService.buyHouse(fieldIndex, player);
         return gameService.getGame();
     }
 
-    @RequestMapping(value="/sell-House", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/sell-House", method = RequestMethod.POST, produces="application/json")
     public Game sellHouse(@RequestParam int fieldIndex, @RequestBody Player player){
         gameService.sellHouse(fieldIndex, player);
         return gameService.getGame();
