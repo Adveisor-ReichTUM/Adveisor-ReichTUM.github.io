@@ -686,7 +686,7 @@ function statusSwitch($scope){
     if(($scope.username != $scope.currentPlayer.name) &&
         ($scope.game.currentStatusString == 'TURN' || $scope.game.currentStatusString == 'BUYPROPERTY'
         ||$scope.game.currentStatusString == 'DICE' || $scope.game.currentStatusString == 'JAIL')){
-        // edit ui ....
+        disable_trading_page();
     }
     else{
         // undo edit ui ....
