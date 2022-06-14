@@ -610,3 +610,22 @@ function user_login() {
         alert(users[user]);
     }
 }*/
+
+
+var app = angular.module('gameApp', []);
+app.controller('gameController', function($scope){
+        poll($scope);
+
+        //to be continued
+    }
+);
+
+// periodically making API requests to update scope object
+function poll($scope){
+    $.getJSON('game', function(json){
+        update($scope, json);
+        setTimeout(function(){
+            poll($scope);
+        }, 500);
+    });
+}
