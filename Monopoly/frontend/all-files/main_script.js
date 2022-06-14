@@ -612,6 +612,13 @@ function user_login() {
 }*/
 
 
+
+//-------Angular Module------------
+
+
+
+var laststatus = null;
+
 var app = angular.module('gameApp', []);
 app.controller('gameController', function($scope){
         poll($scope);
@@ -628,4 +635,18 @@ function poll($scope){
             poll($scope);
         }, 500);
     });
+}
+
+function update($scope, json){
+    // load json package containing game object into scope.game variable
+    $scope.game = json;
+    $scope.currentPlayer = scope.game.players[$scope.game.currentPlayer];
+
+    // update GUI if game status changes
+    if(laststatus!=$scope.game.currentStatusString){
+        phaseChange($scope);
+        laststatus = $scope.game.currentStatusString;
+    }
+
+    $scope.$apply();
 }
