@@ -640,13 +640,31 @@ function poll($scope){
 function update($scope, json){
     // load json package containing game object into scope.game variable
     $scope.game = json;
+
+    // Update here every variable that is not directly addressed via $scope.game
     $scope.currentPlayer = scope.game.players[$scope.game.currentPlayer];
 
     // update GUI if game status changes
     if(laststatus!=$scope.game.currentStatusString){
-        phaseChange($scope);
+        statusSwitch($scope);
         laststatus = $scope.game.currentStatusString;
     }
 
     $scope.$apply();
+}
+
+function statusSwitch($scope){
+    // Adjust UI for inactive player
+    if(($scope.username != $scope.currentPlayer.name) &&
+        ($scope.game.currentStatusString == 'TURN' || $scope.game.currentStatusString == 'BUYPROPERTY'
+        ||$scope.game.currentStatusString == 'DICE' || $scope.game.currentStatusString == 'JAIL')){
+        // edit ui ....
+    }
+    else{
+        // undo edit ui ....
+    }
+
+    if($scope.game.currentstatusString == 'AUCTION'){
+        $scope.bid = $scope.game.highestBid;
+    }
 }
