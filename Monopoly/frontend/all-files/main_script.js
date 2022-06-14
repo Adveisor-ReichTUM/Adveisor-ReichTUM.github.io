@@ -398,16 +398,16 @@ function hide_modal() {
 }
 
 function disable_trading_page() {
-    if(opponents_turn) {
+    if(true) {
         //verhindert Drücken auf Verhandeln oder Straßen
-        document.getElementById("Verhandeln").href = "javascript: void(0)"; //alternativ: .href = "";
+        document.getElementById("Verhandeln").href = "Javascript://"; //alternativ: .href = "";
         document.getElementById("Straßen").href = "javascript: void(0)";
-        //leitet zurück zu Hauptseite
-        window.location.href = './homepage_index.html'; //ich bin mir nicht ganz sicher, ob es auch ohne ./ funktioniert
-        //
-        document.getElementsByTagName("body").style.opacity = 0.5;
+        //Graue den Bildschirm ein
+        document.body.style.opacity = 0.5;
     }
 }
+
+
 
 
 
