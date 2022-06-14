@@ -635,6 +635,21 @@ var app = angular.module('gameApp', []);
 app.controller('gameController', function($scope){
         poll($scope);
 
+        $scope.getOperation = function(url, callback){
+            $.getJSON(url, function(json){
+                    update($scope, json);
+                    if(callback!=undefined){
+                        callback(true);
+                    }
+                }
+            )
+            .fail(function(){
+                if(callback!=undefined){
+                    callback(false);
+                }
+            })
+        }
+
         //to be continued
     }
 );
