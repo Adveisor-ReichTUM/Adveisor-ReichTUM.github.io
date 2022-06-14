@@ -52,6 +52,8 @@ public class Game {
 
     private AbstractStatus currentStatus;
 
+    private String currentStatusString;
+
     // constructor
     @Autowired
     public Game(String boardfile, String chancefile, String communityfile){

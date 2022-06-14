@@ -12,5 +12,6 @@ public class StartStatus extends AbstractStatus {
 
     public StartStatus(Game game) {
         super(game);
+        game.setCurrentStatusString("START");
     }
 }

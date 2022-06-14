@@ -12,5 +12,6 @@ public class DiceStatus extends AbstractStatus {
 
     public DiceStatus(Game game) {
         super(game);
+        game.setCurrentStatusString("DICE");
     }
 }

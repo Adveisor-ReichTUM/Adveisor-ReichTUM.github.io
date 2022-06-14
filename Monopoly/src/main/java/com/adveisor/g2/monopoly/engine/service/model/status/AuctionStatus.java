@@ -12,5 +12,6 @@ public class AuctionStatus extends AbstractStatus {
 
     public AuctionStatus(Game game) {
         super(game);
+        game.setCurrentStatusString("AUCTION");
     }
 }

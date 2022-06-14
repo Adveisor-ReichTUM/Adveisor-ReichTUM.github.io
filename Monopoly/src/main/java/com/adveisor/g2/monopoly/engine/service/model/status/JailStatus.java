@@ -12,5 +12,6 @@ public class JailStatus extends AbstractStatus {
 
     public JailStatus(Game game) {
         super(game);
+        game.setCurrentStatusString("JAIL");
     }
 }

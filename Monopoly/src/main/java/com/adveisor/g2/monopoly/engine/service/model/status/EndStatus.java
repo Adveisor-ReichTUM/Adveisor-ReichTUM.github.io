@@ -12,6 +12,7 @@ public class EndStatus extends AbstractStatus {
 
     public EndStatus(Game game) {
         super(game);
+        game.setCurrentStatusString("END");
     }
 
     @Override

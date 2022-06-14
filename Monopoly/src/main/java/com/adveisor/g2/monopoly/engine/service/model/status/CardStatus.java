@@ -12,5 +12,6 @@ public class CardStatus extends AbstractStatus {
 
     public CardStatus(Game game) {
         super(game);
+        game.setCurrentStatusString("CARD");
     }
 }

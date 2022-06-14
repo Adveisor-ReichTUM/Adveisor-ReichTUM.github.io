@@ -18,6 +18,7 @@ public class TurnStatus extends AbstractStatus {
 
     public TurnStatus(Game game) {
         super(game);
+        game.setCurrentStatusString("TURN");
     }
 
     @Override

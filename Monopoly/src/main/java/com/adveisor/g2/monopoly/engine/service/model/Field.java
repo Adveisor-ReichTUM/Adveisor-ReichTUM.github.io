@@ -25,6 +25,8 @@ public class Field {
     private enum fieldType {los, street, station, jail, police, parking, tax, chance, community, utilities}
     private final fieldType type;
 
+    private int mortgageValue;
+
     // constructor
     public Field(String name, String type, String color, int position, int price, int housecost, int[] rent_stages){
         this.name = name;
@@ -39,6 +41,7 @@ public class Field {
         this.owner = -1;
         this.numHouses = 0;
         this.Hypothek = false;
+        this.mortgageValue = getMortgageValue();
     }
 
     public static void evaluateField(Field field, Player player, Game game){

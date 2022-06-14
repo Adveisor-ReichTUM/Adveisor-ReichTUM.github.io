@@ -12,5 +12,6 @@ public class BuyPropertyStatus extends AbstractStatus {
 
     public BuyPropertyStatus(Game game) {
         super(game);
+        game.setCurrentStatusString("BUYPROPERTY");
     }
 }

@@ -16,6 +16,7 @@ public class WaitingStatus extends AbstractStatus {
 
     public WaitingStatus(Game game) {
         super(game);
+        game.setCurrentStatusString("WAITING");
     }
 
     @Override
