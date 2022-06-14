@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ReichTUM</title>
+        <link rel="shortcut icon" href="images/favicon.png">
+        <link rel="stylesheet" type="text/css" href="styles_homepage.css">
+        <!--<script type="text/javascript" src="script.js"></script>-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />        
+    </head>
+    
+    <body>
+        <!--Navigationsleiste mit Weiterleitung zu anderen Seiten -->
+        <ul class="menu">
+            <li><a href="homepage_index.html"><img id="logo" src="AdvEIsor Logo rund.png"> </a> </li>
+            <li><a href="Verhandeln HTML.html"><i class="fa-solid fa-arrow-right-arrow-left"></i> Verhandeln</a></li>
+            <li><a href="Verhandeln HTML.html"><i class="fa-solid fa-road"></i> Straßen</a></li>
+            <li style="float:right;"><a href="loginpage_index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+        </ul>
+        
+        <br>
+        <table width="100%">
+            <col style="width:70%">
+            <col style="width:30%">
+            <tr>
+                <td>
+                    <!-- Evtl. Spielbrett anzeigen; erstmal: leer -->
+                    <img src="Adveisor Karte.png" width="650" height="650" border="0" usemap="#map" />
+
+                    <map name="map">
+                    <!-- #$-:Image map file created by GIMP Image Map plug-in -->
+                    <!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
+                    <!-- #$-:Please do not edit lines starting with "#$" -->
+                    <!-- #$VERSION:2.3 -->
+                    <!-- #$AUTHOR:grube -->
+                    <area shape="rect" coords="508,563,560,648" href="Array Tal.png" target="_blank" />
+                    <area shape="rect" coords="402,564,454,647" href="Printf Straße.png" target="_blank" />
+                    <area shape="rect" coords="297,564,348,648" href="AND Gatter.png" target="_blank" />
+                    <area shape="rect" coords="245,564,295,647" href="Byte Allee.png" target="_blank" />
+                    <area shape="rect" coords="138,564,189,647" href="Multiplexer Platz.png" target="_blank" />
+                    <area shape="rect" coords="86,565,135,647" href="MMIX Gebirge.png" target="_blank" />
+                    <area shape="rect" coords="4,509,86,560" href="Linearegleichungs Allee.png" target="_blank" />
+                    <area shape="rect" coords="2,456,86,506" href="Spannungsquelle.png" target="_blank" />
+                    <area shape="rect" coords="2,404,86,454" href="Skalarplatz.png" target="_blank" />
+                    <area shape="rect" coords="2,351,86,401" href="Eigenwertstraße.png" target="_blank" />
+                    <area shape="rect" coords="2,299,86,348" href="OR Gatter.png" target="_blank" />
+                    <area shape="rect" coords="2,246,85,297" href="Determigasse.png" target="_blank" />
+                    <area shape="rect" coords="2,141,85,192" href="Zeilenstufenweg.png" target="_blank" />
+                    <area shape="rect" coords="1,87,85,139" href="Eigenvalley.png" target="_blank" />
+                    <area shape="rect" coords="86,3,137,85" href="Bernoullevard.png" target="_blank" />
+                    <area shape="rect" coords="191,2,242,86" href="L'Hospit-Allee.png" target="_blank" />
+                    <area shape="rect" coords="244,2,294,85" href="Cau-Chysee.png" target="_blank" />
+                    <area shape="rect" coords="296,4,349,85" href="NAND Gatter.png" target="_blank" />
+                    <area shape="rect" coords="350,2,401,84" href="Sandwich-Platz.png" target="_blank" />
+                    <area shape="rect" coords="402,2,453,84" href="Leibniz Hospital.png" target="_blank" />
+                    <area shape="rect" coords="455,2,506,84" href="Stromquelle.png" target="_blank" />
+                    <area shape="rect" coords="507,2,559,84" href="Grenzweg.png" target="_blank" />
+                    <area shape="rect" coords="559,87,648,138" href="Kirchhoffsche Moschee.png" target="_blank" />
+                    <area shape="rect" coords="559,140,648,192" href="Norator.png" target="_blank" />
+                    <area shape="rect" coords="560,246,648,298" href="Tayl-Tor.png" target="_blank" />
+                    <area shape="rect" coords="560,299,649,349" href="NOR Gatter.png" target="_blank" />
+                    <area shape="rect" coords="560,403,648,456" href="Zirkulator.png" target="_blank" />
+                    <area shape="rect" coords="561,510,648,563" href="Ohmplatz.png" target="_blank" />
+                    <area class="chance_cards" onclick="show_chance_card()" shape="poly" coords="452,540,539,454,478,395,394,483" href="" target="_blank"/>
+                    <area class="community_cards" onclick="show_community_card()" shape="poly" coords="164,251,249,166,191,107,106,194" href="" target="_blank"/>
+                    </map>
+                </td>
+                <td style="vertical-align:top;">
+                    <table>
+                        <col style="width:30%">
+                        <col style="width:30%">
+                        <col style="width:40%">
+                        <tr>
+                            <td>
+                                <!--Geldzähler Gegner kann noch verändert werden-->
+                                <div class="counter-container">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <div class="counter-opponent"></div>
+                                </div>
+                            
+                                
+                            </td>
+                            <td>
+                                <!--Geldzähler kann noch verändert werden-->
+                                <div class="counter-container">
+                                    <i class="fa-solid fa-sack-dollar"></i>
+                                    <div class="counter"></div>
+                                </div>
+                            
+                                
+                            </td>
+                            <td>
+                                <!--Timer, der die Spielzeit anzeigt mit Mgl. zu pausieren-->
+                                <div class="time-container">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <div id="count_up_timer">00:00:00</div>
+                                    <button class="button" id="break_count_up_timer" onclick="pause_timer()">Pause</button>
+                                    </div>
+                                </div>    
+                            </td>
+                        </tr>
+                        <tr>
+                            <col style="width: 100%;">
+                            <td>
+                                <div style="width: 100%;">
+                                    <button onclick="free_prison_community_button_clicked()" disabled id="prison_community_click" style="opacity: 0.5;"><img src="free_prison_community.png"></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 100%">
+                                    <button onclick="free_prison_chance_button_clicked()" disabled id="prison_chance_click" style="opacity: 0.5;"><img src="free_prison_chance.png"></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width:100%; height: 100%; background: white;">
+                                    hallo
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <script src="main_script.js"></script>
+        <script type = "text/javascript">
+            updateCounter_2(500, true);
+        </script>
+
+    </body>
+</html>

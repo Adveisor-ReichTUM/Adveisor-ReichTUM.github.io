@@ -1,0 +1,55 @@
+body {
+    background-image: url('Loginpage Hintergrundbild.jpg');
+}
+
+form {
+    margin: 12% 0%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+input[type=text] {
+  width: 33%;
+  padding: 12px 20px;
+  margin: 40px 33%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#remember_me {
+   margin: 40px 33%;
+   color: black;
+   background-color: #ccc;
+}
+
+button {
+  background-color: #3170b3;
+  color: white;
+  padding: 14px 20px;
+  margin: 40px auto;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.imgcontainer {
+  text-align: center;
+  height: 20%;
+  width: 20%;
+  margin: auto;
+}
+
+img.logo {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
