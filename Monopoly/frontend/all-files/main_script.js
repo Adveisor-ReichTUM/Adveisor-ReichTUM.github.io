@@ -407,6 +407,12 @@ function disable_trading_page() {
     }
 }
 
+function enable_trading_page() {
+    document.getElementById("Verhandeln").href = "Verhandeln HTML.html";
+    document.getElementById("Straßen").href = "Verhandeln HTML.html";
+    document.body.style.opacity = 1;
+}
+
 
 
 
