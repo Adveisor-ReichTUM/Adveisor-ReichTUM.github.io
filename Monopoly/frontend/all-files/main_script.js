@@ -397,6 +397,18 @@ function hide_modal() {
     }, 1000);
 }
 
+function disable_trading_page() {
+    if(opponents_turn) {
+        //verhindert Drücken auf Verhandeln oder Straßen
+        document.getElementById("Verhandeln").href = "javascript: void(0)"; //alternativ: .href = "";
+        document.getElementById("Straßen").href = "javascript: void(0)";
+        //leitet zurück zu Hauptseite
+        window.location.href = './homepage_index.html'; //ich bin mir nicht ganz sicher, ob es auch ohne ./ funktioniert
+        //
+        document.getElementsByTagName("body").style.opacity = 0.5;
+    }
+}
+
 
 
 
@@ -511,13 +523,13 @@ function set_community_order(community_cards_merged) {
 
 //ziehe verschiedene Ereigniskarten als Bild
 function show_chance_card() {
-    current_chance_card_id = chance_cards[chance_index];
+    document.getElementById("kind_of_taken_card").innerHTML = "Ereigniskarte";
     //get image
-    source = "Ereigniskarte_" + current_chance_card_id + ".png";
+    document.getElementById("taken_card_content").innerHTML = txt;
     //change index
-    chance_index = (chance_index + 1) % chance_cards.length;
+    source = "Ereigniskarte Fragezeichen.jpg"
     //show image
-    window.location.href = './' + source;
+    window.location.href = '../' + source;
     //prison card
     if(current_chance_card_id == prison_index) {
         free_prison_chance_dragged();
@@ -526,13 +538,13 @@ function show_chance_card() {
 
 //ziehe verschiedene Gemeinschaftskarten als Bild
 function show_community_card() {
-    current_community_card_id = community_cards[community_index];
+    document.getElementById("kind_of_taken_card").innerHTML = "Gemeinschaftskarte";
     //get image
-    source = "Gemeinschaftskarte_" + current_community_card_id + ".png";
+    document.getElementById("taken_card_content").innerHTML = txt;
     //change index
-    community_index = (community_index + 1) % community_cards.length;
+    source = "Gemeinschaftskarte Truhe.jpg"
     //show image
-    window.location.href = './' + source;
+    window.location.href = '../' + source;
     //prison card
     if(current_community_card_id == prison_index) {
         free_prison_community_dragged();
