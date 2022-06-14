@@ -695,7 +695,7 @@ function statusSwitch($scope){
         disable_trading_page();
     }
     else{
-        // undo edit ui ....
+        enable_trading_page();
     }
 
     if($scope.game.currentstatusString == 'AUCTION'){
