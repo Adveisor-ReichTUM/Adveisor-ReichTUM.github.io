@@ -15,8 +15,8 @@
         <!--Navigationsleiste mit Weiterleitung zu anderen Seiten -->
         <ul class="menu">
             <li><a href="homepage_index.html"><img id="logo" src="AdvEIsor Logo rund.png"> </a> </li>
-            <li><a href="Verhandeln HTML.html"><i class="fa-solid fa-arrow-right-arrow-left"></i> Verhandeln</a></li>
-            <li><a href="Verhandeln HTML.html"><i class="fa-solid fa-road"></i> Straßen</a></li>
+            <li><a id="Verhandeln" href="Verhandeln HTML.html"><i class="fa-solid fa-arrow-right-arrow-left"></i> Verhandeln</a></li>
+            <li><a id="Straßen" href="Verhandeln HTML.html"><i class="fa-solid fa-road"></i> Straßen</a></li>
             <li style="float:right;"><a href="loginpage_index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
         </ul>
         
@@ -63,8 +63,8 @@
                     <area shape="rect" coords="560,299,649,349" href="NOR Gatter.png" target="_blank" />
                     <area shape="rect" coords="560,403,648,456" href="Zirkulator.png" target="_blank" />
                     <area shape="rect" coords="561,510,648,563" href="Ohmplatz.png" target="_blank" />
-                    <area class="chance_cards" onclick="show_chance_card()" shape="poly" coords="452,540,539,454,478,395,394,483" href="" target="_blank"/>
-                    <area class="community_cards" onclick="show_community_card()" shape="poly" coords="164,251,249,166,191,107,106,194" href="" target="_blank"/>
+                    <area class="chance_cards" onclick="show_chance_card()" shape="poly" coords="452,540,539,454,478,395,394,483" href="" />
+                    <area class="community_cards" onclick="show_community_card()" shape="poly" coords="164,251,249,166,191,107,106,194" href="" />
                     </map>
                 </td>
                 <td style="vertical-align:top;">
@@ -118,8 +118,27 @@
                         </tr>
                         <tr>
                             <td>
-                                <div style="width:100%; height: 100%; background: white;">
-                                    hallo
+                                <div class="card">
+                                    <div class="cont">
+                                        <div class="title">
+                                            <h2 id="kind_of_taken_card">Ereignisfeld</h2>
+                                        </div>
+                                        <!-- <p id="rent"><b>Grundstückwert: &#937; 400</b></p> -->
+                                        <table style="height: 100%;">
+                                            <col width="55%">
+                                            <col width="45%">                    
+                                            <div class="details">
+                                                <tr>
+                                                    <td>
+                                                        <p id="taken_card_content">Das ist ein Test Das ist ein TestDas ist ein TestDas ist ein Test</p>
+                                                    </td>
+                                                    <td>
+                                                        <img src="" id="question_chest">
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                        </table>
+                                    </div>   
                                 </div>
                             </td>
                         </tr>
