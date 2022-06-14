@@ -650,6 +650,7 @@ app.controller('gameController', function($scope){
             })
         }
 
+
         //to be continued
     }
 );
@@ -681,7 +682,7 @@ function update($scope, json){
 }
 
 function statusSwitch($scope){
-    // Adjust UI for inactive player
+    // Adjust UI for inactive players
     if(($scope.username != $scope.currentPlayer.name) &&
         ($scope.game.currentStatusString == 'TURN' || $scope.game.currentStatusString == 'BUYPROPERTY'
         ||$scope.game.currentStatusString == 'DICE' || $scope.game.currentStatusString == 'JAIL')){
