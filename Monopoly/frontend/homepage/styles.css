@@ -1,0 +1,121 @@
+body {
+    background-color: lightgray;
+}
+
+/*Navigation Bar*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+li {
+    float: left;
+  }
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+li a:hover {
+    background-color: #0462bb;
+}
+
+.menu img {
+    height: 1em;
+}
+
+/*Spielzeit*/
+#count_up_timer {
+    font-size: 25px;
+    font-weight: bold;
+	color: #0462bb;
+}
+
+#break_count_up_timer {
+    background-color: #0462bb;
+	color:white;
+}
+
+.fa-clock {
+    font-size: 30px;
+    color: #0462bb;
+}
+
+.time-container {
+    text-align: right;
+    margin-right: 20px;
+    border-radius: 80%;
+}
+
+.button {
+    border-radius: 12px;
+}
+
+/*Geldstand*/
+.counter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    margin: 10px 20px; 
+    color: #0462bb; 
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.counter-opponent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    margin: 10px 0px; 
+    color: red; 
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.counter-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 5px 5px 5px 0px;
+    color: #0462bb;
+    font-size: 30px;
+    font-weight: bold;
+    border: none;
+}
+
+.fa-dollar-sign {
+    font-size: 30px;
+    color: red;
+    margin-top: 20px;
+}
+
+.fa-sack-dollar {
+    font-size: 30px;
+    color: #0462bb;
+    margin-top: 20px;
+}
+
+/*Hauptlogo*/
+.projectlogo {
+    margin-top: 0px;
+}
+
+#field {
+    height: 650px;
+    width: 650px;
+}
+
+
+
+
+
