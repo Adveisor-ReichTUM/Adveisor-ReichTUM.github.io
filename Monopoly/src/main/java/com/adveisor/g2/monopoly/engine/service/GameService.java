@@ -4,25 +4,27 @@
 
 package com.adveisor.g2.monopoly.engine.service;
 
+import com.adveisor.g2.monopoly.config.MqttClientSingleton;
 import com.adveisor.g2.monopoly.engine.service.model.Dice;
 import com.adveisor.g2.monopoly.engine.service.model.PlayerBid;
 import com.adveisor.g2.monopoly.engine.service.model.board.Field;
 import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.deck.Card;
+import com.adveisor.g2.monopoly.engine.service.model.mqtt.MqttPublishModel;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import com.adveisor.g2.monopoly.engine.service.status.*;
 import com.adveisor.g2.monopoly.util.Logger;
 import lombok.Getter;
 import lombok.Setter;
+import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -280,8 +282,36 @@ public class GameService {
         currentStatus.sellHouse(fieldIndex);
     }
 
+
     public static void transaction(Player paying_pl, Player paid_pl, int diff){
         paying_pl.adjustBalance(-diff);
         paid_pl.adjustBalance(diff);
+    }
+
+
+    // MQTT methods below
+
+    public static void MqttPublishMessage(MqttPublishModel messagePublishModel, BindingResult bindingResult) throws MqttException {
+
+        if (bindingResult.hasErrors()) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "MQTT ERROR: Some parameter(s) invalid");
+        }
+
+        MqttMessage mqttMessage = new MqttMessage(messagePublishModel.getMessage().getBytes());
+        mqttMessage.setQos(messagePublishModel.getQos());
+        mqttMessage.setRetained(messagePublishModel.getRetained());
+
+        MqttClientSingleton.getInstance().publish(messagePublishModel.getTopic(), mqttMessage);
+    }
+
+    public static void MqttSubscribeChannelTest(String topic, Integer waitMillis)
+            throws InterruptedException, MqttException {
+        //CountDownLatch countDownLatch = new CountDownLatch(10);
+        MqttClientSingleton.getInstance().subscribeWithResponse(topic, (mqttTopic, mqttMessage) -> {
+            Logger.log("Under Topic: " + mqttTopic + "\n" + mqttMessage);
+            //countDownLatch.countDown();
+        });
+
+        //countDownLatch.await(waitMillis, TimeUnit.MILLISECONDS);
     }
 }
