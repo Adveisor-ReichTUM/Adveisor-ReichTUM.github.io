@@ -150,7 +150,30 @@
             </tr>
         </table>
 
-        <button type="button" onclick="show_chance_card()">Test</button>
+        <button type="button" onclick="show_chance_card()">Show Card Test</button>
+
+        <button type="button" onclick="disable_trading_page()">Beende Zug</button>
+
+        <!-- Trigger/Open The Modal -->
+        <button id="myBtn" onclick="show_whos_turn()">Alert Turn</button>
+
+        <!-- The Modal -->
+        <div id="alert_turn" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Achtung!</h2>
+                </div>
+                <div class="modal-body">
+                <p>Player 1,</p>
+                <p>Du bist am Zug!</p>
+                </div>
+            </div>
+
+        </div>
+
 
         <script src="main_script.js"></script>
         <script type = "text/javascript">

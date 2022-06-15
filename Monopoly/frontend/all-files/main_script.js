@@ -356,6 +356,190 @@ function write_username(own_username, opponent_username) {
     document.getElementById("opponent_username").innerHTML = opponent_username;
 }
 
+function specify_own_username() {
+    own_username = document.getElementById("username").value;
+    document.getElementById("own_username").innerHTML = own_username;
+}
+
+
+
+
+
+//-------Homepage------------
+
+
+
+
+
+
+chance_cards=[];
+community_cards=[];
+chance_index = 0;
+community_index = 0;
+
+//globale Variablen für countUpTimer()
+var timerVariable = setInterval(function() {
+    if(!isPaused) {
+        countUpTimer();
+    }
+}, 1000);
+var totalSeconds = 0;
+var isPaused = false;
+
+function pad(num, size) {
+    num = num.toString();
+    while (num.length < size) num = "0" + num;
+    return num;
+}
+
+function countUpTimer() {
+    ++totalSeconds;
+    var hour = Math.floor(totalSeconds / 3600);
+    var minute = Math.floor((totalSeconds - hour * 3600) / 60);
+    var seconds = totalSeconds - (hour * 3600 + minute * 60);
+    document.getElementById("count_up_timer").innerHTML = pad(hour, 2) + ":" + pad(minute, 2) + ":" + pad(seconds, 2);
+}
+
+function pause_timer() {
+    isPaused = !isPaused;
+    if(isPaused)
+    document.getElementById("break_count_up_timer").innerHTML = "Weiter";
+    else
+    document.getElementById("break_count_up_timer").innerHTML = "Pause";
+}
+
+
+//Geldzähler geht bis 1500
+const counters = document.querySelectorAll('.counter');
+
+counters.forEach(counter => {
+    counter.innerText = '0';
+    counter.setAttribute('data-target', 1500);
+    const updateCounter = () => {
+        const target = +counter.getAttribute('data-target');
+        const c = +counter.innerText;
+        
+        const increment = target / 200;
+        
+        if(c < target) {
+            counter.innerText = `${Math.ceil(c + increment)}`;
+            setTimeout(updateCounter, 1);
+        }
+        else{
+            counter.innerText = target;
+        }
+    };
+    updateCounter();
+});
+
+//dynamisches Update des Geldcounters
+function updateCounter_2(new_counter_value, is_opponent) {
+    // is_oppenent entscheidet, ob Du den Wert für den Gegner oder den Spieler aktualisierst
+    var new_counters;
+    if(is_opponent) {
+        new_counters = document.querySelectorAll('.counter-opponent');
+    } else {
+        new_counters = document.querySelectorAll('.counter');
+    }
+    new_counters.forEach(counter => {
+        counter.innerText = '0';
+        counter.setAttribute('data-target', new_counter_value);
+        
+        const updateCounter = () => {
+            const target = +counter.getAttribute('data-target');
+            const c = +counter.innerText;
+            
+            const increment = target / 200;
+            
+            if(c < target) {
+                counter.innerText = `${Math.ceil(c + increment)}`;
+                setTimeout(updateCounter, 1);
+            }
+            else{
+                counter.innerText = target;
+            }
+        };
+        updateCounter();
+    });
+}
+
+//Integer-Liste mit Indices der gemischten Ereigniskarten
+function set_chance_order(chance_cards_merged) {
+    chance_cards = chance_cards_merged;
+}
+
+//Integer-Liste mit Indices der gemischten Gemeinschaftskarten
+function set_community_order(community_cards_merged) {
+    community_cards = community_cards_merged;
+}
+
+//ziehe verschiedene Ereigniskarten als Bild
+function show_chance_card() {
+    //txt aus Backend
+    txt = anyBackendFunction();
+    //Zeige Karte
+    document.getElementById("card_field").style.visibility = "visible";
+    //Zeige Ereigniskarte
+    document.getElementById("kind_of_taken_card").innerHTML = "Ereigniskarte";
+    //Zeige Text
+    document.getElementById("taken_card_content").innerHTML = txt;
+    //Zeige Fragezeichen
+    document.getElementById("chance_questionmark").style.display = "inline";
+    //prison card
+    if(txt == "Du kommst aus dem Gefängnis frei.") {
+        free_prison_chance_dragged();
+    }
+}
+
+//ziehe verschiedene Gemeinschaftskarten als Bild
+function show_community_card(txt) {
+    //Zeige Karte
+    document.getElementById("card_field").style.visibility = "visible";
+    //Blende Fragezeichen aus
+    document.getElementById("chance_questionmark").style.display = "none";
+    //Zeige Titel
+    document.getElementById("kind_of_taken_card").innerHTML = "Gemeinschaftskarte";
+    //Zeige Text
+    document.getElementById("taken_card_content").innerHTML = txt;
+    //prison card
+    if(current_community_card_id == prison_index) {
+        free_prison_community_dragged();
+    }
+    
+}
+
+//Umgang mit Du kommst aus dem Gefängnis frei
+function free_prison_chance_dragged() {
+    document.getElementById("prison_chance_click").disabled = false;
+    document.getElementById("prison_chance_click").style.opacity = 1;
+}
+
+//Umgang mit Du kommst aus dem Gefängnis frei
+function free_prison_community_dragged() {
+    document.getElementById("prison_community_click").disabled = false;
+    document.getElementById("prison_community_click").style.opacity = 1;
+}
+
+function free_prison_community_button_clicked() {
+    if(/*free_prison_card_played()*/ true) {
+        document.getElementById("prison_community_click").disabled = true;
+        document.getElementById("prison_community_click").style.opacity = 0.5;
+    }
+    //backend: free_prison_card_played();
+}
+
+function free_prison_chance_button_clicked() {
+    if(/*free_prison_card_played()*/ true) {
+        document.getElementById("prison_chance_click").disabled = true;
+        document.getElementById("prison_chance_click").style.opacity = 0.5;
+    }
+    //backend: free_prison_card_played();
+}
+
+function hide_card_after_dragged() {
+    document.getElementById("card_field").visibility = "hidden";
+}
+
 function show_whos_turn() {
 
     // Get the modal
@@ -416,203 +600,15 @@ function enable_trading_page() {
 
 
 
-
-
-
-//-------Homepage------------
-
-
-
-
-
-
-chance_cards=[];
-community_cards=[];
-chance_index = 0;
-community_index = 0;
-
-//globale Variablen für countUpTimer()
-var timerVariable = setInterval(function() {
-    if(!isPaused) {
-        countUpTimer();
-    }
-}, 1000);
-var totalSeconds = 0;
-var isPaused = false;
-
-function pad(num, size) {
-    num = num.toString();
-    while (num.length < size) num = "0" + num;
-    return num;
-}
-
-function countUpTimer() {
-    ++totalSeconds;
-    var hour = Math.floor(totalSeconds / 3600);
-    var minute = Math.floor((totalSeconds - hour * 3600) / 60);
-    var seconds = totalSeconds - (hour * 3600 + minute * 60);
-    document.getElementById("count_up_timer").innerHTML = pad(hour, 2) + ":" + pad(minute, 2) + ":" + pad(seconds, 2);
-}
-
-function pause_timer() {
-    isPaused = !isPaused;
-    if(isPaused)
-        document.getElementById("break_count_up_timer").innerHTML = "Weiter";
-    else
-        document.getElementById("break_count_up_timer").innerHTML = "Pause";
-}
-
-
-//Geldzähler geht bis 1500
-const counters = document.querySelectorAll('.counter');
-
-counters.forEach(counter => {
-    counter.innerText = '0';
-    counter.setAttribute('data-target', 1500);
-    const updateCounter = () => {
-        const target = +counter.getAttribute('data-target');
-        const c = +counter.innerText;
-
-        const increment = target / 200;
-
-        if(c < target) {
-            counter.innerText = `${Math.ceil(c + increment)}`;
-            setTimeout(updateCounter, 1);
-        }
-        else{
-            counter.innerText = target;
-        }
-    };
-    updateCounter();
-});
-
-//dynamisches Update des Geldcounters
-function updateCounter_2(new_counter_value, is_opponent) {
-    // is_oppenent entscheidet, ob Du den Wert für den Gegner oder den Spieler aktualisierst
-    var new_counters;
-    if(is_opponent) {
-        new_counters = document.querySelectorAll('.counter-opponent');
-    } else {
-        new_counters = document.querySelectorAll('.counter');
-    }
-    new_counters.forEach(counter => {
-        counter.innerText = '0';
-        counter.setAttribute('data-target', new_counter_value);
-        
-        const updateCounter = () => {
-            const target = +counter.getAttribute('data-target');
-            const c = +counter.innerText;
-            
-            const increment = target / 200;
-            
-            if(c < target) {
-                counter.innerText = `${Math.ceil(c + increment)}`;
-                setTimeout(updateCounter, 1);
-            }
-            else{
-                counter.innerText = target;
-            }
-        };
-        updateCounter();
-    });
-}
-
-//Integer-Liste mit Indices der gemischten Ereigniskarten
-function set_chance_order(chance_cards_merged) {
-    chance_cards = chance_cards_merged;
-}
-
-//Integer-Liste mit Indices der gemischten Gemeinschaftskarten
-function set_community_order(community_cards_merged) {
-    community_cards = community_cards_merged;
-}
-
-//ziehe verschiedene Ereigniskarten als Bild
-function show_chance_card(txt) {
-    document.getElementById("card_field").style.visibility = "visible";
-    document.getElementById("kind_of_taken_card").innerHTML = "Ereigniskarte";
-    //get image
-    document.getElementById("taken_card_content").innerHTML = txt;
-    //change index
-    document.getElementById("chance_questionmark").style.display = "inline";
-    //prison card
-    if(current_chance_card_id == prison_index) {
-        free_prison_chance_dragged();
-    }
-}
-
-//ziehe verschiedene Gemeinschaftskarten als Bild
-function show_community_card(txt) {
-    document.getElementById("card_field").style.visibility = "visible";
-    document.getElementById("kind_of_taken_card").innerHTML = "Gemeinschaftskarte";
-    //get image
-    document.getElementById("taken_card_content").innerHTML = txt;
-    //change index
-    //prison card
-    if(current_community_card_id == prison_index) {
-        free_prison_community_dragged();
-    }
-
-}
-
-//Umgang mit Du kommst aus dem Gefängnis frei
-function free_prison_chance_dragged() {
-    document.getElementById("prison_chance_click").disabled = false;
-    document.getElementById("prison_chance_click").style.opacity = 1;
-}
-
-//Umgang mit Du kommst aus dem Gefängnis frei
-function free_prison_community_dragged() {
-    document.getElementById("prison_community_click").disabled = false;
-    document.getElementById("prison_community_click").style.opacity = 1;
-}
-
-function free_prison_community_button_clicked() {
-    if(/*free_prison_card_played()*/ true) {
-        document.getElementById("prison_community_click").disabled = true;
-        document.getElementById("prison_community_click").style.opacity = 0.5;
-    }
-    //backend: free_prison_card_played();
-}
-
-function free_prison_chance_button_clicked() {
-    if(/*free_prison_card_played()*/ true) {
-        document.getElementById("prison_chance_click").disabled = true;
-        document.getElementById("prison_chance_click").style.opacity = 0.5;
-    }
-    //backend: free_prison_card_played();
-}
-
-
-
-
 //-------------loginpage--------------
 
 
 
 
 
-
-var users = {
-    'fabian_gruber': [false, true, true, false]
-};
-
-var record = [];
-
-function user_login() {
-    uname_exists = false;
-    entered_username = document.getElementById("username").value;
-    for(user in users) {
-        if(users[user] == entered_username) {
-            uname_exists = true;
-            break;
-        }
-        else uname_exists = false;   
-    }
-    if(!uname_exists) {
-        key = "username_" + parseInt(Object.keys(users).length + 1);
-        users[key] = entered_username;
-    }    
+function user_login() { 
+    specify_own_username();
+    $scope.username = document.getElementById("username").value;
 }
 
 /*function user_login_test() {

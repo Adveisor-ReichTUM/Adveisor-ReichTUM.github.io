@@ -18,17 +18,11 @@ input[type=text] {
   box-sizing: border-box;
 }
 
-#remember_me {
-   margin: 40px 33%;
-   color: black;
-   background-color: #ccc;
-}
-
 button {
   background-color: #3170b3;
   color: white;
   padding: 14px 20px;
-  margin: 40px auto;
+  margin: 30px auto;
   border: none;
   cursor: pointer;
   width: 10%;
