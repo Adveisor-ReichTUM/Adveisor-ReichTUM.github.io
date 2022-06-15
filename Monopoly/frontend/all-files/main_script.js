@@ -646,9 +646,83 @@ app.controller('gameController', function($scope){
                 if(callback!=undefined){
                     callback(false);
                 }
-            })
+            });
         }
 
+        // making controller methods accessible
+
+        $scope.join = function(piece){
+            $scope.getOperation('join?name=' + $scope.username + '&piece=' + piece,
+            function(success){
+                    if(success){
+                        // ...
+                    }
+                    else{
+
+                    }
+                });
+        }
+
+        $scope.start = function(){
+            $scope.getOperation('start');
+        }
+
+        $scope.reset = function(){
+            $scope.getOperation('reset');
+        }
+
+        $scope.end = function(){
+            $scope.getOperation('end');
+        }
+
+        $scope.rollAndMove = function(){
+            $scope.getOperation('rollingdices');
+        }
+
+        $scope.decideJail = function(choice){
+            $scope.getOperation('jaildecision?choice=' + choice);
+        }
+
+        $scope.useJailCard = function(){
+            $scope.getOperation('jailcard');
+        }
+
+        $scope.buy = function(){
+            $scope.getOperation('buyproperty');
+        }
+
+        $scope.sellProp2Bank = function(fieldIndex){
+            $scope.getOperation('sellpropertybank?fieldIndex=' + fieldIndex);
+        }
+
+        $scope.auction = function(){
+            $scope.getOperation('auction?fieldIndex=' + $scope.currentPlayer.position);
+        }
+
+        $scope.trade = function(){
+            $scope.getOperation('trading?offer=' + $scope.offer + '&receive=' + $scope.receive + '&moneyOffer=' + $scope.moneyOffer
+                + '&moneyReceive=' + $scope.moneyReceive + '&partnerId=' + (1-$scope.currentPlayer));
+        }
+
+        $scope.bid = function(){
+            $scope.getOperation('bid?name=' + $scope.username + '&bid=' + $scope.bid);
+        }
+
+        $scope.startMortgage = function(fieldIndex){
+            $scope.getOperation('startmortgage?fieldIndex=' + fieldIndex);
+        }
+
+        $scope.endMortgage = function(fieldIndex){
+            $scope.getOperation('endmortgage?fieldIndex=' + fieldIndex);
+        }
+
+        $scope.buyHouse = function(fieldIndex){
+            $scope.getOperation('buyHouse?fieldIndex=' + fieldIndex);
+        }
+
+        $scope.sellHouse = function(fieldIndex){
+            $scope.getOperation('sellHouse?fieldIndex=' + fieldIndex);
+        }
 
         //to be continued
     }
@@ -670,6 +744,7 @@ function update($scope, json){
 
     // Update here every variable that is not directly addressed via $scope.game
     $scope.currentPlayer = scope.game.players[$scope.game.currentPlayer];
+    $scope.opponent = scope.game.players[1-$scope.game.currentPlayer];
 
     // update GUI if game status changes
     if(laststatus!=$scope.game.currentStatusString){
