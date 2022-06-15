@@ -293,8 +293,6 @@ public class GameService {
 
     public static void MqttPublishMessage(MqttPublishModel messagePublishModel) throws MqttException {
 
-
-
         MqttMessage mqttMessage = new MqttMessage(messagePublishModel.getMessage().getBytes());
         mqttMessage.setQos(messagePublishModel.getQos());
         mqttMessage.setRetained(messagePublishModel.getRetained());

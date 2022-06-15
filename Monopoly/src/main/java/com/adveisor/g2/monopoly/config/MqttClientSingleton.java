@@ -12,7 +12,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class MqttClientSingleton {
 
     private static final String MQTT_PUBLISHER_ID = "game_server";
-    private static final String MQTT_SERVER_ADDRESS = "tcp://127.0.0.1:1883";
+    private static final String MQTT_SERVER_ADDRESS = "tcp://localhost:1883";
     private static IMqttClient instance;
 
     public static IMqttClient getInstance() {
