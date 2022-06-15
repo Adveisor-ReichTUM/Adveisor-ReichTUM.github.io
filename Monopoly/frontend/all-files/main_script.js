@@ -528,14 +528,13 @@ function set_community_order(community_cards_merged) {
 }
 
 //ziehe verschiedene Ereigniskarten als Bild
-function show_chance_card() {
+function show_chance_card(txt) {
+    document.getElementById("card_field").style.visibility = "visible";
     document.getElementById("kind_of_taken_card").innerHTML = "Ereigniskarte";
     //get image
     document.getElementById("taken_card_content").innerHTML = txt;
     //change index
-    source = "Ereigniskarte Fragezeichen.jpg"
-    //show image
-    window.location.href = '../' + source;
+    document.getElementById("chance_questionmark").style.display = "inline";
     //prison card
     if(current_chance_card_id == prison_index) {
         free_prison_chance_dragged();
@@ -543,14 +542,12 @@ function show_chance_card() {
 }
 
 //ziehe verschiedene Gemeinschaftskarten als Bild
-function show_community_card() {
+function show_community_card(txt) {
+    document.getElementById("card_field").style.visibility = "visible";
     document.getElementById("kind_of_taken_card").innerHTML = "Gemeinschaftskarte";
     //get image
     document.getElementById("taken_card_content").innerHTML = txt;
     //change index
-    source = "Gemeinschaftskarte Truhe.jpg"
-    //show image
-    window.location.href = '../' + source;
     //prison card
     if(current_community_card_id == prison_index) {
         free_prison_community_dragged();
