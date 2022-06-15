@@ -124,6 +124,7 @@ li a:hover {
     align-items: center;
     justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    visibility: hidden;
 }
 
 .card .cont{
@@ -159,15 +160,24 @@ li a:hover {
     align-items: center;
 }
 
- 
-#question_chest {
-    size: 20px;
-    height: 90%;
-    width: 90%;
-    float: left;
-    align-items: left;
-    margin-bottom: 15px;
+#community_chance_parent {
+    position: relative;
+    top: 0;
+    left: 0;
 }
+
+#community_chest {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+ 
+#chance_questionmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
  
 
 #taken_card_content {

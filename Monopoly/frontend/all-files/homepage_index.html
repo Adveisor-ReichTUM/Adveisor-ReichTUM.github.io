@@ -63,8 +63,8 @@
                     <area shape="rect" coords="560,299,649,349" href="NOR Gatter.png" target="_blank" />
                     <area shape="rect" coords="560,403,648,456" href="Zirkulator.png" target="_blank" />
                     <area shape="rect" coords="561,510,648,563" href="Ohmplatz.png" target="_blank" />
-                    <area class="chance_cards" onclick="show_chance_card()" shape="poly" coords="452,540,539,454,478,395,394,483" href="" />
-                    <area class="community_cards" onclick="show_community_card()" shape="poly" coords="164,251,249,166,191,107,106,194" href="" />
+                    <area class="chance_cards" onclick="show_chance_card('Du kommst aus dem Gefängnis frei.')" shape="poly" coords="452,540,539,454,478,395,394,483" href="#" />
+                    <area class="community_cards" onclick="show_community_card('Hallo')" shape="poly" coords="164,251,249,166,191,107,106,194" href="#" />
                     </map>
                 </td>
                 <td style="vertical-align:top;">
@@ -118,7 +118,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <div class="card">
+                                <div class="card" id="card_field">
                                     <div class="cont">
                                         <div class="title">
                                             <h2 id="kind_of_taken_card">Ereignisfeld</h2>
@@ -133,7 +133,10 @@
                                                         <p id="taken_card_content">Das ist ein Test Das ist ein TestDas ist ein TestDas ist ein Test</p>
                                                     </td>
                                                     <td>
-                                                        <img src="" id="question_chest">
+                                                        <div id="community_chance_parent">
+                                                            <img src="Gemeinschaftskarte Truhe.png" id="community_chest">
+                                                            <img src="Ereigniskarte Fragezeichen.png" id="chance_questionmark" style="display: none;">
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </div>
@@ -147,7 +150,7 @@
             </tr>
         </table>
 
-        <button type="button" onclick="disable_trading_page()">Test</button>
+        <button type="button" onclick="show_chance_card()">Test</button>
 
         <script src="main_script.js"></script>
         <script type = "text/javascript">
