@@ -539,13 +539,14 @@ function enable_trading_page() {
 //-------------loginpage--------------
 
 
-
-
-
-function user_login() { 
-    entered_username = document.getElementById("username").value;
-    return entered_username;
+function user_login() {
+    uname = document.getElementById("username").value;
+    alert(uname);
+    return uname;
 }
+
+var uname = user_login();
+var entered_username = uname;
 
 /*function user_login_test() {
     users = {
@@ -568,11 +569,8 @@ var laststatus = null;
 var lastbal1 = null;
 var lastbal2 = null;
 
-var app = angular.module('gameApp', []);
-app.controller('gameController', function($scope){
+angular.module('gameApp', []).controller('gameController', ['$scope', function($scope){
     poll($scope);
-    
-    $scope.username = user_login();
     
     $scope.getOperation = function(url, callback){
         $.getJSON(url, function(json){
@@ -602,12 +600,25 @@ app.controller('gameController', function($scope){
             }
         });
     }
+
+    $scope.save = function() {
+        $timeout(function () {
+            window.alert("hi!");
+        });
+    }
     
     $scope.write_usernames = function() {
         //Spieler 1 für eigenen Nutzernamen
-        document.getElementById("own_username").innerHTML = $scope.username;
+        $timeout(function(){
+            window.alert("hi!");
+        });
+        //document.getElementById("own_username").innerHTML = $scope.username;
         //Spieler 2 für gegnerischen Nutzernamen
-        document.getElementById("opponent_username").innerHTML = $scope.game.players[1-$scope.game.currentPlayer].name;
+        //document.getElementById("opponent_username").innerHTML = $scope.game.players[1-$scope.game.currentPlayer].name;
+    }
+
+    $scope.alerttest = function(){
+        alerttest();
     }
     
     $scope.start = function(){
@@ -727,9 +738,14 @@ app.controller('gameController', function($scope){
             else document.getElementById("roll_out_of_prison").style.display = "none";
         }
 
+        $scope.username = 'World';
+
+        $scope.sayHello = function() {
+            $scope.greeting = 'Hello ' + $scope.username + '!';
+        };
+
         //to be continued
-    }
-    );
+    }]);
     
     // periodically making API requests to update scope object
     function poll($scope){
@@ -817,4 +833,8 @@ function statusSwitch($scope){
     if($scope.game.currentstatusString == 'AUCTION'){
         $scope.bid = $scope.game.highestBid;
     }
+}
+
+function alerttest(){
+        alert("hello");
 }

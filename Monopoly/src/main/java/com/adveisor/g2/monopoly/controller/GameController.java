@@ -26,7 +26,7 @@ public class GameController {
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public FileSystemResource get() {
-        return getFrontend("index.html");
+        return getFrontend("loginpage_index.html");
     }
 
     // -------------------------
