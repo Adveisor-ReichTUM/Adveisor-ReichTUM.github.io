@@ -116,7 +116,6 @@ public class Player {
         return wealth;
     }
 
-
     public void endMortgage(int fieldIndex){
         Field field = game.getBoard().getFields().get(fieldIndex);
 

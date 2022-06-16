@@ -21,7 +21,7 @@ public class GameController {
     @RequestMapping(value="/{file_name:.+}", method=RequestMethod.GET)
     public FileSystemResource getFrontend(@PathVariable("file_name") String file)
     {
-        return new FileSystemResource("frontend/" + file);
+        return new FileSystemResource("frontend/all-files/" + file);
     }
 
     @RequestMapping(value="/", method = RequestMethod.GET)
@@ -60,9 +60,9 @@ public class GameController {
         return game;
     }
 
-    @RequestMapping(value="/rollingdices", method = RequestMethod.GET, produces="application/json")
-    public Game rollAndMove(){
-        game.turn2();
+    @RequestMapping(value="/endturn", method = RequestMethod.GET, produces="application/json")
+    public Game endTurn(){
+        game.turn1();
         return game;
     }
 
