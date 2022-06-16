@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -296,5 +297,22 @@ class GameTest {
         boolean actual = p2.getPossession(39);
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getFieldsByPlayer(){
+        Field field1 = game.getBoard().getFields().get(37);
+        Field field2 = game.getBoard().getFields().get(39);
+        field1.setOwner(0);
+        field1.setOwned(true);
+        game.getPlayers().get(game.getCurrentPlayer()).setPossession(37, true);
+        field2.setOwner(0);
+        field2.setOwned(true);
+        game.getPlayers().get(game.getCurrentPlayer()).setPossession(39, true);
+
+        List<Integer> expected = new ArrayList<Integer>();
+        expected.add(27);
+        expected.add(28);
+        assertEquals(expected, game.getFieldsByPlayer(0));
     }
 }

@@ -368,6 +368,18 @@ public class Game {
         setCurrentStatus(getTurnStatus());
     }
 
+    public List<Integer> getFieldsByPlayer(int id){
+        List<Integer> fields = new ArrayList<Integer>();
+        boolean possession[] = players.get(id).getStreets();
+        int counter = 0;
 
+        for(int i = 0; i <= 39; i++){
+            Field field = board.getFields().get(i);
+            if(field.checkType("street") || field.checkType("station") || field.checkType("utilities")) counter++;
+            if(possession[i]) fields.add(counter);
+        }
+
+        return fields;
+    }
 
 }

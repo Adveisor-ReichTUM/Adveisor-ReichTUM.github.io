@@ -147,4 +147,9 @@ public class Field {
         return this.rent_stages[stage];
     }
 
+    public boolean checkType(String request){
+        if(this.type == fieldType.valueOf(request)) return true;
+        return false;
+    }
+
 }

@@ -154,4 +154,10 @@ class FieldTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void checkType(){
+        Field street = game.getBoard().getFields().get(1);
+        assertEquals(true, street.checkType("street"));
+    }
+
 }
