@@ -382,4 +382,19 @@ public class Game {
         return fields;
     }
 
+    public List<Integer> getFreeCards(){
+        List<Integer> fields = new ArrayList<Integer>();
+        int counter = 0;
+
+        for(int i = 0; i <= 39; i++){
+            Field field = board.getFields().get(i);
+            if(field.checkType("street") || field.checkType("station") || field.checkType("utilities")){
+                counter++;
+                if(!field.isOwned()) fields.add(counter);
+            }
+        }
+
+        return fields;
+    }
+
 }

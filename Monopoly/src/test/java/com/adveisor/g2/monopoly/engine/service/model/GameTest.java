@@ -315,4 +315,22 @@ class GameTest {
         expected.add(28);
         assertEquals(expected, game.getFieldsByPlayer(0));
     }
+
+    @Test
+    void getFreeCards(){
+        Field field1 = game.getBoard().getFields().get(37);
+        Field field2 = game.getBoard().getFields().get(39);
+        field1.setOwner(0);
+        field1.setOwned(true);
+        game.getPlayers().get(game.getCurrentPlayer()).setPossession(37, true);
+        field2.setOwner(0);
+        field2.setOwned(true);
+        game.getPlayers().get(game.getCurrentPlayer()).setPossession(39, true);
+
+        List<Integer> expected = new ArrayList<Integer>();
+        for(int i = 1; i<=26; i++){
+            expected.add(i);
+        }
+        assertEquals(expected, game.getFreeCards());
+    }
 }

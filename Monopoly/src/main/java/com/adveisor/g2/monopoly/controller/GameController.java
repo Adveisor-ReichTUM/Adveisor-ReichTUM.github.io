@@ -9,6 +9,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @EnableAutoConfiguration
@@ -132,9 +133,13 @@ public class GameController {
     }
 
     @RequestMapping(value="/fieldsByPlayer", method = RequestMethod.GET, produces="application/json")
-    public Game getFieldsByPlayer(@RequestParam int playerId){
-        game.getFieldsByPlayer(playerId);
-        return game;
+    public List<Integer> getFieldsByPlayer(@RequestParam int playerId){
+        return game.getFieldsByPlayer(playerId);
+    }
+
+    @RequestMapping(value="/freecards", method = RequestMethod.GET, produces="application/json")
+    public List<Integer> getFreeCards(){
+        return game.getFreeCards();
     }
 
     public static void main(String[] args) throws Exception{
