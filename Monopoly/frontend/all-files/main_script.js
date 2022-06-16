@@ -540,12 +540,12 @@ function enable_trading_page() {
 
 
 
-
+entered_username = "Fabian";
 
 function user_login() { 
     entered_username = document.getElementById("username").value;
-    return entered_username;
 }
+
 
 /*function user_login_test() {
     users = {
@@ -572,7 +572,7 @@ var app = angular.module('gameApp', []);
 app.controller('gameController', function($scope){
     poll($scope);
     
-    $scope.username = user_login();
+    $scope.username = entered_username;
     
     $scope.getOperation = function(url, callback){
         $.getJSON(url, function(json){
