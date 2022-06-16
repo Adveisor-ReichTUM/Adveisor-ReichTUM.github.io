@@ -258,3 +258,44 @@ li a:hover {
   .modal-body {padding: 2px 16px;}
   
 
+  #show_offer_wuensche, #show_offer_angebote {
+    float: left;
+    width: 800px;
+    height: 200px;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 25px;
+    margin-top: 50px;
+    padding: 10px;
+    border: 0px solid black;
+    background-color: white;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 10px #999;
+    box-shadow: 0 0 10px #999;
+}
+
+#decision {
+    margin-top: 500px; 
+    border-radius: 5px; 
+}
+
+
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+  }
+
+#offer_angebote_streets, #offer_wuensche_streets {
+    width: 630px;
+    height: 180px;
+}

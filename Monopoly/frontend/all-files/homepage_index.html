@@ -65,8 +65,8 @@
                     <area shape="rect" coords="560,299,649,349" href="NOR Gatter.png" target="_blank" />
                     <area shape="rect" coords="560,403,648,456" href="Zirkulator.png" target="_blank" />
                     <area shape="rect" coords="561,510,648,563" href="Ohmplatz.png" target="_blank" />
-                    <area class="chance_cards" onclick="show_chance_card('Du kommst aus dem Gefängnis frei.')" shape="poly" coords="452,540,539,454,478,395,394,483" href="#" />
-                    <area class="community_cards" onclick="show_community_card('Hallo')" shape="poly" coords="164,251,249,166,191,107,106,194" href="#" />
+                    <area class="chance_cards" ng-click="show_chance_card()" shape="poly" coords="452,540,539,454,478,395,394,483" href="#" />
+                    <area class="community_cards" ng-click="show_community_card()" shape="poly" coords="164,251,249,166,191,107,106,194" href="#" />
                     </map>
                 </td>
                 <td style="vertical-align:top;">
@@ -104,11 +104,19 @@
                             </td>
                         </tr>
                         <tr>
-                            <col style="width: 100%;">
+                            <col style="width: 80%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
                             <td>
                                 <div style="width: 100%;">
                                     <button onclick="free_prison_community_button_clicked()" disabled id="prison_community_click" style="opacity: 0.5;"><img src="free_prison_community.png"></button>
                                 </div>
+                            </td>
+                            <td>
+                                <button type="button" id="buy_out_of_prison" style="display: none;" ng-click="buy_out_of_prison()"><i class="fa-solid fa-money-bill"></i></button>
+                            </td>
+                            <td>
+                                <button type="button" id="roll_out_of_prison" style="display: none;" ng-click="roll_out_of_prison()"><i class="fa-solid fa-dice"></i></button>
                             </td>
                         </tr>
                         <tr>
@@ -154,10 +162,10 @@
 
         <button type="button" onclick="show_chance_card()">Show Card Test</button>
 
-        <button type="button" onclick="disable_trading_page()">Beende Zug</button>
+        <button type="button" onclick="disable_trading_page(); hide_card_after_dragged()" ng-click="endTurn()">Beende Zug</button>
 
         <!-- Trigger/Open The Modal -->
-        <button id="myBtn" onclick="show_whos_turn()">Alert Turn</button>
+        <button type="button" id="myBtn" onclick="show_whos_turn()">Alert Turn</button>
 
         <!-- The Modal -->
         <div id="alert_turn" class="modal">
@@ -176,11 +184,59 @@
 
         </div>
 
+        <div id="overlay"> 
+            <!-- Wird als Angebotefeld angezeigt, wenn das Angebot beim Gegner ankommt -->
+            <div id="show_offer_angebote" style="display: none;">
+                <table style="width: 100%; height: 100%;">
+                    <col width="90%">
+                    <col width="10%">
+                    <tr>
+                        <td style="vertical-align:top;">
+                            <p style="text-align:left; margin-top:0;">Gegnerisches Angebot
+                                <div id="offer_angebote_streets" style="display: flex; justify-content: space-evenly;"></div>
+                            </p>
+                        </td>
+                        <td style="vertical-align:top;">
+                            Geldbetrag:
+                            <p style="float:right;" id="offer_angebote_value"></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    
+            <!-- Wird als Wünschefeld angezeigt, wenn das Angebot beim Gegner ankommt -->
+            <div id="show_offer_wuensche" style="display: none;">
+                <table style="width: 100%; height: 100%;">
+                    <col width="90%">
+                    <col width="10%">
+                    <tr>
+                        <td style="vertical-align:top;">
+                            <p style="text-align:left; margin-top:0;">Gegnerischer Wunsch
+                                <div id="offer_wuensche_streets" style="display: flex; justify-content: space-evenly;"></div>
+                            </p>
+                        </td>
+                        <td style="vertical-align:top;">
+                            Geldbetrag: 
+                            <p style="float:right;" id="offer_wuensche_value"></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    
+            <!--Bietet Gegner Option Angebot anzunehmen oder abzulehnen-->
+            <div id="decision">
+                <form action="backend.php" style="display: none;" id="trading_offer_decision">
+                    <input type="radio" id="trading_offer_accept" name="trading_offer_buttons" value="Annehmen">
+                    <label for="Annehmen">Annehmen</label><br>
+                    <input type="radio" id="trading_offer_decline" name="trading_offer_buttons" value="Ablehnen">
+                    <label for="Ablehnen">Ablehnen</label>
+                    <button type="submit" ng-click="submitoffer()" style="margin-left: 15px;">Senden</button>
+                </form>
+            </div>
+        </div>
 
-        <script src="main_script.js"></script>
-        <script type = "text/javascript">
-            updateCounter_2(500, true);
-        </script>
 
+        <script type="text/javascript" src="main_script.js"></script>
+        
     </body>
 </html>

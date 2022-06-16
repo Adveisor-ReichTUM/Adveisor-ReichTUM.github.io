@@ -2,10 +2,7 @@
 
 
 const playerID = 0;
-
-const my_cards = [];
-const opponent_cards = [];
-const free_cards = [];
+const userID = 0;
 
 showing_selector_wuensche = false;
 showing_selector_angebote = false;
@@ -15,11 +12,6 @@ value_angebote = 0;
 
 var streets_wuensche = [];
 var streets_angebote = [];
-
-//Player Id muss durch Aufruf festgelegt werden
-function set_player_id(id) {
-    playerID = id;
-}
 
 //Notwendig für Drag&Drop
 function allowDrop(ev) {
@@ -186,87 +178,65 @@ function remove_streets_angebote(element) {
     }
 }
 
-//test
-/*function submit_trading_offer() {
-    trade(streets_angebote, streets_wuensche, value_angebote, value_wuensche, playerID);
-}*/
-
 // Diese Funktion bekommt als Eingabe List<String>, wobei jeder String die ID einer Straße repräsentiert
 //Zeigt Gegner Verhandlungsangebot mit Geldwert und Straßen
-function show_offer(value_angebote, streets_angebote, value_wuensche, streets_wuensche) {
-    document.getElementById("show_offer_angebote").style.display = "inline";
-    document.getElementById("show_offer_wuensche").style.display = "inline";
-    document.getElementById("trading_offer_decision").style.display = "inline";
-    document.getElementById("overlay").style.display = "block";
-    document.getElementById("angebote").style.display = "none";
-    document.getElementById("wuensche").style.display = "none";
-    document.getElementById("submit_offer").style.display = "none";
-    for(var i = 0; i < streets_angebote.length; i++) {
-        newNode = document.getElementById(streets_angebote[i]).cloneNode(true);
-        newNode.setAttribute('draggable', false);
-        document.getElementById("offer_angebote_streets").appendChild(newNode);
+function show_offer($scope) {
+    if($scope.currentPlayer.name != $scope.username) {
+        document.getElementById("show_offer_angebote").style.display = "inline";
+        document.getElementById("show_offer_wuensche").style.display = "inline";
+        document.getElementById("trading_offer_decision").style.display = "inline";
+        document.getElementById("overlay").style.display = "block";
+
+        for(var i = 0; i < streets_angebote.length; i++) {
+            newNode = document.getElementById(streets_angebote[i]).cloneNode(true);
+            newNode.setAttribute('draggable', false);
+            document.getElementById("offer_angebote_streets").appendChild(newNode);
+        }
+        for(var i = 0; i < streets_wuensche.length; i++) {
+            newNode = document.getElementById(streets_wuensche[i]).cloneNode(true);
+            newNode.setAttribute('draggable', false);
+            document.getElementById("offer_wuensche_streets").appendChild(newNode);
+        }
+        document.getElementById("offer_wuensche_value").innerHTML = value_wuensche + " Ω";
+        document.getElementById("offer_angebote_value").innerHTML = value_angebote + " Ω";
     }
-    for(var i = 0; i < streets_wuensche.length; i++) {
-        newNode = document.getElementById(streets_wuensche[i]).cloneNode(true);
-        newNode.setAttribute('draggable', false);
-        document.getElementById("offer_wuensche_streets").appendChild(newNode);
+    else {
+        while(submit_offer_decision()) {
+            document.getElementById("submit_offer").disabled = true;
+        }
+        document.getElementById("submit_offer").disabled = false;
     }
-    document.getElementById("offer_wuensche_value").innerHTML = value_wuensche + " Ω";
-    document.getElementById("offer_angebote_value").innerHTML = value_angebote + " Ω";
 }
 
 //Gegner kann annehmen oder ablehnen
-function submit_offer_decision() {
+function submit_offer_decision($scope) {
+    wait = true;
     answer = document.querySelector('input[name="trading_offer_buttons"]:checked').value;
+    target = $scope.currentPlayer.name == $scope.username;
     if(answer == "Annehmen") {
-        alert("Angebot wurde akzeptiert");
-        //backend_offer_accepted(True);
+        wait = false;
+        hide_offer();
+        $scope.trade();
+        show_acception_alert(true, target);
     }
-    else {
-        alert("Angebot wurde abgelehnt");
-        //backend_offer_accepted(False);
+    else if(answer == "Ablehnen"){
+        wait = false;
+        hide_offer();
+        show_acception_alert(false, target);
     }
     document.getElementById("overlay").style.display = "none";
+    return wait;
 }
-
-//Diese Funktion soll Alex für den Spieler aufrufen, der das Angebot gemacht hat, bevor er den Screen updated, decision ist bool
-//zeigt einem Entscheidung des Gegners
-function show_opponent_decision(decision) {
-    show_acception_alert(decision);
-}
-
 
 
 //Alex ruft diese Methode auf, wenn ein Angebot angenommen wurde, oder wenn eine neue Straße gekauft wurde
 // my_cards, opponent_cards, free_cards: List<String> mit IDs
 //Ordnet alle Karten dem korrekten Tabellenplatz zu
-function update_streets_on_screen(my_cards, opponent_cards, free_cards) {
+function hide_offer() {
     document.getElementById("show_offer_angebote").style.display = "none";
     document.getElementById("show_offer_wuensche").style.display = "none";
     document.getElementById("trading_offer_decision").style.display = "none";
-    document.getElementById("angebote").style.display = "inline";
-    document.getElementById("wuensche").style.display = "inline";
-    document.getElementById("submit_offer").style.display = "inline";
-    // Update it
-    
-    for(var i = 0; i < 84; i++) {
-        try {
-            var street_element = document.getElementById("street_" + (i+1));
-            document.getElementById("storage").appendChild(street_element);
-        }
-        catch (e) {
-
-        }
-    }
-    for(var i = 0; i < my_cards.length; i++) {
-        document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById(my_cards[i]));
-    }
-    for(var i = 0; i < opponent_cards.length; i++) {
-        document.getElementById("street_field_" + (i + 29)).appendChild(document.getElementById(opponent_cards[i]));
-    }
-    for(var i = 0; i < free_cards.length; i++) {
-        document.getElementById("street_field_" + (i + 57)).appendChild(document.getElementById(free_cards[i]));
-    }
+    document.getElementById("overlay").style.display = "none";
 }
 
 //test
@@ -319,29 +289,31 @@ function end_mortgage(id) {
 }*/
 
 //Zeigt 10 Sekunden, ob Angebot vom Gegner angenomen oder abgelehnt wurde, danach verschwindet es wieder
-function show_acception_alert(decision) {
-    $(document).ready(function hide_acception(){
-        var counter = 10;
-        var timer_status_accept = setInterval(function(){
-            document.getElementById("show_acception").style.display = "inline";
-            counter--;
-            if(counter > 0 && decision){
-                document.getElementById("decision_variable").innerHTML = "Das Angebot wurde angenommen.";
-                var msg = + counter + ' s'
-                    $('#timer_status_accept').text(msg);
-            }
-            else if(counter > 0 && !decision){
-                document.getElementById("decision_variable").innerHTML = "Das Angebot wurde abgelehnt.";
-                var msg = + counter + ' s'
-                    $('#timer_status_accept').text(msg);
-            }
-            else{
-                    //$('#time_status').text('hide successfully after 10 seconds');
-                    $('#show_acception').hide();
-                    clearInterval(timer_status_accept);
-            }
-        }, 1000);
-    });
+function show_acception_alert(decision, target) {
+    if(target) {
+        $(document).ready(function hide_acception(){
+            var counter = 10;
+            var timer_status_accept = setInterval(function(){
+                document.getElementById("show_acception").style.display = "inline";
+                counter--;
+                if(counter > 0 && decision){
+                    document.getElementById("decision_variable").innerHTML = "Das Angebot wurde angenommen.";
+                    var msg = + counter + ' s'
+                        $('#timer_status_accept').text(msg);
+                }
+                else if(counter > 0 && !decision){
+                    document.getElementById("decision_variable").innerHTML = "Das Angebot wurde abgelehnt.";
+                    var msg = + counter + ' s'
+                        $('#timer_status_accept').text(msg);
+                }
+                else{
+                        //$('#time_status').text('hide successfully after 10 seconds');
+                        $('#show_acception').hide();
+                        clearInterval(timer_status_accept);
+                }
+            }, 1000);
+        });
+    }
 }
 
 /*function submit_trading_offer(){
@@ -349,17 +321,8 @@ function show_acception_alert(decision) {
 }*/
 
 //Alex kriegt Usernames von Login-Page, gibt ihnen playerId und ruft write-. mit den Variablen own-. und opponent-. auf
-function write_username(own_username, opponent_username) {
-    //Spieler 1 für eigenen Nutzernamen
-    document.getElementById("own_username").innerHTML = own_username;
-    //Spieler 2 für gegnerischen Nutzernamen
-    document.getElementById("opponent_username").innerHTML = opponent_username;
-}
 
-function specify_own_username() {
-    own_username = document.getElementById("username").value;
-    document.getElementById("own_username").innerHTML = own_username;
-}
+
 
 
 
@@ -371,11 +334,6 @@ function specify_own_username() {
 
 
 
-
-chance_cards=[];
-community_cards=[];
-chance_index = 0;
-community_index = 0;
 
 //globale Variablen für countUpTimer()
 var timerVariable = setInterval(function() {
@@ -463,20 +421,11 @@ function updateCounter_2(new_counter_value, is_opponent) {
     });
 }
 
-//Integer-Liste mit Indices der gemischten Ereigniskarten
-function set_chance_order(chance_cards_merged) {
-    chance_cards = chance_cards_merged;
-}
 
-//Integer-Liste mit Indices der gemischten Gemeinschaftskarten
-function set_community_order(community_cards_merged) {
-    community_cards = community_cards_merged;
-}
-
-//ziehe verschiedene Ereigniskarten als Bild
-function show_chance_card() {
+//ziehe verschiedene Ereigniskarten als HTML
+function show_chance_card($scope) {
     //txt aus Backend
-    txt = anyBackendFunction();
+    txt = $scope.game.cardDescription;
     //Zeige Karte
     document.getElementById("card_field").style.visibility = "visible";
     //Zeige Ereigniskarte
@@ -486,13 +435,15 @@ function show_chance_card() {
     //Zeige Fragezeichen
     document.getElementById("chance_questionmark").style.display = "inline";
     //prison card
-    if(txt == "Du kommst aus dem Gefängnis frei.") {
+    if(txt == "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
         free_prison_chance_dragged();
     }
 }
 
-//ziehe verschiedene Gemeinschaftskarten als Bild
-function show_community_card(txt) {
+//ziehe verschiedene Gemeinschaftskarten als HTML
+function show_community_card($scope) {
+    //txt aus Backend
+    txt = $scope.game.cardDescription;
     //Zeige Karte
     document.getElementById("card_field").style.visibility = "visible";
     //Blende Fragezeichen aus
@@ -502,7 +453,7 @@ function show_community_card(txt) {
     //Zeige Text
     document.getElementById("taken_card_content").innerHTML = txt;
     //prison card
-    if(current_community_card_id == prison_index) {
+    if(txt == "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
         free_prison_community_dragged();
     }
     
@@ -520,54 +471,39 @@ function free_prison_community_dragged() {
     document.getElementById("prison_community_click").style.opacity = 1;
 }
 
-function free_prison_community_button_clicked() {
-    if(/*free_prison_card_played()*/ true) {
-        document.getElementById("prison_community_click").disabled = true;
-        document.getElementById("prison_community_click").style.opacity = 0.5;
-    }
-    //backend: free_prison_card_played();
-}
-
-function free_prison_chance_button_clicked() {
-    if(/*free_prison_card_played()*/ true) {
-        document.getElementById("prison_chance_click").disabled = true;
-        document.getElementById("prison_chance_click").style.opacity = 0.5;
-    }
-    //backend: free_prison_card_played();
-}
 
 function hide_card_after_dragged() {
     document.getElementById("card_field").visibility = "hidden";
 }
 
 function show_whos_turn() {
-
     // Get the modal
     var modal = document.getElementById("alert_turn");
-
+    
     // Get the button that opens the modal
     var btn = document.getElementById("myBtn");
-
+    
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
-
+    
     // When the user clicks the button, open the modal 
     btn.onclick = function() {
-    modal.style.display = "block";
+        modal.style.display = "block";
     }
-
+    
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
-    modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-    if (event.target == modal) {
         modal.style.display = "none";
     }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
     hide_modal();
+    
 }
 
 function hide_modal() {
@@ -607,8 +543,8 @@ function enable_trading_page() {
 
 
 function user_login() { 
-    specify_own_username();
-    $scope.username = document.getElementById("username").value;
+    entered_username = document.getElementById("username").value;
+    return entered_username;
 }
 
 /*function user_login_test() {
@@ -629,122 +565,221 @@ function user_login() {
 
 
 var laststatus = null;
+var lastbal1 = null;
+var lastbal2 = null;
 
 var app = angular.module('gameApp', []);
 app.controller('gameController', function($scope){
-        poll($scope);
-
-        $scope.getOperation = function(url, callback){
-            $.getJSON(url, function(json){
-                    update($scope, json);
-                    if(callback!=undefined){
-                        callback(true);
-                    }
-                }
-            )
-            .fail(function(){
-                if(callback!=undefined){
-                    callback(false);
-                }
-            });
+    poll($scope);
+    
+    $scope.username = user_login();
+    
+    $scope.getOperation = function(url, callback){
+        $.getJSON(url, function(json){
+            update($scope, json);
+            if(callback!=undefined){
+                callback(true);
+            }
         }
+        )
+        .fail(function(){
+            if(callback!=undefined){
+                callback(false);
+            }
+        });
+    }
+    
+    // making controller methods accessible
+    
+    $scope.join = function(){
+        $scope.getOperation('join?name=' + $scope.username,
+        function(success){
+            if(success){
+                // ...
+            }
+            else{
+                
+            }
+        });
+    }
+    
+    $scope.write_usernames = function() {
+        //Spieler 1 für eigenen Nutzernamen
+        document.getElementById("own_username").innerHTML = $scope.username;
+        //Spieler 2 für gegnerischen Nutzernamen
+        document.getElementById("opponent_username").innerHTML = $scope.game.players[1-$scope.game.currentPlayer].name;
+    }
+    
+    $scope.start = function(){
+        $scope.getOperation('start');
+    }
+    
+    $scope.reset = function(){
+        $scope.getOperation('reset');
+    }
+    
+    $scope.end = function(){
+        $scope.getOperation('end');
+    }
+    
+    $scope.endTurn = function(){
+        $scope.getOperation('endturn');
+    }
+    
+    $scope.decideJail = function(choice){
+        $scope.getOperation('jaildecision?choice=' + choice);
+    }
+    
+    $scope.useJailCard = function(){
+        $scope.getOperation('jailcard');
+    }
+    
+    $scope.buy = function(){
+        $scope.getOperation('buyproperty');
+    }
 
-        // making controller methods accessible
-
-        $scope.join = function(piece){
-            $scope.getOperation('join?name=' + $scope.username + '&piece=' + piece,
-            function(success){
-                    if(success){
-                        // ...
-                    }
-                    else{
-
-                    }
-                });
-        }
-
-        $scope.start = function(){
-            $scope.getOperation('start');
-        }
-
-        $scope.reset = function(){
-            $scope.getOperation('reset');
-        }
-
-        $scope.end = function(){
-            $scope.getOperation('end');
-        }
-
-        $scope.rollAndMove = function(){
-            $scope.getOperation('rollingdices');
-        }
-
-        $scope.decideJail = function(choice){
-            $scope.getOperation('jaildecision?choice=' + choice);
-        }
-
-        $scope.useJailCard = function(){
-            $scope.getOperation('jailcard');
-        }
-
-        $scope.buy = function(){
-            $scope.getOperation('buyproperty');
-        }
-
-        $scope.sellProp2Bank = function(fieldIndex){
-            $scope.getOperation('sellpropertybank?fieldIndex=' + fieldIndex);
-        }
-
-        $scope.auction = function(){
-            $scope.getOperation('auction?fieldIndex=' + $scope.currentPlayer.position);
-        }
-
-        $scope.trade = function(){
-            $scope.getOperation('trading?offer=' + $scope.offer + '&receive=' + $scope.receive + '&moneyOffer=' + $scope.moneyOffer
-                + '&moneyReceive=' + $scope.moneyReceive + '&partnerId=' + (1-$scope.currentPlayer));
-        }
-
-        $scope.bid = function(){
-            $scope.getOperation('bid?name=' + $scope.username + '&bid=' + $scope.bid);
-        }
-
-        $scope.startMortgage = function(fieldIndex){
-            $scope.getOperation('startmortgage?fieldIndex=' + fieldIndex);
-        }
-
-        $scope.endMortgage = function(fieldIndex){
-            $scope.getOperation('endmortgage?fieldIndex=' + fieldIndex);
-        }
-
-        $scope.buyHouse = function(fieldIndex){
+    $scope.sellProp2Bank = function(fieldIndex){
+        $scope.getOperation('sellpropertybank?fieldIndex=' + fieldIndex);
+    }
+    
+    $scope.auction = function(){
+        $scope.getOperation('auction?fieldIndex=' + $scope.currentPlayer.position);
+    }
+    
+    $scope.trade = function(){
+        $scope.getOperation('trading?offer=' + streets_angebote + '&receive=' + streets_wuensche + '&moneyOffer=' + value_angebote
+        + '&moneyReceive=' + value_wuensche + '&partnerId=' + (1-$scope.currentPlayer));
+    }
+    
+    $scope.showoffer = function(){
+        show_offer($scope);
+    }
+    
+    $scope.submitoffer = function(){
+        submit_offer_decision($scope);
+    }
+    
+    $scope.bid = function(){
+        $scope.getOperation('bid?name=' + $scope.username + '&bid=' + $scope.bid);
+    }
+    
+    $scope.startMortgage = function(fieldIndex){
+        $scope.getOperation('startmortgage?fieldIndex=' + fieldIndex);
+    }
+    
+    $scope.endMortgage = function(fieldIndex){
+        $scope.getOperation('endmortgage?fieldIndex=' + fieldIndex);
+    }
+    
+    $scope.buyHouse = function(fieldIndex){
             $scope.getOperation('buyHouse?fieldIndex=' + fieldIndex);
         }
-
+        
         $scope.sellHouse = function(fieldIndex){
             $scope.getOperation('sellHouse?fieldIndex=' + fieldIndex);
+        }
+        
+        $scope.getFieldsByPlayer = function(id) {
+            $scope.getOperation('fieldsByPlayer?playerId=' + id);
+        }
+        
+        $scope.getFreeCards = function() {
+            $scope.getOperation('freecards');
+        }
+        
+        $scope.show_chance_card = function() {
+            show_chance_card($scope);
+        }
+        
+        $scope.show_community_card = function() {
+            show_community_card($scope);
+        }
+        
+        $scope.free_prison_community_button_clicked = function() {
+            if($scope.currentPlayer.inJail) {
+                document.getElementById("prison_community_click").disabled = true;
+                document.getElementById("prison_community_click").style.opacity = 0.5;
+            }
+            $scope.useJailCard();
+        }
+        
+        $scope.free_prison_chance_button_clicked = function() {
+            if($scope.currentPlayer.inJail) {
+                document.getElementById("prison_chance_click").disabled = true;
+                document.getElementById("prison_chance_click").style.opacity = 0.5;
+            }
+            $scope.useJailCard();
+        }
+        
+        $scope.buy_out_of_prison = function() {
+            if($scope.currentPlayer.inJail) {
+                document.getElementById("buy_out_of_prison").style.display = "inline";
+                $scope.decideJail(true);
+            }
+            else document.getElementById("buy_out_of_prison").style.display = "none";
+        }
+        
+        $scope.roll_out_of_prison = function() {
+            if($scope.currentPlayer.inJail) {
+                document.getElementById("roll_out_of_prison").style.display = "inline";
+                $scope.decideJail(false);
+            }
+            else document.getElementById("roll_out_of_prison").style.display = "none";
         }
 
         //to be continued
     }
-);
-
-// periodically making API requests to update scope object
-function poll($scope){
-    $.getJSON('game', function(json){
-        update($scope, json);
-        setTimeout(function(){
-            poll($scope);
-        }, 500);
-    });
-}
-
-function update($scope, json){
-    // load json package containing game object into scope.game variable
-    $scope.game = json;
-
+    );
+    
+    // periodically making API requests to update scope object
+    function poll($scope){
+        $.getJSON('game', function(json){
+            update($scope, json);
+            setTimeout(function(){
+                poll($scope);
+            }, 500);
+        });
+    }
+    
+    function update($scope, json){
+        // load json package containing game object into scope.game variable
+        $scope.game = json;
+        playerID = 1-$scope.currentPlayer;
+        
     // Update here every variable that is not directly addressed via $scope.game
-    $scope.currentPlayer = scope.game.players[$scope.game.currentPlayer];
-    $scope.opponent = scope.game.players[1-$scope.game.currentPlayer];
+    $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
+    $scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
+
+    $scope.mycards = $scope.getFieldsByPlayer($scope.game.currentPlayer);
+    $scope.opponentcards = $scope.getFieldsByPlayer(1-$scope.game.currentPlayer);
+    $scope.freecards = $scope.getFreeCards();
+
+    for(var i = 0; i < 84; i++) {
+        try {
+            var street_element = document.getElementById("street_" + (i+1));
+            document.getElementById("storage").appendChild(street_element);
+        }
+        catch (e) {
+
+        }
+    }
+    for(var i = 0; i < my_cards.length; i++) {
+        document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById($scope.mycards[i]));
+    }
+    for(var i = 0; i < opponent_cards.length; i++) {
+        document.getElementById("street_field_" + (i + 29)).appendChild(document.getElementById($scope.opponentcards[i]));
+    }
+    for(var i = 0; i < free_cards.length; i++) {
+        document.getElementById("street_field_" + (i + 57)).appendChild(document.getElementById(freecards[i]));
+    }
+
+    $scope.game.board.fields.forEach(function(field, i) {
+        if(field.Hypothek) show_mortgage(i);
+        else end_mortgage(i);
+    }
+    );
+
+    checkBalanceAdjustment($scope);
 
     // update GUI if game status changes
     if(laststatus!=$scope.game.currentStatusString){
@@ -753,6 +788,18 @@ function update($scope, json){
     }
 
     $scope.$apply();
+}
+
+function checkBalanceAdjustment($scope) {
+    // player0
+    if(lastbal1 != $scope.game.players[0].balance) {
+        isOpponent = $scope.game.players[0].name != $scope.username;
+        updateCounter_2($scope.game.players[0].balance, isOpponent);
+    }
+    if(lastbal2 != $scope.game.players[1].balance) {
+        isOpponent = $scope.game.players[1].name != $scope.username;
+        updateCounter_2($scope.game.players[1].balance, isOpponent);
+    }
 }
 
 function statusSwitch($scope){
@@ -764,6 +811,7 @@ function statusSwitch($scope){
     }
     else{
         enable_trading_page();
+        show_whos_turn();
     }
 
     if($scope.game.currentstatusString == 'AUCTION'){
