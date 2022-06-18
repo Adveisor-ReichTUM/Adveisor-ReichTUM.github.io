@@ -22,7 +22,7 @@ public abstract class AbstractStatus {
     }
 
     // default method throw exception, overridden in concrete statuses
-    public void join(String name, Piece piece) {
+    public void join(String name) {
         throw new IllegalStateException("Failed to join game: already running.");
     }
 

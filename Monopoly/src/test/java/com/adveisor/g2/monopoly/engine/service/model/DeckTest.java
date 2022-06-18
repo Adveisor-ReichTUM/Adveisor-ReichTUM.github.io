@@ -42,7 +42,7 @@ class DeckTest {
     @Test
     void takeCard() {
         Game game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        Player player = new Player("Mr. Monopoly", game, Piece.DOG);
+        Player player = new Player("Mr. Monopoly", game);
         Card expected = communityDeck.getCards().get(0);
         communityDeck.takeCard(player, game);
         Card actual = communityDeck.getCards().get(communityDeck.getCards().size()-1);

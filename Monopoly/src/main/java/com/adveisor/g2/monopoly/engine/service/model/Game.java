@@ -80,8 +80,8 @@ public class Game {
     }
 
 
-    public void join(String name, Piece piece){
-       currentStatus.join(name, piece);
+    public void join(String name){
+       currentStatus.join(name);
     }
 
     public void start(){

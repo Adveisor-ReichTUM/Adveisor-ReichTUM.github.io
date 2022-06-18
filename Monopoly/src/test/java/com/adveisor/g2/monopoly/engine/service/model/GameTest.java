@@ -14,8 +14,8 @@ class GameTest {
     @BeforeEach
     void setUp() {
         game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        game.join("Mr. Monopoly", Piece.DOG);
-        game.join("Mr. Monopoly 2", Piece.SHIP);
+        game.join("Mr. Monopoly");
+        game.join("Mr. Monopoly 2");
     }
 
     @Test
@@ -28,7 +28,7 @@ class GameTest {
     @Test()
     void joinException(){
         try{
-            game.join("Mr. Monopoly", Piece.SHOE);
+            game.join("Mr. Monopoly");
         } catch(IllegalArgumentException e){
         }
     }
@@ -311,12 +311,13 @@ class GameTest {
         game.getPlayers().get(game.getCurrentPlayer()).setPossession(39, true);
 
         List<Integer> expected = new ArrayList<Integer>();
-        expected.add(27);
-        expected.add(28);
-        assertEquals(expected, game.getFieldsByPlayer(0));
+        expected.add(37);
+        expected.add(39);
+        game.setFieldsByPlayer(0);
+        assertEquals(expected, game.getPlayercards());
     }
 
-    @Test
+    /*@Test
     void getFreeCards(){
         Field field1 = game.getBoard().getFields().get(37);
         Field field2 = game.getBoard().getFields().get(39);
@@ -331,6 +332,7 @@ class GameTest {
         for(int i = 1; i<=26; i++){
             expected.add(i);
         }
-        assertEquals(expected, game.getFreeCards());
-    }
+        game.setFreeCards();
+        assertEquals(expected, game.getFreecards());
+    }*/
 }

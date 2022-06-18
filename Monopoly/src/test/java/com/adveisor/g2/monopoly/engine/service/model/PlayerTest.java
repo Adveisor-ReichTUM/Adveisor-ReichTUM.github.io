@@ -11,7 +11,7 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        player = new Player("Mr. Monopoly", game, Piece.DOG);
+        player = new Player("Mr. Monopoly", game);
     }
 
     @Test

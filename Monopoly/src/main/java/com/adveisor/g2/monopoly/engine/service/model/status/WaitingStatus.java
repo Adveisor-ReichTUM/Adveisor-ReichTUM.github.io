@@ -20,7 +20,7 @@ public class WaitingStatus extends AbstractStatus {
     }
 
     @Override
-    public void join(String name, Piece piece){
+    public void join(String name){
 
         // check for player limit
         if(game.getPlayers().size()==4) return;
@@ -29,11 +29,11 @@ public class WaitingStatus extends AbstractStatus {
 
         for(Player player : players){
             if(player.getName().equals(name)) throw new IllegalArgumentException("This name already exists.");
-            if(player.getPiece().equals(piece)) throw new IllegalArgumentException("This color is already used by another player.");
+            //if(player.getPiece().equals(piece)) throw new IllegalArgumentException("This color is already used by another player.");
         }
 
         // create player
-        Player player = new Player(name, game, piece);
+        Player player = new Player(name, game);
         players.add(player);
     }
 

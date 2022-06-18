@@ -37,8 +37,8 @@ public class GameController {
     }
 
     @RequestMapping(value="/join", method = RequestMethod.GET, produces="application/json")
-    public Game join(@RequestParam String name, @RequestParam Piece piece){
-        game.join(name, piece);
+    public Game join(@RequestParam String name){
+        game.join(name);
         return game;
     }
 

@@ -21,7 +21,7 @@ public class Player {
     private int numPasch;
     private int bid;
 
-    private final Piece piece;
+    //private final Piece piece;
     private int balance;        // amount of money the player owns
     private boolean bankrupt;   // criteria defining if player is still in the game
     private String name;        // name of player
@@ -37,7 +37,7 @@ public class Player {
     private Game game;          // reference object to interact with game
 
     // constructor
-    public Player(String name, Game game, Piece piece){
+    public Player(String name, Game game){
         this.startMoney = 1500;
         this.balance = startMoney;
         this.name = name;
@@ -46,7 +46,7 @@ public class Player {
         this.game = game;
         this.streets = new boolean[40];    // initializes the elements with false
         this.bid = 0;
-        this.piece = piece;
+        //this.piece = piece;
 
         this.id = nextId++;
 

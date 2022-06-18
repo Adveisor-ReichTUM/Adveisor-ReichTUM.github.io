@@ -19,7 +19,7 @@ class BoardTest {
     @Test
     void countType1() {
         Game game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        Player player = new Player("Mr. Monopoly", game, Piece.DOG);
+        Player player = new Player("Mr. Monopoly", game);
         player.setId(1);
         board.getFields().get(1).setOwner(1);
         board.getFields().get(3).setOwner(1);
@@ -30,7 +30,7 @@ class BoardTest {
     @Test
     void countType2() {
         Game game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/CommunityDeck.txt");
-        Player player = new Player("Mr. Monopoly", game, Piece.DOG);
+        Player player = new Player("Mr. Monopoly", game);
         player.setId(1);
         board.getFields().get(5).setOwner(1);
         int expected = 1;
