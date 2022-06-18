@@ -26,6 +26,7 @@ public class WaitingStatus extends AbstractStatus {
         // create player
         player.initialize(gameService.getGame());
         gameService.getPlayers().add(player);
+        gameService.getGame().setNumPlayers(player.getPlayerSequentialId());
 
         return player;
     }

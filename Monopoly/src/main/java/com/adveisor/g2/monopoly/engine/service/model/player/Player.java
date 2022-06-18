@@ -30,6 +30,8 @@ public class Player {
     // player basic info, for identification
     private String playerId;
     private String playerName;
+    private int playerSequentialId;
+    private int playerPositionalId;
 
     // player position and figure, visualization related
     private Piece piece;
@@ -72,6 +74,8 @@ public class Player {
         this.streets = new boolean[40];    // initializes the elements with false
         this.playerId = UUID.randomUUID().toString();
         this.currentStatus = freeStatus;
+        this.playerSequentialId = game.getNumPlayers() + 1;
+        this.playerPositionalId = (int) Math.pow(2, this.playerSequentialId - 1);
         this.game = game;
     }
 
