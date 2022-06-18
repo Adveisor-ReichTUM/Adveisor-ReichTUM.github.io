@@ -34,6 +34,18 @@ import java.util.Objects;
 @Setter
 @Service
 public class GameService {
+
+    public static final boolean ENABLE_PLAYER_VERIFICATION = false;
+
+    public static final String[] MqttTopicsToSubscribe = {
+            "wurfl1/ausgabe",
+            "wurfl2/ausgabe",
+            "test/topic"
+    };
+
+    public static final String[] testTopics = {
+            "wurfl/anfordern"
+    };
     private final Game game;
 
 
@@ -64,15 +76,7 @@ public class GameService {
         }
     });
 
-    public static String[] MqttTopicsToSubscribe = {
-            "wurfl1/ausgabe",
-            "wurfl2/ausgabe",
-            "test/topic"
-    };
 
-    public static String[] testTopics = {
-            "wurfl/anfordern"
-    };
 
     @Autowired
     public GameService(Game game) {
@@ -151,7 +155,7 @@ public class GameService {
      * @param player a player object of which only the playId field must be specified for validation
      */
     public Player validateActivePlayer(Player player) {
-        if (!Objects.equals(player.getPlayerId(), getCurrentPlayerId())) {
+        if (GameService.ENABLE_PLAYER_VERIFICATION && !Objects.equals(player.getPlayerId(), getCurrentPlayerId())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Player validation failed, non active player cannot take action");
         }
         return getCurrentPlayer();
