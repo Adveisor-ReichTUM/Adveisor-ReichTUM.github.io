@@ -133,13 +133,15 @@ public class GameController {
     }
 
     @RequestMapping(value="/fieldsByPlayer", method = RequestMethod.GET, produces="application/json")
-    public List<Integer> getFieldsByPlayer(@RequestParam int playerId){
-        return game.getFieldsByPlayer(playerId);
+    public Game getFieldsByPlayer(@RequestParam int playerId){
+        game.setFieldsByPlayer(playerId);
+        return game;
     }
 
     @RequestMapping(value="/freecards", method = RequestMethod.GET, produces="application/json")
-    public List<Integer> getFreeCards(){
-        return game.getFreeCards();
+    public Game getFreeCards(){
+        game.setFreeCards();
+        return game;
     }
 
     public static void main(String[] args) throws Exception{

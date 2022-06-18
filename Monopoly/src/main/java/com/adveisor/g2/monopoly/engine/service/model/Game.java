@@ -33,6 +33,9 @@ public class Game {
 
     // reference attributes
     private List<Player> players = new ArrayList<>();
+
+    private List<Integer> freecards = new ArrayList<Integer>();
+    private List<Integer> playercards = new ArrayList<Integer>();
     private Deck communityDeck;
     private Deck chanceDeck;
     private Board board;
@@ -368,33 +371,30 @@ public class Game {
         setCurrentStatus(getTurnStatus());
     }
 
-    public List<Integer> getFieldsByPlayer(int id){
+    public void setFieldsByPlayer(int id){
         List<Integer> fields = new ArrayList<Integer>();
-        boolean possession[] = players.get(id).getStreets();
-        int counter = 0;
+        boolean[] possession = players.get(id).getStreets();
 
         for(int i = 0; i <= 39; i++){
             Field field = board.getFields().get(i);
-            if(field.checkType("street") || field.checkType("station") || field.checkType("utilities")) counter++;
-            if(possession[i]) fields.add(counter);
+            //if(field.checkType("street") || field.checkType("station") || field.checkType("utilities"))
+            if(possession[i]) fields.add(i);
         }
 
-        return fields;
+        this.playercards = fields;
     }
 
-    public List<Integer> getFreeCards(){
+    public void setFreeCards(){
         List<Integer> fields = new ArrayList<Integer>();
-        int counter = 0;
 
         for(int i = 0; i <= 39; i++){
             Field field = board.getFields().get(i);
             if(field.checkType("street") || field.checkType("station") || field.checkType("utilities")){
-                counter++;
-                if(!field.isOwned()) fields.add(counter);
+                if(!field.isOwned()) fields.add(i);
             }
         }
 
-        return fields;
+        this.freecards = fields;
     }
 
 }

@@ -342,7 +342,7 @@ var timerVariable = setInterval(function() {
     }
 }, 1000);
 var totalSeconds = 0;
-var isPaused = false;
+var isPaused = true;
 
 function pad(num, size) {
     num = num.toString();
@@ -545,10 +545,6 @@ function switch_sites(shown, hidden) {
 //-------------loginpage--------------
 
 
-function test_split() {
-    return window.location.search.split("=")[1];
-}
-
 /*function user_login_test() {
     users = {
         'username_1': 'admin',
@@ -572,8 +568,7 @@ var lastbal2 = null;
 var test = false;
 
 angular.module('gameApp', []).controller('gameController', function($scope){
-    $scope.username = test_split();
-    $scope.counter = 0;
+    $scope.username = window.location.search.split("=")[1];
     poll($scope);
 
     $scope.getOperation = function(url, callback){
@@ -605,15 +600,9 @@ angular.module('gameApp', []).controller('gameController', function($scope){
         });
     }
     
-    $scope.write_usernames = function() {
-        //Spieler 1 für eigenen Nutzernamen
-        document.getElementById("own_username").innerHTML = test_split();
-        //Spieler 2 für gegnerischen Nutzernamen
-        document.getElementById("opponent_username").innerHTML = $scope.game.players[1-$scope.game.currentPlayer].name;
-    }
-    
     $scope.start = function(){
         $scope.getOperation('start');
+        if($scope.game.currentStatusString!="WAITING") pause_timer();
     }
     
     $scope.reset = function(){
@@ -729,14 +718,6 @@ angular.module('gameApp', []).controller('gameController', function($scope){
             else document.getElementById("roll_out_of_prison").style.display = "none";
         }
 
-        $scope.printalert = function() {
-            window.alert("hello");
-        }
-
-        $scope.addcounter = function(){
-            $scope.username = "changed";
-        }
-
         //to be continued
     });
     
@@ -753,16 +734,15 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     function update($scope, json){
         // load json package containing game object into scope.game variable
         $scope.game = json;
+
+        /*if($scope.game.currentStatusString=="WAITING"){
+            $scope.join();
+            $scope.start();
+        }*/
         
     // Update here every variable that is not directly addressed via $scope.game
     $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
     $scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
-
-    $scope.mycards = $scope.getFieldsByPlayer($scope.game.currentPlayer);
-    $scope.opponentcards = $scope.getFieldsByPlayer(1-$scope.game.currentPlayer);
-    $scope.freecards = $scope.getFreeCards();
-
-    $scope.write_usernames();
 
     for(var i = 0; i < 84; i++) {
         try {
@@ -773,14 +753,20 @@ angular.module('gameApp', []).controller('gameController', function($scope){
 
         }
     }
-    for(var i = 0; i < my_cards.length; i++) {
-        document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById($scope.mycards[i]));
+
+    $scope.getFieldsByPlayer($scope.game.currentPlayer);
+    for(var i = 0; i < $scope.game.playercards.length; i++) {
+        document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById("street_" + $scope.game.playercards[i]));
     }
-    for(var i = 0; i < opponent_cards.length; i++) {
-        document.getElementById("street_field_" + (i + 29)).appendChild(document.getElementById($scope.opponentcards[i]));
+
+    $scope.getFieldsByPlayer(1-$scope.game.currentPlayer);
+    for(var i = 0; i < $scope.game.playercards.length; i++) {
+        document.getElementById("street_field_" + (i + 29)).appendChild(document.getElementById("street_" + $scope.game.playercards[i]));
     }
-    for(var i = 0; i < free_cards.length; i++) {
-        document.getElementById("street_field_" + (i + 57)).appendChild(document.getElementById(freecards[i]));
+
+    $scope.getFreeCards();
+    for(var i = 0; i < $scope.game.freecards.length; i++) {
+        document.getElementById("street_field_" + (i + 57)).appendChild(document.getElementById("street_" + $scope.game.freecards[i]));
     }
 
     $scope.game.board.fields.forEach(function(field, i) {
