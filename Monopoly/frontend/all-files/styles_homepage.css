@@ -299,3 +299,109 @@ li a:hover {
     width: 630px;
     height: 180px;
 }
+
+#angebote, #wuensche {
+    float: left;
+    width: 800px;
+    height: 200px;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 25px;
+    margin-top: 50px;
+    padding: 10px;
+    border: 0px solid black;
+    background-color: white;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 10px #999;
+    box-shadow: 0 0 10px #999;
+}
+
+#angebote_drop, #wuensche_drop {
+    width: 630px;
+    height: 180px;
+}
+
+body {
+    background-color: lightgray;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #3170b3;
+}
+
+.menu img {
+    height: 1em;
+}
+
+.slidecontainer {
+    width: 30%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: none;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 5px;
+    border: 2px solid black;
+    box-shadow: 0 0 10px black;
+    margin-top:5px;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #3170b3;
+    cursor: pointer;
+
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #3170b3;
+    cursor: pointer;
+}
+
+
+#show_acception {
+    float: right;
+    vertical-align: bottom;
+    border-radius: 5px;
+    height: 100px;
+    width: 300px;
+    border: 3px solid black;
+    text-align: center;
+    justify-content: center;
+}

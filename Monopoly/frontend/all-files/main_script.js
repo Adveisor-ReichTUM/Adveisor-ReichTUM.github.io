@@ -533,6 +533,12 @@ function enable_trading_page() {
     document.body.style.opacity = 1;
 }
 
+function switch_sites(shown, hidden) {
+    document.getElementById(shown).style.display='inline';
+    document.getElementById(hidden).style.display='none';
+    return false;
+}
+
 
 
 

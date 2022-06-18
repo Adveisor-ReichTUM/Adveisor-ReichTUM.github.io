@@ -16,234 +16,759 @@
     <body ng-app='gameApp' ng-controller='gameController'>
         <!--Navigationsleiste mit Weiterleitung zu anderen Seiten -->
         <ul class="menu">
-            <li><a href="homepage_index.html"><img id="logo" src="AdvEIsor Logo rund.png"> </a> </li>
-            <li><a id="Verhandeln" href="Verhandeln HTML.html?username={{username}}"><i class="fa-solid fa-arrow-right-arrow-left"></i> Verhandeln</a></li>
-            <li><a id="Straßen" href="Verhandeln HTML.html"><i class="fa-solid fa-road"></i> Straßen</a></li>
+            <li><a href="#" onclick="switch_sites('homepage', 'tradingpage')"><img id="logo" src="AdvEIsor Logo rund.png"> </a> </li>
+            <li><a id="Verhandeln" href="#" onclick="switch_sites('tradingpage', 'homepage')""><i class="fa-solid fa-arrow-right-arrow-left"></i> Verhandeln</a></li>
+            <li><a id="Straßen" href="#" onclick="switch_sites('tradingpage', 'homepage')"><i class="fa-solid fa-road"></i> Straßen</a></li>
             <li style="float:right;"><a href="loginpage_index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
         </ul>
-        
-        <br>
-        <table width="100%">
-            <col style="width:70%">
-            <col style="width:30%">
-            <tr>
-                <td>
-                    <!-- Evtl. Spielbrett anzeigen; erstmal: leer -->
-                    <img src="Adveisor Karte.png" width="650" height="650" border="0" usemap="#map" />
 
-                    <map name="map">
-                    <!-- #$-:Image map file created by GIMP Image Map plug-in -->
-                    <!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
-                    <!-- #$-:Please do not edit lines starting with "#$" -->
-                    <!-- #$VERSION:2.3 -->
-                    <!-- #$AUTHOR:grube -->
-                    <area shape="rect" coords="508,563,560,648" href="Array Tal.png" alt="test" target="_blank" />
-                    <area shape="rect" coords="402,564,454,647" href="Printf Straße.png" target="_blank" />
-                    <area shape="rect" coords="297,564,348,648" href="AND Gatter.png" target="_blank" />
-                    <area shape="rect" coords="245,564,295,647" href="Byte Allee.png" target="_blank" />
-                    <area shape="rect" coords="138,564,189,647" href="Multiplexer Platz.png" target="_blank" />
-                    <area shape="rect" coords="86,565,135,647" href="MMIX Gebirge.png" target="_blank" />
-                    <area shape="rect" coords="4,509,86,560" href="Linearegleichungs Allee.png" target="_blank" />
-                    <area shape="rect" coords="2,456,86,506" href="Spannungsquelle.png" target="_blank" />
-                    <area shape="rect" coords="2,404,86,454" href="Skalarplatz.png" target="_blank" />
-                    <area shape="rect" coords="2,351,86,401" href="Eigenwertstraße.png" target="_blank" />
-                    <area shape="rect" coords="2,299,86,348" href="OR Gatter.png" target="_blank" />
-                    <area shape="rect" coords="2,246,85,297" href="Determigasse.png" target="_blank" />
-                    <area shape="rect" coords="2,141,85,192" href="Zeilenstufenweg.png" target="_blank" />
-                    <area shape="rect" coords="1,87,85,139" href="Eigenvalley.png" target="_blank" />
-                    <area shape="rect" coords="86,3,137,85" href="Bernoullevard.png" target="_blank" />
-                    <area shape="rect" coords="191,2,242,86" href="L'Hospit-Allee.png" target="_blank" />
-                    <area shape="rect" coords="244,2,294,85" href="Cau-Chysee.png" target="_blank" />
-                    <area shape="rect" coords="296,4,349,85" href="NAND Gatter.png" target="_blank" />
-                    <area shape="rect" coords="350,2,401,84" href="Sandwich-Platz.png" target="_blank" />
-                    <area shape="rect" coords="402,2,453,84" href="Leibniz Hospital.png" target="_blank" />
-                    <area shape="rect" coords="455,2,506,84" href="Stromquelle.png" target="_blank" />
-                    <area shape="rect" coords="507,2,559,84" href="Grenzweg.png" target="_blank" />
-                    <area shape="rect" coords="559,87,648,138" href="Kirchhoffsche Moschee.png" target="_blank" />
-                    <area shape="rect" coords="559,140,648,192" href="Norator.png" target="_blank" />
-                    <area shape="rect" coords="560,246,648,298" href="Tayl-Tor.png" target="_blank" />
-                    <area shape="rect" coords="560,299,649,349" href="NOR Gatter.png" target="_blank" />
-                    <area shape="rect" coords="560,403,648,456" href="Zirkulator.png" target="_blank" />
-                    <area shape="rect" coords="561,510,648,563" href="Ohmplatz.png" target="_blank" />
-                    <area class="chance_cards" ng-click="show_chance_card()" shape="poly" coords="452,540,539,454,478,395,394,483" href="#" />
-                    <area class="community_cards" ng-click="show_community_card()" shape="poly" coords="164,251,249,166,191,107,106,194" href="#" />
-                    </map>
-                </td>
-                <td style="vertical-align:top;">
-                    <table>
-                        <col style="width:30%">
-                        <col style="width:30%">
-                        <col style="width:40%">
-                        <tr>
-                            <td>
-                                <!--Geldzähler Gegner kann noch verändert werden-->
-                                <div class="counter-container">
-                                    <p>{{game.players[1-$scope.game.currentPlayer].name}}</p>
-                                    <i class="fa-solid fa-dollar-sign"></i>
-                                    <div class="counter-opponent"></div>
-                                </div>
-                            
-                                
-                            </td>
-                            <td>
-                                <!--Geldzähler kann noch verändert werden-->
-                                <div class="counter-container">
-                                    <p>{{username}}</p>
-                                    <i class="fa-solid fa-sack-dollar"></i>
-                                    <div class="counter"></div>
-                                </div>
-                            
-                                
-                            </td>
-                            <td>
-                                <!--Timer, der die Spielzeit anzeigt mit Mgl. zu pausieren-->
-                                <div class="time-container">
-                                    <i class="fa-solid fa-clock"></i>
-                                    <div id="count_up_timer">00:00:00</div>
-                                    <button class="button" id="break_count_up_timer" onclick="pause_timer()">Pause</button>
+        <div id="homepage">
+            
+            <br>
+            <table width="100%">
+                <col style="width:70%">
+                <col style="width:30%">
+                <tr>
+                    <td>
+                        <!-- Evtl. Spielbrett anzeigen; erstmal: leer -->
+                        <img src="Adveisor Karte.png" width="650" height="650" border="0" usemap="#map" />
+
+                        <map name="map">
+                        <!-- #$-:Image map file created by GIMP Image Map plug-in -->
+                        <!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
+                        <!-- #$-:Please do not edit lines starting with "#$" -->
+                        <!-- #$VERSION:2.3 -->
+                        <!-- #$AUTHOR:grube -->
+                        <area shape="rect" coords="508,563,560,648" href="Array Tal.png" alt="test" target="_blank" />
+                        <area shape="rect" coords="402,564,454,647" href="Printf Straße.png" target="_blank" />
+                        <area shape="rect" coords="297,564,348,648" href="AND Gatter.png" target="_blank" />
+                        <area shape="rect" coords="245,564,295,647" href="Byte Allee.png" target="_blank" />
+                        <area shape="rect" coords="138,564,189,647" href="Multiplexer Platz.png" target="_blank" />
+                        <area shape="rect" coords="86,565,135,647" href="MMIX Gebirge.png" target="_blank" />
+                        <area shape="rect" coords="4,509,86,560" href="Linearegleichungs Allee.png" target="_blank" />
+                        <area shape="rect" coords="2,456,86,506" href="Spannungsquelle.png" target="_blank" />
+                        <area shape="rect" coords="2,404,86,454" href="Skalarplatz.png" target="_blank" />
+                        <area shape="rect" coords="2,351,86,401" href="Eigenwertstraße.png" target="_blank" />
+                        <area shape="rect" coords="2,299,86,348" href="OR Gatter.png" target="_blank" />
+                        <area shape="rect" coords="2,246,85,297" href="Determigasse.png" target="_blank" />
+                        <area shape="rect" coords="2,141,85,192" href="Zeilenstufenweg.png" target="_blank" />
+                        <area shape="rect" coords="1,87,85,139" href="Eigenvalley.png" target="_blank" />
+                        <area shape="rect" coords="86,3,137,85" href="Bernoullevard.png" target="_blank" />
+                        <area shape="rect" coords="191,2,242,86" href="L'Hospit-Allee.png" target="_blank" />
+                        <area shape="rect" coords="244,2,294,85" href="Cau-Chysee.png" target="_blank" />
+                        <area shape="rect" coords="296,4,349,85" href="NAND Gatter.png" target="_blank" />
+                        <area shape="rect" coords="350,2,401,84" href="Sandwich-Platz.png" target="_blank" />
+                        <area shape="rect" coords="402,2,453,84" href="Leibniz Hospital.png" target="_blank" />
+                        <area shape="rect" coords="455,2,506,84" href="Stromquelle.png" target="_blank" />
+                        <area shape="rect" coords="507,2,559,84" href="Grenzweg.png" target="_blank" />
+                        <area shape="rect" coords="559,87,648,138" href="Kirchhoffsche Moschee.png" target="_blank" />
+                        <area shape="rect" coords="559,140,648,192" href="Norator.png" target="_blank" />
+                        <area shape="rect" coords="560,246,648,298" href="Tayl-Tor.png" target="_blank" />
+                        <area shape="rect" coords="560,299,649,349" href="NOR Gatter.png" target="_blank" />
+                        <area shape="rect" coords="560,403,648,456" href="Zirkulator.png" target="_blank" />
+                        <area shape="rect" coords="561,510,648,563" href="Ohmplatz.png" target="_blank" />
+                        <area class="chance_cards" ng-click="show_chance_card()" shape="poly" coords="452,540,539,454,478,395,394,483" href="#" />
+                        <area class="community_cards" ng-click="show_community_card()" shape="poly" coords="164,251,249,166,191,107,106,194" href="#" />
+                        </map>
+                    </td>
+                    <td style="vertical-align:top;">
+                        <table>
+                            <col style="width:30%">
+                            <col style="width:30%">
+                            <col style="width:40%">
+                            <tr>
+                                <td>
+                                    <!--Geldzähler Gegner kann noch verändert werden-->
+                                    <div class="counter-container">
+                                        <p>{{game.players[1-$scope.game.currentPlayer].name}}</p>
+                                        <i class="fa-solid fa-dollar-sign"></i>
+                                        <div class="counter-opponent"></div>
                                     </div>
-                                </div>    
-                            </td>
-                        </tr>
-                        <tr>
-                            <col style="width: 80%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <td>
-                                <div style="width: 100%;">
-                                    <button onclick="free_prison_community_button_clicked()" disabled id="prison_community_click" style="opacity: 0.5;"><img src="free_prison_community.png"></button>
-                                </div>
-                            </td>
-                            <td>
-                                <button type="button" id="buy_out_of_prison" style="display: none;" ng-click="buy_out_of_prison()"><i class="fa-solid fa-money-bill"></i></button>
-                            </td>
-                            <td>
-                                <button type="button" id="roll_out_of_prison" style="display: none;" ng-click="roll_out_of_prison()"><i class="fa-solid fa-dice"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="width: 100%">
-                                    <button onclick="free_prison_chance_button_clicked()" disabled id="prison_chance_click" style="opacity: 0.5;"><img src="free_prison_chance.png"></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="card" id="card_field">
-                                    <div class="cont">
-                                        <div class="title">
-                                            <h2 id="kind_of_taken_card">Ereignisfeld</h2>
+                                
+                                    
+                                </td>
+                                <td>
+                                    <!--Geldzähler kann noch verändert werden-->
+                                    <div class="counter-container">
+                                        <p>{{username}}</p>
+                                        <i class="fa-solid fa-sack-dollar"></i>
+                                        <div class="counter"></div>
+                                    </div>
+                                
+                                    
+                                </td>
+                                <td>
+                                    <!--Timer, der die Spielzeit anzeigt mit Mgl. zu pausieren-->
+                                    <div class="time-container">
+                                        <i class="fa-solid fa-clock"></i>
+                                        <div id="count_up_timer">00:00:00</div>
+                                        <button class="button" id="break_count_up_timer" onclick="pause_timer()">Pause</button>
                                         </div>
-                                        <!-- <p id="rent"><b>Grundstückwert: &#937; 400</b></p> -->
-                                        <table style="height: 100%;">
-                                            <col width="55%">
-                                            <col width="45%">                    
-                                            <div class="details">
-                                                <tr>
-                                                    <td>
-                                                        <p id="taken_card_content">Das ist ein Test Das ist ein TestDas ist ein TestDas ist ein Test</p>
-                                                    </td>
-                                                    <td>
-                                                        <div id="community_chance_parent">
-                                                            <img src="Gemeinschaftskarte Truhe.png" id="community_chest">
-                                                            <img src="Ereigniskarte Fragezeichen.png" id="chance_questionmark" style="display: none;">
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                    </div>    
+                                </td>
+                            </tr>
+                            <tr>
+                                <col style="width: 80%;">
+                                <col style="width: 10%;">
+                                <col style="width: 10%;">
+                                <td>
+                                    <div style="width: 100%;">
+                                        <button onclick="free_prison_community_button_clicked()" disabled id="prison_community_click" style="opacity: 0.5;"><img src="free_prison_community.png"></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" id="buy_out_of_prison" style="display: none;" ng-click="buy_out_of_prison()"><i class="fa-solid fa-money-bill"></i></button>
+                                </td>
+                                <td>
+                                    <button type="button" id="roll_out_of_prison" style="display: none;" ng-click="roll_out_of_prison()"><i class="fa-solid fa-dice"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="width: 100%">
+                                        <button onclick="free_prison_chance_button_clicked()" disabled id="prison_chance_click" style="opacity: 0.5;"><img src="free_prison_chance.png"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="card" id="card_field">
+                                        <div class="cont">
+                                            <div class="title">
+                                                <h2 id="kind_of_taken_card">Ereignisfeld</h2>
                                             </div>
-                                        </table>
-                                    </div>   
+                                            <!-- <p id="rent"><b>Grundstückwert: &#937; 400</b></p> -->
+                                            <table style="height: 100%;">
+                                                <col width="55%">
+                                                <col width="45%">                    
+                                                <div class="details">
+                                                    <tr>
+                                                        <td>
+                                                            <p id="taken_card_content">Das ist ein Test Das ist ein TestDas ist ein TestDas ist ein Test</p>
+                                                        </td>
+                                                        <td>
+                                                            <div id="community_chance_parent">
+                                                                <img src="Gemeinschaftskarte Truhe.png" id="community_chest">
+                                                                <img src="Ereigniskarte Fragezeichen.png" id="chance_questionmark" style="display: none;">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </div>
+                                            </table>
+                                        </div>   
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <button type="button" onclick="show_chance_card()">Show Card Test</button>
+
+            <button type="button" onclick="disable_trading_page(); hide_card_after_dragged()" ng-click="endTurn()">Beende Zug</button>
+
+            <!-- Trigger/Open The Modal -->
+            <button type="button" id="myBtn" onclick="show_whos_turn()">Alert Turn</button>
+
+            <!-- The Modal -->
+            <div id="alert_turn" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2>Achtung!</h2>
+                    </div>
+                    <div class="modal-body">
+                    <p>Player 1,</p>
+                    <p>Du bist am Zug!</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="overlay"> 
+                <!-- Wird als Angebotefeld angezeigt, wenn das Angebot beim Gegner ankommt -->
+                <div id="show_offer_angebote" style="display: none;">
+                    <table style="width: 100%; height: 100%;">
+                        <col width="90%">
+                        <col width="10%">
+                        <tr>
+                            <td style="vertical-align:top;">
+                                <p style="text-align:left; margin-top:0;">Gegnerisches Angebot
+                                    <div id="offer_angebote_streets" style="display: flex; justify-content: space-evenly;"></div>
+                                </p>
+                            </td>
+                            <td style="vertical-align:top;">
+                                Geldbetrag:
+                                <p style="float:right;" id="offer_angebote_value"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+        
+                <!-- Wird als Wünschefeld angezeigt, wenn das Angebot beim Gegner ankommt -->
+                <div id="show_offer_wuensche" style="display: none;">
+                    <table style="width: 100%; height: 100%;">
+                        <col width="90%">
+                        <col width="10%">
+                        <tr>
+                            <td style="vertical-align:top;">
+                                <p style="text-align:left; margin-top:0;">Gegnerischer Wunsch
+                                    <div id="offer_wuensche_streets" style="display: flex; justify-content: space-evenly;"></div>
+                                </p>
+                            </td>
+                            <td style="vertical-align:top;">
+                                Geldbetrag: 
+                                <p style="float:right;" id="offer_wuensche_value"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!--Bietet Gegner Option Angebot anzunehmen oder abzulehnen-->
+                <div id="decision">
+                    <form action="backend.php" style="display: none;" id="trading_offer_decision">
+                        <input type="radio" id="trading_offer_accept" name="trading_offer_buttons" value="Annehmen">
+                        <label for="Annehmen">Annehmen</label><br>
+                        <input type="radio" id="trading_offer_decline" name="trading_offer_buttons" value="Ablehnen">
+                        <label for="Ablehnen">Ablehnen</label>
+                        <button type="submit" ng-click="submitoffer()" style="margin-left: 15px;">Senden</button>
+                    </form>
+                </div>
+            </div>
+            <p id="showhere">{{username}}</p>
+            <button ng-click="addcounter()">+1</button>
+            <p>{{counter}}</p>
+            <script>
+                document.getElementById("showhere").innerHTML = document.getElementById("submitted_name").value;
+            </script>
+
+            <script type="text/javascript" src="main_script.js"></script>
+        </div>
+        <div id="tradingpage">
+          
+            <br><br>
+
+            <!--Anzeige der Karten und Möglichkeit in entsprechende Wunsch-/Angebot-Felder hineinzudraggen/-droppen-->
+            <table style="width:100%;" >
+                <tr>
+                    <td style="text-align:left;" id="own_username">{{username}}
+                        <div style="max-height: 400px; overflow-y: scroll;">
+                            <table style="text-align:center;">
+                                <tr>
+                                    <td>
+                                        <div id="street_field_1" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        <img src="Array Tal.png" draggable="true" ondragstart="drag(event)" id="street_1"  width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <div id="street_field_2" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Printf Straße.png" draggable="true" ondragstart="drag(event)" id="street_3" width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_3" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="AND Gatter.png" draggable="true" ondragstart="drag(event)" id="street_5" width="120" height="160">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_4" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_5" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_6" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_7" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_8" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_9" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_10" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <div id="street_field_11" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_12" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_13" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <div id="street_field_14" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_15" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_16" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <div id="street_field_17" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_18" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_19" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <div id="street_field_20" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_21" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_22" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <div id="street_field_23" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_24" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_25" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <div id="street_field_26" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_27" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_28" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td style="text-align:left;" id="opponent_username">Spieler 2
+                        <div style="max-height: 400px; overflow-y: scroll;">
+                            <table>
+                                <tr>
+                                    <td style="height:5px">
+                                        <div id="street_field_29" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_30" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_31" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_32" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_33" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_34" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_35" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_36" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_37" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_38" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_39" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_40" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_41" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_42" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_43" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_44" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_45" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_46" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_47" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_48" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_49" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_50" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_51" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_52" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_53" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_54" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_55" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_56" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td style="text-align:left;">Freie Straßen
+                        <div style="max-height: 400px; overflow-y: scroll;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_57" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_58" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_59" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_60" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Byte Allee.png" draggable="true" ondragstart="drag(event)" id="street_6"  width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_61" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Multiplexer Platz.png" draggable="true" ondragstart="drag(event)" id="street_8" width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_62" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="MMIX Gebirge.png" draggable="true" ondragstart="drag(event)" id="street_9" width="120" height="160">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_63" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Linearegleichungs Allee.png" draggable="true" ondragstart="drag(event)" id="street_11"  width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_64" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Spannungsquelle.png" draggable="true" ondragstart="drag(event)" id="street_12" width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_65" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Skalarplatz.png" draggable="true" ondragstart="drag(event)" id="street_13" width="120" height="160">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_66" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Eigenwertstraße.png" draggable="true" ondragstart="drag(event)" id="street_14"  width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_67" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="OR Gatter.png" draggable="true" ondragstart="drag(event)" id="street_15" width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_68" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Determigasse.png" draggable="true" ondragstart="drag(event)" id="street_16" width="120" height="160">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_69" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Zeilenstufenweg.png" draggable="true" ondragstart="drag(event)" id="street_18"  width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_70" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Eigenvalley.png" draggable="true" ondragstart="drag(event)" id="street_19" width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_71" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Bernoullevard.png" draggable="true" ondragstart="drag(event)" id="street_21" width="120" height="160">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_72" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="L'Hospit-Allee.png" draggable="true" ondragstart="drag(event)" id="street_23"  width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_73" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Cau-Chysee.png" draggable="true" ondragstart="drag(event)" id="street_24" width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_74" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="NAND Gatter.png" draggable="true" ondragstart="drag(event)" id="street_25" width="120" height="160">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_75" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Sandwich-Platz.png" draggable="true" ondragstart="drag(event)" id="street_26"  width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_76" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Leibniz Hospital.png" draggable="true" ondragstart="drag(event)" id="street_27" width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_77" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Stromquelle.png" draggable="true" ondragstart="drag(event)" id="street_28" width="120" height="160">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="street_field_78" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Grenzweg.png" draggable="true" ondragstart="drag(event)" id="street_29"  width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_79" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Kirchoffsche Moschee.png" draggable="true" ondragstart="drag(event)" id="street_31" width="120" height="160">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="street_field_80" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                            <img src="Norator.png" draggable="true" ondragstart="drag(event)" id="street_32" width="120" height="160">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                            <div id="street_field_81" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                                <img src="Tayl-Tor.png" draggable="true" ondragstart="drag(event)" id="street_34"  width="120" height="160">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="street_field_82" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                                <img src="NOR Gatter.png" draggable="true" ondragstart="drag(event)" id="street_35" width="120" height="160">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="street_field_83" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                                <img src="Zirkulator.png" draggable="true" ondragstart="drag(event)" id="street_37" width="120" height="160">
+                                            </div>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                            <div id="street_field_84" ondrop="drop_to_street_field(event)" ondragover="allowDrop(event)" style="width:120px; height:160px;">
+                                                <img src="Ohmplatz.png" draggable="true" ondragstart="drag(event)" id="street_39"  width="120" height="160">
+                                            </div>
+                                        </td>                            
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="display: none;" id="storage"></div>
+
+
+            <!--Drop-Feld, um Angebote hineinzuziehen und Geldbetrag einzustellen-->
+            <div id="angebote" style="display: inline;">
+                <table style="width: 100%; height: 100%;">
+                    <col width="90%">
+                    <col width="10%">
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <p style="text-align:left; margin-top: 0;">Angebote
+                                
+                            
+                            <div id="angebote_drop" ondrop="drop_to_angebote_field(event)" ondragover="allowDrop(event)" style="display: flex; justify-content: space-evenly;"></div>
+                            </p>
+                        </td>
+                        <td style="vertical-align: top;">
+                            <button style="float: right;" class="money" onclick="show_range_shifter_angebote()">
+                                <i class="fa-solid fa-comment-dollar"></i>
+                            </button>
+                            <div style="display: none;" class="slidecontainer" id="shifter_angebote">
+                                <form action="/action_page.php">
+                                    <label for="quantity">Betrag:</label>
+                                    <input type="number" id="quantity_angebote" name="quantity_angebote" min="0" max="7500" oninput="update_quantity_angebote()">
+                                </form>
+                                <input type="range" min="0" max="7500" value="1" class="slider" id="shifter_input_angebote" oninput="update_value_angebote()">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!--Drop-Feld, um Wünsche hineinzuziehen und Geldbetrag einzustellen-->
+            <div id="wuensche" style="display: inline;">
+                <table style="width: 100%; height: 100%;">
+                        <col width="90%">
+                        <col width="10%">
+                        <tr>
+                            <td style="vertical-align:top;">
+                                <p style="text-align:left; margin-top:0;">Wünsche
+                                    <div id="wuensche_drop" ondrop="drop_to_wuensche_field(event)" ondragover="allowDrop(event)" style="display: flex; justify-content: space-evenly;"></div>
+                                </p>
+                            </td>
+                            <td style="vertical-align:top;">
+                                <button style="float:right;" class="money"  onclick="show_range_shifter_wuensche()">
+                                    <i class="fa-solid fa-comment-dollar"></i>
+                                </button>
+                                <div style="display: none;" class="slidecontainer" id="shifter_wuensche">
+                                    <form action="/action_page.php">
+                                        <label for="quantity">Betrag:</label>
+                                        <input type="number" id="quantity_wuensche" name="quantity_wuensche" min="0" max="7500" oninput="update_quantity_wuensche()">
+                                    </form>
+                                    <input type="range" min="0" max="7500" value="1" class="slider" id="shifter_input_wuensche" oninput="update_value_wuensche()">
                                 </div>
                             </td>
                         </tr>
                     </table>
-                </td>
-            </tr>
-        </table>
-
-        <button type="button" onclick="show_chance_card()">Show Card Test</button>
-
-        <button type="button" onclick="disable_trading_page(); hide_card_after_dragged()" ng-click="endTurn()">Beende Zug</button>
-
-        <!-- Trigger/Open The Modal -->
-        <button type="button" id="myBtn" onclick="show_whos_turn()">Alert Turn</button>
-
-        <!-- The Modal -->
-        <div id="alert_turn" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Achtung!</h2>
-                </div>
-                <div class="modal-body">
-                <p>Player 1,</p>
-                <p>Du bist am Zug!</p>
-                </div>
+                </div> 
             </div>
 
-        </div>
+            <!--Submitbutton, um seine Angebote an Alex zu übermitteln-->
+            <input id="submit_offer" style="display: inline;" type="submit" value="Submit" ng-click="showoffer()" style="margin-top:400px;">
 
-        <div id="overlay"> 
-            <!-- Wird als Angebotefeld angezeigt, wenn das Angebot beim Gegner ankommt -->
-            <div id="show_offer_angebote" style="display: none;">
-                <table style="width: 100%; height: 100%;">
-                    <col width="90%">
-                    <col width="10%">
-                    <tr>
-                        <td style="vertical-align:top;">
-                            <p style="text-align:left; margin-top:0;">Gegnerisches Angebot
-                                <div id="offer_angebote_streets" style="display: flex; justify-content: space-evenly;"></div>
-                            </p>
-                        </td>
-                        <td style="vertical-align:top;">
-                            Geldbetrag:
-                            <p style="float:right;" id="offer_angebote_value"></p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-    
-            <!-- Wird als Wünschefeld angezeigt, wenn das Angebot beim Gegner ankommt -->
-            <div id="show_offer_wuensche" style="display: none;">
-                <table style="width: 100%; height: 100%;">
-                    <col width="90%">
-                    <col width="10%">
-                    <tr>
-                        <td style="vertical-align:top;">
-                            <p style="text-align:left; margin-top:0;">Gegnerischer Wunsch
-                                <div id="offer_wuensche_streets" style="display: flex; justify-content: space-evenly;"></div>
-                            </p>
-                        </td>
-                        <td style="vertical-align:top;">
-                            Geldbetrag: 
-                            <p style="float:right;" id="offer_wuensche_value"></p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-    
-            <!--Bietet Gegner Option Angebot anzunehmen oder abzulehnen-->
-            <div id="decision">
-                <form action="backend.php" style="display: none;" id="trading_offer_decision">
-                    <input type="radio" id="trading_offer_accept" name="trading_offer_buttons" value="Annehmen">
-                    <label for="Annehmen">Annehmen</label><br>
-                    <input type="radio" id="trading_offer_decline" name="trading_offer_buttons" value="Ablehnen">
-                    <label for="Ablehnen">Ablehnen</label>
-                    <button type="submit" ng-click="submitoffer()" style="margin-left: 15px;">Senden</button>
-                </form>
-            </div>
-        </div>
-        <p id="showhere">{{username}}</p>
-        <button ng-click="addcounter()">+1</button>
-        <p>{{counter}}</p>
-        <script>
-            document.getElementById("showhere").innerHTML = document.getElementById("submitted_name").value;
-        </script>
 
-        <script type="text/javascript" src="main_script.js"></script>
-        
+            <!--Zeigt dem Angebotsteller an, ob sein Angebot vom Gegner akzeptiert oder abgelehnt wurde; verschwindet nach 10s wieder-->
+            <div id="show_acception" style="display: none;">
+                <p id="timer_status_accept">10 s</p>
+                <b id="decision_variable"></b>
+            </div>
+
+        </div>        
     </body>
 </html>
