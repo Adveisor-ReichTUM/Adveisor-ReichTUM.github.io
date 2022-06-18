@@ -55,9 +55,9 @@ public class GameRestController {
         return gameService.join(player);
     }
 
-    @PostMapping(value="/dice-throw", produces="application/json")
-    public Dice throwDice(@Valid @RequestBody(required = false)Dice dice){
-        return gameService.diceThrow(dice);
+    @PostMapping(value="/use-sim-dice", produces="application/json")
+    public Dice useSimDice() {
+        return gameService.diceThrow();
     }
     @PostMapping(value="/end-round", produces="application/json")
     public Game endCurrentRound(@RequestBody Player player){
@@ -131,7 +131,7 @@ public class GameRestController {
     }
 
     @RequestMapping(value="/sell-House", method = RequestMethod.POST, produces="application/json")
-    public Game sellHouse(@RequestParam int fieldIndex, @RequestBody Player player){
+    public Game sellHouse(@RequestParam int fieldIndex, @RequestBody Player player) {
         gameService.sellHouse(fieldIndex, player);
         return gameService.getGame();
     }

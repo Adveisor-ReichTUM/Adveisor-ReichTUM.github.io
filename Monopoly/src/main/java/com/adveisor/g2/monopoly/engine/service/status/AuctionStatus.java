@@ -60,12 +60,12 @@ public class AuctionStatus extends AbstractStatus {
         winner.adjustBalance(-highestBid.getBid());
         auctionedProperty.setOwned(true);
         auctionedProperty.setOwnerId(winner.getPlayerId());
-        gameService.setCurrentStatus(gameService.getTurnStatus());
+        gameService.setStatus("TURN");
         return highestBid;
     }
 
     @Override
     public String toString() {
-        return "Auction-Status";
+        return "AUCTION";
     }
 }

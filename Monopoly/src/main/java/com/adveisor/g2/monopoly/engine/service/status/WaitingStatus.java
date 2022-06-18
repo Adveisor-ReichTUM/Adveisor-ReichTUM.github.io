@@ -35,14 +35,14 @@ public class WaitingStatus extends AbstractStatus {
         //start the game
         if(gameService.getPlayers().size()>=2) {
             gameService.getGame().setCurrentPlayerId(gameService.getPlayers().get(0).getPlayerId());
-            gameService.setCurrentStatus(gameService.getDiceStatus());
+            gameService.setStatus("DICE");
         }
 
     }
 
     @Override
     public String toString() {
-        return "Waiting-Status";
+        return "WAITING";
     }
 
 }

@@ -27,4 +27,18 @@ public class MqttPublishModel {
 
     @NotNull
     private Integer qos;
+
+    public MqttPublishModel(String topic, String message, Boolean retained, Integer qos) {
+        this.message = message;
+        this.qos = qos;
+        this.retained = retained;
+        this.topic = topic;
+    }
+
+    public MqttPublishModel(String topic, String message) {
+        this.message = message;
+        this.qos = 0;
+        this.retained = false;
+        this.topic = topic;
+    }
 }

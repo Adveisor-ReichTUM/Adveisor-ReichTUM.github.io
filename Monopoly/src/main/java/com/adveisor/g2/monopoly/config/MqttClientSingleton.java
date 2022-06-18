@@ -11,8 +11,10 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 
 public class MqttClientSingleton {
 
+    public static boolean LOCAL_DEBUG = true;
+
     private static final String MQTT_PUBLISHER_ID = "game_server";
-    private static final String MQTT_SERVER_ADDRESS = "tcp://localhost:1883";
+    private static final String MQTT_SERVER_ADDRESS = LOCAL_DEBUG ? "tcp://localhost:1883" : "tcp://monopoli.local:1883";
     private static IMqttClient instance;
 
     public static IMqttClient getInstance() {
@@ -36,8 +38,6 @@ public class MqttClientSingleton {
         return instance;
     }
 
-    private MqttClientSingleton() {
-
-    }
+    private MqttClientSingleton() {}
 }
 

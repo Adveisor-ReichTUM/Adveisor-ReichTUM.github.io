@@ -14,4 +14,6 @@ public class MqttSubscribeModel {
     private String message;
     private Integer qos;
     private Integer id;
+
+
 }

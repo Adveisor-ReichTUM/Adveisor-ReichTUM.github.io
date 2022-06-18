@@ -7,22 +7,26 @@ package com.adveisor.g2.monopoly.engine.service.status;
 import com.adveisor.g2.monopoly.engine.service.GameService;
 import com.adveisor.g2.monopoly.engine.service.model.Dice;
 import com.adveisor.g2.monopoly.engine.service.model.board.Field;
+import com.adveisor.g2.monopoly.engine.service.model.mqtt.MqttPublishModel;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
+import com.adveisor.g2.monopoly.util.Logger;
 import com.adveisor.g2.monopoly.util.SimulatedDice;
+import lombok.Getter;
 
+@Getter
 public class DiceStatus extends AbstractStatus {
 
+    private Dice dice = new Dice();
     public DiceStatus(GameService gameService) {
         super(gameService);
     }
 
     @Override
-    public Dice diceThrow(Dice dice) {
+    public Dice diceThrow() {
         Player player = gameService.getCurrentPlayer();
-
-        // Würfeln
         // if no dice result is given, use simulated dice
-        if (dice == null) {
+        if (!dice.isValid()) {
+            Logger.log("Using simulated dice");
             dice = SimulatedDice.generateDiceResult();
         }
         dice.setIfPasch();
@@ -32,10 +36,8 @@ public class DiceStatus extends AbstractStatus {
         //Bewegen des Spielers und Evaluation der Position
         player.moveForward(dice.getTotal());
 
-        //Option zum Bauen, Tauschen, Hypothek
-        //manage();
-
         evaluateStandingField(player);
+        //GameService.mqttPublishMessageApi(new MqttPublishModel("/topic", gameService.currentPlayerStandingField().getPosition() + ""));
         gameService.setCurrentStatus(gameService.getTurnStatus());
         return dice;
     }
@@ -49,6 +51,6 @@ public class DiceStatus extends AbstractStatus {
 
     @Override
     public String toString() {
-        return "Dice-Status";
+        return "DICE";
     }
 }

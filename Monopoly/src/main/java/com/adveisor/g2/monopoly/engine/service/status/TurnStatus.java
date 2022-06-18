@@ -60,7 +60,7 @@ public class TurnStatus extends AbstractStatus {
         if (bankruptPlayerCount >= gameService.getPlayerCount() - 1) {
             gameService.setTurnStatus(gameService.getEndStatus());
         } else {
-            gameService.setCurrentStatus(gameService.getDiceStatus());
+            gameService.setStatus("DICE");
         }
     }
 
@@ -81,6 +81,6 @@ public class TurnStatus extends AbstractStatus {
 
     @Override
     public String toString() {
-        return "Turn-Status";
+        return "TURN";
     }
 }

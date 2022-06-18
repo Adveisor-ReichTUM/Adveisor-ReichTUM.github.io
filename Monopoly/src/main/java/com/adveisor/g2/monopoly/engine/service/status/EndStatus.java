@@ -20,7 +20,7 @@ public class EndStatus extends AbstractStatus {
     }
     @Override
     public String toString() {
-        return "End-Status";
+        return "END";
     }
 
     public void addPlayer(Player player) {

@@ -6,31 +6,36 @@ package com.adveisor.g2.monopoly.engine.service;
 
 import com.adveisor.g2.monopoly.config.MqttClientSingleton;
 import com.adveisor.g2.monopoly.engine.service.model.Dice;
+import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.PlayerBid;
 import com.adveisor.g2.monopoly.engine.service.model.board.Field;
-import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.deck.Card;
 import com.adveisor.g2.monopoly.engine.service.model.mqtt.MqttPublishModel;
 import com.adveisor.g2.monopoly.engine.service.model.player.Player;
 import com.adveisor.g2.monopoly.engine.service.status.*;
+import com.adveisor.g2.monopoly.util.MqttPayloadUtil;
 import com.adveisor.g2.monopoly.util.Logger;
 import lombok.Getter;
 import lombok.Setter;
-import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
-import java.util.*;
 
 @Getter
 @Setter
 @Service
 public class GameService {
     private final Game game;
+
 
     // all the possible statuses initialized here
     private AbstractStatus auctionStatus = new AuctionStatus(this);
@@ -39,14 +44,68 @@ public class GameService {
     private EndStatus endStatus = new EndStatus(this);
     private WaitingStatus waitingStatus = new WaitingStatus(this);
     //
-
     private AbstractStatus currentStatus;
+
+    IMqttMessageListener processMqttMessage = ((mqttTopic, mqttMessage) -> {
+        Logger.log("New Mqtt Message Under Topic: " + mqttTopic + ": " + mqttMessage
+                + "\nBinary representation: " + MqttPayloadUtil.getByteArrayBinary(mqttMessage));
+        switch (mqttTopic) {
+            case "test" -> {
+
+            }
+            case "wurfl1/ausgabe" -> {
+                diceStatus.getDice().setFirstThrow(Integer.parseInt(mqttMessage.toString()));
+                if (diceStatus.getDice().isValid()) diceThrow();
+            }
+            case "wurfl2/ausgabe" -> {
+                diceStatus.getDice().setSecondThrow(Integer.parseInt(mqttMessage.toString()));
+                if (diceStatus.getDice().isValid()) diceThrow();
+            }
+        }
+    });
+
+    public static String[] MqttTopicsToSubscribe = {
+            "wurfl1/ausgabe",
+            "wurfl2/ausgabe",
+            "test/topic"
+    };
+
+    public static String[] testTopics = {
+            "wurfl/anfordern"
+    };
 
     @Autowired
     public GameService(Game game) {
         this.game = game;
+        subscribeAllTopics();
+        if (MqttClientSingleton.LOCAL_DEBUG) {
+            for (String topic : GameService.testTopics) {
+                mqttSubscribeTopic(topic);
+            }
+        }
         // game start at this status
-        this.currentStatus = this.waitingStatus;
+        setStatus("WAITING");
+    }
+
+    public void subscribeAllTopics() {
+        for (String topic : GameService.MqttTopicsToSubscribe) {
+            mqttSubscribeTopic(topic);
+        }
+    }
+
+    public void setStatus(String status) {
+        switch (status) {
+            case "TURN" -> currentStatus = turnStatus;
+            case "DICE" -> {
+                diceStatus.getDice().setZero();
+                currentStatus = diceStatus;
+                mqttPublishMessage("wurfl/anfordern", "hallo");
+            }
+            case "AUCTION" -> currentStatus = auctionStatus;
+            case "END" -> currentStatus = endStatus;
+            case "WAITING" -> currentStatus = waitingStatus;
+            default -> Logger.log("unknown status transfer");
+        }
     }
 
     public void resetGame() {
@@ -79,6 +138,10 @@ public class GameService {
     public String getCurrentPlayerId() {
 
         return game.getCurrentPlayerId();
+    }
+
+    public String getCurrentStatusString() {
+        return currentStatus.toString();
     }
     // util above to get game info
 
@@ -160,13 +223,11 @@ public class GameService {
     /**
      * A dice-throw and move according to the throw result.
      * only possible when game is in dice status
-     * @param dice a `Dice` object representing the result of the two dice.
-     *             if it is not present(null passed), a simulated dice will be used
      * @return a complete `Dice` object containing boolean field `pasch` to indicate whether the throw is a double
      */
-    public Dice diceThrow(Dice dice) {
+    public Dice diceThrow() {
         incrementGameVersionId();
-        var toBeReturned = currentStatus.diceThrow(dice);
+        var toBeReturned = currentStatus.diceThrow();
         Logger.log(this);
         return toBeReturned;
     }
@@ -291,23 +352,31 @@ public class GameService {
 
     // MQTT methods below
 
-    public static void MqttPublishMessage(MqttPublishModel messagePublishModel) throws MqttException {
-
-        MqttMessage mqttMessage = new MqttMessage(messagePublishModel.getMessage().getBytes());
-        mqttMessage.setQos(messagePublishModel.getQos());
-        mqttMessage.setRetained(messagePublishModel.getRetained());
-
-        MqttClientSingleton.getInstance().publish(messagePublishModel.getTopic(), mqttMessage);
+    public static void mqttPublishMessageApi(MqttPublishModel messagePublishModel) {
+        try {
+            MqttMessage mqttMessage = new MqttMessage(messagePublishModel.getMessage().getBytes());
+            mqttMessage.setQos(messagePublishModel.getQos());
+            mqttMessage.setRetained(messagePublishModel.getRetained());
+            MqttClientSingleton.getInstance().publish(messagePublishModel.getTopic(), mqttMessage);
+        } catch (MqttException e) {
+            Logger.log(e.getMessage());
+        }
     }
 
-    public static void MqttSubscribeChannelTest(String topic, Integer waitMillis)
-            throws InterruptedException, MqttException {
-        //CountDownLatch countDownLatch = new CountDownLatch(10);
-        MqttClientSingleton.getInstance().subscribeWithResponse(topic, (mqttTopic, mqttMessage) -> {
-            Logger.log("New Mqtt Message Under Topic: " + mqttTopic + ": " + mqttMessage);
-            //countDownLatch.countDown();
-        });
+    public void mqttPublishMessage(String topic, String msg) {
+        try {
+            MqttMessage message = new MqttMessage(msg.getBytes());
+            MqttClientSingleton.getInstance().publish(topic, message);
+        } catch (MqttException e) {
+            Logger.log(e.getMessage());
+        }
+    }
 
-        //countDownLatch.await(waitMillis, TimeUnit.MILLISECONDS);
+    public void mqttSubscribeTopic(String topic) {
+        try {
+            MqttClientSingleton.getInstance().subscribeWithResponse(topic, processMqttMessage);
+        } catch (MqttException e) {
+            Logger.log(e.getMessage());
+        }
     }
 }
