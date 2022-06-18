@@ -539,14 +539,9 @@ function enable_trading_page() {
 //-------------loginpage--------------
 
 
-function user_login() {
-    uname = document.getElementById("username").value;
-    alert(uname);
-    return uname;
+function test_split() {
+    return window.location.search.split("=")[1];
 }
-
-var uname = user_login();
-var entered_username = uname;
 
 /*function user_login_test() {
     users = {
@@ -568,10 +563,13 @@ var entered_username = uname;
 var laststatus = null;
 var lastbal1 = null;
 var lastbal2 = null;
+var test = false;
 
-angular.module('gameApp', []).controller('gameController', ['$scope', function($scope){
+angular.module('gameApp', []).controller('gameController', function($scope){
+    $scope.username = test_split();
+    $scope.counter = 0;
     poll($scope);
-    
+
     $scope.getOperation = function(url, callback){
         $.getJSON(url, function(json){
             update($scope, json);
@@ -600,25 +598,12 @@ angular.module('gameApp', []).controller('gameController', ['$scope', function($
             }
         });
     }
-
-    $scope.save = function() {
-        $timeout(function () {
-            window.alert("hi!");
-        });
-    }
     
     $scope.write_usernames = function() {
         //Spieler 1 für eigenen Nutzernamen
-        $timeout(function(){
-            window.alert("hi!");
-        });
-        //document.getElementById("own_username").innerHTML = $scope.username;
+        document.getElementById("own_username").innerHTML = test_split();
         //Spieler 2 für gegnerischen Nutzernamen
-        //document.getElementById("opponent_username").innerHTML = $scope.game.players[1-$scope.game.currentPlayer].name;
-    }
-
-    $scope.alerttest = function(){
-        alerttest();
+        document.getElementById("opponent_username").innerHTML = $scope.game.players[1-$scope.game.currentPlayer].name;
     }
     
     $scope.start = function(){
@@ -738,14 +723,16 @@ angular.module('gameApp', []).controller('gameController', ['$scope', function($
             else document.getElementById("roll_out_of_prison").style.display = "none";
         }
 
-        $scope.username = 'World';
+        $scope.printalert = function() {
+            window.alert("hello");
+        }
 
-        $scope.sayHello = function() {
-            $scope.greeting = 'Hello ' + $scope.username + '!';
-        };
+        $scope.addcounter = function(){
+            $scope.username = "changed";
+        }
 
         //to be continued
-    }]);
+    });
     
     // periodically making API requests to update scope object
     function poll($scope){
@@ -753,14 +740,13 @@ angular.module('gameApp', []).controller('gameController', ['$scope', function($
             update($scope, json);
             setTimeout(function(){
                 poll($scope);
-            }, 500);
+            }, 10000);
         });
     }
     
     function update($scope, json){
         // load json package containing game object into scope.game variable
         $scope.game = json;
-        playerID = 1-$scope.currentPlayer;
         
     // Update here every variable that is not directly addressed via $scope.game
     $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
@@ -769,6 +755,8 @@ angular.module('gameApp', []).controller('gameController', ['$scope', function($
     $scope.mycards = $scope.getFieldsByPlayer($scope.game.currentPlayer);
     $scope.opponentcards = $scope.getFieldsByPlayer(1-$scope.game.currentPlayer);
     $scope.freecards = $scope.getFreeCards();
+
+    $scope.write_usernames();
 
     for(var i = 0; i < 84; i++) {
         try {
@@ -833,8 +821,4 @@ function statusSwitch($scope){
     if($scope.game.currentstatusString == 'AUCTION'){
         $scope.bid = $scope.game.highestBid;
     }
-}
-
-function alerttest(){
-        alert("hello");
 }

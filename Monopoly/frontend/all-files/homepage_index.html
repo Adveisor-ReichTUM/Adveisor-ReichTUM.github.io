@@ -17,7 +17,7 @@
         <!--Navigationsleiste mit Weiterleitung zu anderen Seiten -->
         <ul class="menu">
             <li><a href="homepage_index.html"><img id="logo" src="AdvEIsor Logo rund.png"> </a> </li>
-            <li><a id="Verhandeln" href="Verhandeln HTML.html"><i class="fa-solid fa-arrow-right-arrow-left"></i> Verhandeln</a></li>
+            <li><a id="Verhandeln" href="Verhandeln HTML.html?username={{username}}"><i class="fa-solid fa-arrow-right-arrow-left"></i> Verhandeln</a></li>
             <li><a id="Straßen" href="Verhandeln HTML.html"><i class="fa-solid fa-road"></i> Straßen</a></li>
             <li style="float:right;"><a href="loginpage_index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
         </ul>
@@ -78,6 +78,7 @@
                             <td>
                                 <!--Geldzähler Gegner kann noch verändert werden-->
                                 <div class="counter-container">
+                                    <p>{{game.players[1-$scope.game.currentPlayer].name}}</p>
                                     <i class="fa-solid fa-dollar-sign"></i>
                                     <div class="counter-opponent"></div>
                                 </div>
@@ -87,6 +88,7 @@
                             <td>
                                 <!--Geldzähler kann noch verändert werden-->
                                 <div class="counter-container">
+                                    <p>{{username}}</p>
                                     <i class="fa-solid fa-sack-dollar"></i>
                                     <div class="counter"></div>
                                 </div>
@@ -234,8 +236,12 @@
                 </form>
             </div>
         </div>
-
-        <p>{{greeting}}</p>
+        <p id="showhere">{{username}}</p>
+        <button ng-click="addcounter()">+1</button>
+        <p>{{counter}}</p>
+        <script>
+            document.getElementById("showhere").innerHTML = document.getElementById("submitted_name").value;
+        </script>
 
         <script type="text/javascript" src="main_script.js"></script>
         
