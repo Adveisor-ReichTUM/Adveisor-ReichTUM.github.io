@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -107,7 +108,15 @@ public class GameRestController {
     }
 
     @RequestMapping(value="/bid", method = RequestMethod.POST, produces="application/json")
-    public Game bid(@RequestBody PlayerBid playerBid){
+    public Game bid(@RequestBody PlayerBid playerBid, @RequestParam(required = false) String playerName){
+        if (playerBid.getPlayerId() == null) {
+            if (playerName == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "please include bidder info");
+            } else {
+                playerBid.setPlayerId(gameService.getGame().findPlayerByName(playerName)
+                        .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,  "player name not found")).getPlayerId());
+            }
+        }
         gameService.tryHighestBid(playerBid);
         return gameService.getGame();
     }

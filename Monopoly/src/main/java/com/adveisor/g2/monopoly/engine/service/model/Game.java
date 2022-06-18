@@ -84,7 +84,16 @@ public class Game {
         return Optional.empty();
     }
 
-    public Player findCurrentPlayer() {
+    public Optional<Player> findPlayerByName(String target) {
+        for(Player player : players) {
+            if (Objects.equals(player.getPlayerName(), target)) {
+                return Optional.of(player);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Player getCurrentPlayer() {
         return findPlayerById(getCurrentPlayerId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find requested player"));
     }
@@ -96,7 +105,7 @@ public class Game {
     }
 
     public void setNextPlayer() {
-        int currentPlayerIndex = players.indexOf(findCurrentPlayer());
+        int currentPlayerIndex = players.indexOf(getCurrentPlayer());
         int nextPlayerIndex = currentPlayerIndex + 1 >= players.size() ? 0 : currentPlayerIndex + 1;
         setCurrentPlayerId(players.get(nextPlayerIndex).getPlayerId());
     }

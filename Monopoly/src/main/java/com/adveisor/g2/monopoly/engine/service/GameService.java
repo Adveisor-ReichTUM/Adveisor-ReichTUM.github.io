@@ -136,7 +136,7 @@ public class GameService {
     }
 
     public Player getCurrentPlayer() {
-        return game.findCurrentPlayer();
+        return game.getCurrentPlayer();
     }
 
     public String getCurrentPlayerId() {
