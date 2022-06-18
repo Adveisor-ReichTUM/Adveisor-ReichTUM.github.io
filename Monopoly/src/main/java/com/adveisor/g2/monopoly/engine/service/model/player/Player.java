@@ -225,10 +225,12 @@ public class Player {
 
     public void investRealEstate(int fieldIndex) {
         currentStatus.investRealEstate(fieldIndex);
+        gameService.mqttPublishPropertyLevel();
     }
 
     public void sellHouse(int fieldIndex){
         currentStatus.sellHouse(fieldIndex);
+        gameService.mqttPublishPropertyLevel();
     }
 
     public void endMortgage(int fieldIndex){
@@ -241,6 +243,7 @@ public class Player {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field not mortgaged");
         }
+        gameService.mqttPublishPropertyLevel();
     }
 
     public void startMortgage(int fieldIndex){
@@ -252,6 +255,7 @@ public class Player {
             adjustBalance(field.getMortgageValue());
             field.setHypothek(true);
         }
+        gameService.mqttPublishPropertyLevel();
     }
 
     public boolean monopolyOverColor(Color color){

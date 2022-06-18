@@ -395,6 +395,17 @@ public class GameService {
         mqttPublishMessage("/display/property-ownership", Arrays.toString(propertyOwnership));
     }
 
+    public void mqttPublishPropertyLevel() {
+        int[] propertyLevel = new int[40];
+        for (Field field : game.getBoard().getFields()) {
+            propertyLevel[field.getPosition()] = field.getNumHouses();
+            if (field.isHypothek()) {
+                propertyLevel[field.getPosition()] = -1;
+            }
+        }
+        mqttPublishMessage("/display/property-level", Arrays.toString(propertyLevel));
+    }
+
     public void mqttSubscribeTopic(String topic) {
         try {
             MqttClientSingleton.getInstance().subscribeWithResponse(topic, processMqttMessage);
