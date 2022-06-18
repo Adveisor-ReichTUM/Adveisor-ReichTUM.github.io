@@ -39,14 +39,14 @@ public class GameService {
     public static final boolean ENABLE_PLAYER_VERIFICATION = false;
 
     public static final String[] MqttTopicsToSubscribe = {
-            "wurfl1/ausgabe",
-            "wurfl2/ausgabe",
-            "test/topic",
+            "/wurfl1/ausgabe",
+            "/wurfl2/ausgabe",
+            "/test/topic",
     };
 
     public static final String[] testTopics = {
-            "wurfl/anfordern",
-            "display/player-position",
+            "/wurfl/anfordern",
+            "/display/player-position",
     };
     private final Game game;
 
@@ -61,17 +61,16 @@ public class GameService {
     private AbstractStatus currentStatus;
 
     IMqttMessageListener processMqttMessage = ((mqttTopic, mqttMessage) -> {
-        Logger.log("New Mqtt Message Under Topic: " + mqttTopic + ": " + mqttMessage
-                + "\nBinary representation: " + MqttPayloadUtil.getByteArrayBinary(mqttMessage));
+        Logger.log("New Mqtt Message Under Topic: " + mqttTopic + ":\n" + mqttMessage);
         switch (mqttTopic) {
-            case "test" -> {
+            case "/test" -> {
 
             }
-            case "wurfl1/ausgabe" -> {
+            case "/wurfl1/ausgabe" -> {
                 diceStatus.getDice().setFirstThrow(Integer.parseInt(mqttMessage.toString()));
                 if (diceStatus.getDice().isValid()) diceThrow();
             }
-            case "wurfl2/ausgabe" -> {
+            case "/wurfl2/ausgabe" -> {
                 diceStatus.getDice().setSecondThrow(Integer.parseInt(mqttMessage.toString()));
                 if (diceStatus.getDice().isValid()) diceThrow();
             }
@@ -105,7 +104,7 @@ public class GameService {
             case "DICE" -> {
                 diceStatus.getDice().setZero();
                 currentStatus = diceStatus;
-                mqttPublishMessage("wurfl/anfordern", "hallo");
+                mqttPublishMessage("/wurfl/anfordern", "hallo");
             }
             case "AUCTION" -> currentStatus = auctionStatus;
             case "END" -> currentStatus = endStatus;
@@ -383,7 +382,17 @@ public class GameService {
         for (Player player : getPlayers()) {
             playersPosition[player.getPosition()] += player.getPlayerPositionalId();
         }
-        mqttPublishMessage("display/player-position", Arrays.toString(playersPosition));
+        mqttPublishMessage("/display/player-position", Arrays.toString(playersPosition));
+    }
+
+    public void mqttPublishOwnership() {
+        int[] propertyOwnership = new int[40];
+        for (Field field : game.getBoard().getFields()) {
+            if (field.isOwned()) {
+                propertyOwnership[field.getPosition()] = game.findPlayerById(field.getOwnerId()).orElseThrow().getPlayerSequentialId();
+            }
+        }
+        mqttPublishMessage("/display/property-ownership", Arrays.toString(propertyOwnership));
     }
 
     public void mqttSubscribeTopic(String topic) {

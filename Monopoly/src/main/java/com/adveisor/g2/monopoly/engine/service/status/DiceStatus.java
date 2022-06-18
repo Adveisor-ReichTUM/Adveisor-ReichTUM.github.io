@@ -36,17 +36,8 @@ public class DiceStatus extends AbstractStatus {
         //Bewegen des Spielers und Evaluation der Position
         player.moveForward(dice.getTotal());
 
-        evaluateStandingField(player);
-        gameService.mqttPublishPlayersPosition();
         gameService.setStatus("TURN");
         return dice;
-    }
-
-    private void evaluateStandingField(Player player) {
-        Field standingField = player.standingOnField();
-        switch (standingField.getType()) {
-            case chance, community -> player.setCurrentStatus(player.getCardObligatedStatus());
-        }
     }
 
     @Override

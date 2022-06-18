@@ -4,6 +4,7 @@
 
 package com.adveisor.g2.monopoly.engine.service.model.player;
 
+import com.adveisor.g2.monopoly.engine.service.GameService;
 import com.adveisor.g2.monopoly.engine.service.model.Game;
 import com.adveisor.g2.monopoly.engine.service.model.board.Color;
 import com.adveisor.g2.monopoly.engine.service.model.board.Field;
@@ -12,6 +13,7 @@ import com.adveisor.g2.monopoly.engine.service.model.player.status.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -52,6 +54,9 @@ public class Player {
     // reference attribute
     @JsonIgnore
     private Game game;          // reference object to interact with game
+    @JsonIgnore
+    @Autowired
+    GameService gameService;
 
     // statuses
     @JsonIgnore
@@ -109,6 +114,7 @@ public class Player {
         lastDiceThrow = steps;
         currentStatus.moveForward(steps);
         evaluateStandingField();
+        gameService.mqttPublishPlayersPosition();
     }
 
     public boolean getPossession(int field_num){
@@ -129,7 +135,9 @@ public class Player {
 
 
     public Field buyProperty(Field field) {
-        return currentStatus.buyProperty(field);
+        var toReturn = currentStatus.buyProperty(field);
+        gameService.mqttPublishOwnership();
+        return toReturn;
     }
 
     public Card takeCard() {
@@ -193,10 +201,14 @@ public class Player {
 
     public void evaluateStandingField(){
         Field currentField = game.getBoard().getField(position);
-        if (currentField.getType() == tax) {
-            adjustBalance(-currentField.getPrice());
-        } else if (currentField.isOwned() && !Objects.equals(currentField.getOwnerId(), playerId)) {
-            payRentTo(game.findPlayerById(currentField.getOwnerId()).orElseThrow());
+        switch (currentField.getType()) {
+            case tax -> adjustBalance(-currentField.getPrice());
+            case chance, community -> currentStatus = cardObligatedStatus;
+            default -> {
+                if (currentField.isOwned() && !Objects.equals(currentField.getOwnerId(), playerId)) {
+                    payRentTo(game.findPlayerById(currentField.getOwnerId()).orElseThrow());
+                }
+            }
         }
     }
 
@@ -208,6 +220,7 @@ public class Player {
 
     public void sellPropertyToBank(int fieldIndex) {
         currentStatus.sellPropertyToBank(fieldIndex);
+        gameService.mqttPublishOwnership();
     }
 
     public void investRealEstate(int fieldIndex) {
