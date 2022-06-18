@@ -37,8 +37,8 @@ public class DiceStatus extends AbstractStatus {
         player.moveForward(dice.getTotal());
 
         evaluateStandingField(player);
-        //GameService.mqttPublishMessageApi(new MqttPublishModel("/topic", gameService.currentPlayerStandingField().getPosition() + ""));
-        gameService.setCurrentStatus(gameService.getTurnStatus());
+        gameService.mqttPublishPlayersPosition();
+        gameService.setStatus("TURN");
         return dice;
     }
 

@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -40,11 +41,12 @@ public class GameService {
     public static final String[] MqttTopicsToSubscribe = {
             "wurfl1/ausgabe",
             "wurfl2/ausgabe",
-            "test/topic"
+            "test/topic",
     };
 
     public static final String[] testTopics = {
-            "wurfl/anfordern"
+            "wurfl/anfordern",
+            "display/player-position",
     };
     private final Game game;
 
@@ -374,6 +376,14 @@ public class GameService {
         } catch (MqttException e) {
             Logger.log(e.getMessage());
         }
+    }
+
+    public void mqttPublishPlayersPosition() {
+        int[] playersPosition = new int[40];
+        for (Player player : getPlayers()) {
+            playersPosition[player.getPosition()] += player.getPlayerPositionalId();
+        }
+        mqttPublishMessage("display/player-position", Arrays.toString(playersPosition));
     }
 
     public void mqttSubscribeTopic(String topic) {
