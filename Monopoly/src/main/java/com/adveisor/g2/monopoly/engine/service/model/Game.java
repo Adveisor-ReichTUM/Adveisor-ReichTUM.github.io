@@ -17,7 +17,7 @@ public class Game {
     private int numPlayers;
     private int numActivePlayers;
     private int numBankruptPlayers;
-
+    private String actioninput;
     private int numHouses;
 
     private int numHotels;
@@ -76,7 +76,6 @@ public class Game {
 
         // game start at this status
         this.currentStatus = this.waitingStatus;
-
     }
 
 
@@ -211,12 +210,12 @@ public class Game {
             return;
         }
 
-        for(int i = 0; i<39; i++){
+        /*for(int i = 0; i<39; i++){
             if(player.getPossession(i)){
                 Field field = board.getFields().get(i);
                 auctionProperty(i);
             }
-        }
+        }*/
     }
 
     public void auctionProperty(int fieldIndex){

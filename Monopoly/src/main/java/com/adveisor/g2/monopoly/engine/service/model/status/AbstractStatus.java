@@ -34,6 +34,16 @@ public abstract class AbstractStatus {
         int currentPlayer = game.getCurrentPlayer();
         Player player = game.getPlayers().get(currentPlayer);
 
+        if(player.getBalance()<=0){
+            Runnable r = new Runnable(){
+                public void run(){
+                    game.bankrupt(player);
+                }
+            };
+
+            new Thread(r).start();
+        }
+
         if(player.isBankrupt()==false && player.isPasch()==true){
             if(player.getNumPasch()==3) player.jail();
             else if (player.getNumPasch()<3) player.setNumPasch(player.getNumPasch()+1);
