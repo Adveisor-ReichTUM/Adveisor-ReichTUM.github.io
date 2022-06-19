@@ -28,7 +28,7 @@ public class WaitingStatus extends AbstractStatus {
         List<Player> players = game.getPlayers();
 
         for(Player player : players){
-            if(player.getName().equals(name)) throw new IllegalArgumentException("This name already exists.");
+            if(player.getName().equals(name)) return; //throw new IllegalArgumentException("This name already exists.");
             //if(player.getPiece().equals(piece)) throw new IllegalArgumentException("This color is already used by another player.");
         }
 

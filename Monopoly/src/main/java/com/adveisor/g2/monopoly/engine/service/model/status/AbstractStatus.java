@@ -85,6 +85,6 @@ public abstract class AbstractStatus {
         throw new IllegalStateException("Can not start Mortgage while not being in TURN");
     }
     public void start() {
-        throw new IllegalStateException("Failed to start game: wrong status.");
+        //throw new IllegalStateException("Failed to start game: wrong status.");
     }
 }

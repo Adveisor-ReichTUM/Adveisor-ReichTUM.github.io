@@ -5,6 +5,7 @@ import com.adveisor.g2.monopoly.engine.service.model.Piece;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@EnableAutoConfiguration
+@SpringBootApplication
 public class GameController {
     @Autowired
     private static Game game = new Game("/text/board.txt", "/text/chanceDeck.txt", "/text/communityDeck.txt");

@@ -667,88 +667,89 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     }
     
     $scope.buyHouse = function(fieldIndex){
-            $scope.getOperation('buyHouse?fieldIndex=' + fieldIndex);
-        }
+        $scope.getOperation('buyHouse?fieldIndex=' + fieldIndex);
+    }
         
-        $scope.sellHouse = function(fieldIndex){
-            $scope.getOperation('sellHouse?fieldIndex=' + fieldIndex);
-        }
+    $scope.sellHouse = function(fieldIndex){
+        $scope.getOperation('sellHouse?fieldIndex=' + fieldIndex);
+    }
         
-        $scope.getFieldsByPlayer = function(id) {
-            $scope.getOperation('fieldsByPlayer?playerId=' + id);
-        }
+    $scope.getFieldsByPlayer = function(id) {
+        $scope.getOperation('fieldsByPlayer?playerId=' + id);
+    }
         
-        $scope.getFreeCards = function() {
-            $scope.getOperation('freecards');
-        }
+    $scope.getFreeCards = function() {
+        $scope.getOperation('freecards');
+    }
         
-        $scope.show_chance_card = function() {
-            show_chance_card($scope);
-        }
+    $scope.show_chance_card = function() {
+        show_chance_card($scope);
+    }
         
-        $scope.show_community_card = function() {
-            show_community_card($scope);
-        }
+    $scope.show_community_card = function() {
+        show_community_card($scope);
+    }
         
-        $scope.free_prison_community_button_clicked = function() {
-            if($scope.currentPlayer.inJail) {
-                document.getElementById("prison_community_click").disabled = true;
-                document.getElementById("prison_community_click").style.opacity = 0.5;
-            }
-            $scope.useJailCard();
+    $scope.free_prison_community_button_clicked = function() {
+        if($scope.currentPlayer.inJail) {
+            document.getElementById("prison_community_click").disabled = true;
+            document.getElementById("prison_community_click").style.opacity = 0.5;
         }
+        $scope.useJailCard();
+    }
         
-        $scope.free_prison_chance_button_clicked = function() {
-            if($scope.currentPlayer.inJail) {
-                document.getElementById("prison_chance_click").disabled = true;
-                document.getElementById("prison_chance_click").style.opacity = 0.5;
-            }
-            $scope.useJailCard();
+    $scope.free_prison_chance_button_clicked = function() {
+        if($scope.currentPlayer.inJail) {
+            document.getElementById("prison_chance_click").disabled = true;
+            document.getElementById("prison_chance_click").style.opacity = 0.5;
         }
+        $scope.useJailCard();
+    }
+
+    $scope.buy_out_of_prison = function() {
+        if($scope.currentPlayer.inJail) {
+            document.getElementById("buy_out_of_prison").style.display = "inline";
+            $scope.decideJail(true);
+        }
+        else document.getElementById("buy_out_of_prison").style.display = "none";
+    }
         
-        $scope.buy_out_of_prison = function() {
-            if($scope.currentPlayer.inJail) {
-                document.getElementById("buy_out_of_prison").style.display = "inline";
-                $scope.decideJail(true);
-            }
-            else document.getElementById("buy_out_of_prison").style.display = "none";
+    $scope.roll_out_of_prison = function() {
+        if($scope.currentPlayer.inJail) {
+            document.getElementById("roll_out_of_prison").style.display = "inline";
+            $scope.decideJail(false);
         }
-        
-        $scope.roll_out_of_prison = function() {
-            if($scope.currentPlayer.inJail) {
-                document.getElementById("roll_out_of_prison").style.display = "inline";
-                $scope.decideJail(false);
-            }
-            else document.getElementById("roll_out_of_prison").style.display = "none";
-        }
+        else document.getElementById("roll_out_of_prison").style.display = "none";
+    }
 
         //to be continued
-    });
+});
     
     // periodically making API requests to update scope object
-    function poll($scope){
-        $.getJSON('game', function(json){
-            update($scope, json);
-            setTimeout(function(){
-                poll($scope);
-            }, 10000);
-        });
+function poll($scope){
+    $.getJSON('game', function(json){
+        update($scope, json);
+        setTimeout(function(){
+            poll($scope);
+        }, 1000);
+    });
+}
+
+var temp_bool = true;
+function update($scope, json){
+    // load json package containing game object into scope.game variable
+    $scope.game = json;
+    if($scope.game.currentStatusString==="WAITING" && temp_bool===true){
+        $scope.join();
+        $scope.start();
+        temp_bool = false;
     }
-    
-    function update($scope, json){
-        // load json package containing game object into scope.game variable
-        $scope.game = json;
 
-        if($scope.game.currentStatusString=="WAITING"){
-            $scope.join();
-            $scope.start();
-        }
-
-        checkBalanceAdjustment($scope);
+    //checkBalanceAdjustment($scope);
         
-        // Update here every variable that is not directly addressed via $scope.game
-        $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
-        //$scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
+    // Update here every variable that is not directly addressed via $scope.game
+    $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
+    //$scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
 
     for(var i = 0; i < 84; i++) {
         try {
@@ -765,9 +766,11 @@ angular.module('gameApp', []).controller('gameController', function($scope){
         document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById("street_" + $scope.game.playercards[i]));
     }
 
-    $scope.getFieldsByPlayer(1-$scope.game.currentPlayer);
-    for(var i = 0; i < $scope.game.playercards.length; i++) {
-        document.getElementById("street_field_" + (i + 29)).appendChild(document.getElementById("street_" + $scope.game.playercards[i]));
+    if($scope.game.players.length>=2){
+        $scope.getFieldsByPlayer(1 - $scope.game.currentPlayer);
+        for (var i = 0; i < $scope.game.playercards.length; i++) {
+            document.getElementById("street_field_" + (i + 29)).appendChild(document.getElementById("street_" + $scope.game.playercards[i]));
+        }
     }
 
     $scope.getFreeCards();
@@ -795,14 +798,14 @@ function checkBalanceAdjustment($scope) {
     //window.alert($scope.game.players[0].balance);
     if(lastbal1 != $scope.game.players[0].balance) {
         isOpponent = $scope.game.players[0].name != $scope.username;
-        updateCounter_2(200, isOpponent);
+        updateCounter_2($scope.game.players[0].balance, isOpponent);
         lastbal1 = $scope.game.players[0].balance;
     }
-    if(lastbal2 != $scope.game.players[1].balance) {
+    /*if(lastbal2 != $scope.game.players[1].balance) {
         isOpponent = $scope.game.players[1].name != $scope.username;
         updateCounter_2($scope.game.players[1].balance, isOpponent);
         lastbal2 = $scope.game.players[1].balance;
-    }
+    }*/
 }
 
 function statusSwitch($scope){

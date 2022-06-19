@@ -1,6 +1,7 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
 import com.adveisor.g2.monopoly.engine.service.model.status.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ public class Game {
     private int highestBid;
 
     // reference attributes
-    private List<Player> players = new ArrayList<>();
+    @JsonManagedReference
+    private List<Player> players;
 
     private List<Integer> freecards = new ArrayList<Integer>();
     private List<Integer> playercards = new ArrayList<Integer>();
@@ -41,20 +43,26 @@ public class Game {
     private Board board;
 
     // all the possible statuses initialized here
+
     private AbstractStatus auctionStatus = new AuctionStatus(this);
+
     private AbstractStatus buyPropertyStatus = new BuyPropertyStatus(this);
+
     private AbstractStatus cardStatus = new CardStatus(this);
+
     private AbstractStatus diceStatus = new DiceStatus(this);
+
     private AbstractStatus endStatus = new EndStatus(this);
+
     private AbstractStatus jailStatus = new JailStatus(this);
+
     private AbstractStatus startStatus = new StartStatus(this);
+
     private AbstractStatus turnStatus = new TurnStatus(this);
+
     private AbstractStatus waitingStatus = new WaitingStatus(this);
 
-    //
-
     private AbstractStatus currentStatus;
-
     private String currentStatusString;
 
     // constructor
@@ -62,6 +70,7 @@ public class Game {
     public Game(String boardfile, String chancefile, String communityfile){
         // set up board
         this.board = new Board(boardfile);
+        this.players = new ArrayList<Player>();
 
         // set up chance Deck
         this.chanceDeck = new Deck(true, chancefile);
@@ -80,10 +89,11 @@ public class Game {
         this.cardDescription = "Rücken Sie vor bis zum Ohmplatz.";
     }
 
-
+    @Autowired
     public void join(String name){
        //currentStatus.join(name);
-        players.add(new Player(name, this));
+        Player player = new Player(name, this);
+        players.add(player);
     }
 
     public void start(){
@@ -397,6 +407,12 @@ public class Game {
         }
 
         this.freecards = fields;
+    }
+
+    // explicit definition necessary to prevent infinite json recursion
+    @JsonManagedReference
+    public List<Player> getPlayers(){
+        return this.players;
     }
 
 }

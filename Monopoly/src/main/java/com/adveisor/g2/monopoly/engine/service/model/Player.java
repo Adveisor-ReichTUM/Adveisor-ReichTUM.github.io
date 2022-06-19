@@ -1,5 +1,7 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +14,6 @@ public class Player {
     public static int nextId = 0;             // identification number for player
     private int id;
     private final int startMoney;   // amount of money available in the beginning
-
 
     private int position;       // position on the field array: 0 - 39
     private int dice;           // total value of dices
@@ -34,11 +35,12 @@ public class Player {
     private int numJailCards;   // number of Out-of-jail cards in players possession
 
     // reference attribute
+    @JsonBackReference
     private Game game;          // reference object to interact with game
 
     // constructor
     public Player(String name, Game game){
-        this.startMoney = 1400;
+        this.startMoney = 1500;
         this.balance = startMoney;
         this.name = name;
         this.bankrupt = false;
@@ -145,5 +147,11 @@ public class Player {
             }
         }
         return true;
+    }
+
+    // explicit definition necessary to prevent infinite json recursion
+    @JsonBackReference
+    public Game getGame() {
+        return game;
     }
 }
