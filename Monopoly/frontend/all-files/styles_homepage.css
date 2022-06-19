@@ -156,10 +156,10 @@ li a:hover {
     align-content: left;
 }
 
-.card .cont .details{
+.card .cont .details {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 0px;
     align-items: center;
 }
 
@@ -181,12 +181,12 @@ li a:hover {
     left: 0;
 }
 
- 
+
 
 #taken_card_content {
     text-align: center;
     justify-content: center;
-    vertical-align: middle;
+    vertical-align: top;
     font-weight: bold;
     width: 100%;
     font-size: larger;

@@ -140,19 +140,21 @@
                                             <!-- <p id="rent"><b>Grundstückwert: &#937; 400</b></p> -->
                                             <table style="height: 100%;">
                                                 <col width="55%">
-                                                <col width="45%">                    
+                                                <col width="45%">
                                                 <div class="details">
-                                                    <tr>
-                                                        <td>
-                                                            <p id="taken_card_content">Das ist ein Test Das ist ein TestDas ist ein TestDas ist ein Test</p>
-                                                        </td>
-                                                        <td>
-                                                            <div id="community_chance_parent">
-                                                                <img src="Gemeinschaftskarte Truhe.png" id="community_chest">
-                                                                <img src="Ereigniskarte Fragezeichen.png" id="chance_questionmark" style="display: none;">
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                    <tbody style="height: 100%">
+                                                        <tr>
+                                                            <td>
+                                                                <p id="taken_card_content">Das ist ein Test Das ist ein TestDas ist ein TestDas ist ein Test</p>
+                                                            </td>
+                                                            <td>
+                                                                <div id="community_chance_parent">
+                                                                    <img src="Gemeinschaftskarte Truhe.png" id="community_chest">
+                                                                    <img src="Ereigniskarte Fragezeichen.png" id="chance_questionmark" style="visibility: hidden;">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
                                                 </div>
                                             </table>
                                         </div>   
@@ -241,6 +243,8 @@
             <p id="showhere">{{username}}</p>
             <button ng-click="addcounter()">+1</button>
             <p>{{counter}}</p>
+            <button onclick="updateCounter_2(200, false)">update counter</button>
+            <button onclick="updateCounter_2(200, true)">update counter</button>
             <script>
                 document.getElementById("showhere").innerHTML = document.getElementById("submitted_name").value;
             </script>

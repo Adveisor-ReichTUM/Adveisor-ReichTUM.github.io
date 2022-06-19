@@ -38,7 +38,7 @@ public class Player {
 
     // constructor
     public Player(String name, Game game){
-        this.startMoney = 1500;
+        this.startMoney = 1400;
         this.balance = startMoney;
         this.name = name;
         this.bankrupt = false;

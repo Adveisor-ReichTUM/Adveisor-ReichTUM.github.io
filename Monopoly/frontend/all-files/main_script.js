@@ -433,7 +433,7 @@ function show_chance_card($scope) {
     //Zeige Text
     document.getElementById("taken_card_content").innerHTML = txt;
     //Zeige Fragezeichen
-    document.getElementById("chance_questionmark").style.display = "inline";
+    document.getElementById("chance_questionmark").style.visibility = "visible";
     //prison card
     if(txt == "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
         free_prison_chance_dragged();
@@ -447,7 +447,7 @@ function show_community_card($scope) {
     //Zeige Karte
     document.getElementById("card_field").style.visibility = "visible";
     //Blende Fragezeichen aus
-    document.getElementById("chance_questionmark").style.display = "none";
+    document.getElementById("chance_questionmark").style.visibility = "hidden";
     //Zeige Titel
     document.getElementById("kind_of_taken_card").innerHTML = "Gemeinschaftskarte";
     //Zeige Text
@@ -575,8 +575,8 @@ function waitFiveSec() {
 
 
 var laststatus = null;
-var lastbal1 = null;
-var lastbal2 = null;
+var lastbal1 = 0;
+var lastbal2 = 0;
 var test = false;
 
 angular.module('gameApp', []).controller('gameController', function($scope){
@@ -601,15 +601,7 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     // making controller methods accessible
     
     $scope.join = function(){
-        $scope.getOperation('join?name=' + $scope.username,
-        function(success){
-            if(success){
-                // ...
-            }
-            else{
-                
-            }
-        });
+        $scope.getOperation('join?name=' + $scope.username);
     }
     
     $scope.start = function(){
@@ -747,14 +739,16 @@ angular.module('gameApp', []).controller('gameController', function($scope){
         // load json package containing game object into scope.game variable
         $scope.game = json;
 
-        /*if($scope.game.currentStatusString=="WAITING"){
+        if($scope.game.currentStatusString=="WAITING"){
             $scope.join();
             $scope.start();
-        }*/
+        }
+
+        checkBalanceAdjustment($scope);
         
-    // Update here every variable that is not directly addressed via $scope.game
-    $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
-    $scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
+        // Update here every variable that is not directly addressed via $scope.game
+        $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
+        //$scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
 
     for(var i = 0; i < 84; i++) {
         try {
@@ -787,8 +781,6 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     }
     );
 
-    checkBalanceAdjustment($scope);
-
     // update GUI if game status changes
     if(laststatus!=$scope.game.currentStatusString){
         statusSwitch($scope);
@@ -800,13 +792,16 @@ angular.module('gameApp', []).controller('gameController', function($scope){
 
 function checkBalanceAdjustment($scope) {
     // player0
+    //window.alert($scope.game.players[0].balance);
     if(lastbal1 != $scope.game.players[0].balance) {
         isOpponent = $scope.game.players[0].name != $scope.username;
-        updateCounter_2($scope.game.players[0].balance, isOpponent);
+        updateCounter_2(200, isOpponent);
+        lastbal1 = $scope.game.players[0].balance;
     }
     if(lastbal2 != $scope.game.players[1].balance) {
         isOpponent = $scope.game.players[1].name != $scope.username;
         updateCounter_2($scope.game.players[1].balance, isOpponent);
+        lastbal2 = $scope.game.players[1].balance;
     }
 }
 

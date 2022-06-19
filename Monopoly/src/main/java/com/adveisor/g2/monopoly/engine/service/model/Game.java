@@ -17,7 +17,6 @@ public class Game {
     private int numPlayers;
     private int numActivePlayers;
     private int numBankruptPlayers;
-    private String actioninput;
     private int numHouses;
 
     private int numHotels;
@@ -26,6 +25,7 @@ public class Game {
     private boolean running;
 
     private String cardDescription;
+    private String cardType;
 
     private int highestBidderIndex;
 
@@ -76,11 +76,14 @@ public class Game {
 
         // game start at this status
         this.currentStatus = this.waitingStatus;
+
+        this.cardDescription = "Rücken Sie vor bis zum Ohmplatz.";
     }
 
 
     public void join(String name){
-       currentStatus.join(name);
+       //currentStatus.join(name);
+        players.add(new Player(name, this));
     }
 
     public void start(){

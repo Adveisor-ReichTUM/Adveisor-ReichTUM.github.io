@@ -34,7 +34,7 @@ public class WaitingStatus extends AbstractStatus {
 
         // create player
         Player player = new Player(name, game);
-        players.add(player);
+        game.getPlayers().add(player);
     }
 
     @Override
