@@ -539,6 +539,18 @@ function switch_sites(shown, hidden) {
     return false;
 }
 
+function waitFiveSec() {
+    var counter = 5;
+    var closeWindow = setInterval(function(){
+        counter--;
+        if(!(counter > 0)) {
+            window.close;
+            clearInterval(closeWindow);
+        }
+    }, 1000);   
+}       
+
+
 
 
 
