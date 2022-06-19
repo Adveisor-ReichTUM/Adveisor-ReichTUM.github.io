@@ -539,18 +539,208 @@ function switch_sites(shown, hidden) {
     return false;
 }
 
-function waitFiveSec() {
-    var counter = 5;
-    var closeWindow = setInterval(function(){
-        counter--;
-        if(!(counter > 0)) {
-            window.close;
-            clearInterval(closeWindow);
-        }
-    }, 1000);   
-}       
 
 
+//Öffne Straßen in neuem Fenster
+
+
+
+
+function array_tal() {
+    myTab = window.open('Array Tal.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function printf_straße() {
+    myTab = window.open('Printf Straße.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function and_gatter() {
+    myTab = window.open('AND Gatter.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function byte_allee() {
+    myTab = window.open('Byte Allee.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function multiplexer_platz() {
+    myTab = window.open('Multiplexer Platz.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function mmix_gebirge() {
+    myTab = window.open('MMIX Gebirge.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function linearegleichungs_allee() {
+    myTab = window.open('Linearegleichungs Allee.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function spannungsquelle() {
+    myTab = window.open('Spannungsquelle.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function skalarplatz() {
+    myTab = window.open('Skalarplatz.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function eigenwertstraße() {
+    myTab = window.open('Eigenwertstraße.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function or_gatter() {
+    myTab = window.open('OR Gatter.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function determigasse() {
+    myTab = window.open('Determigasse.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function zeilenstufenweg() {
+    myTab = window.open('Zeilenstufenweg.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function eigenvalley() {
+    myTab = window.open('Eigenvalley.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function bernoullevard() {
+    myTab = window.open('Bernoullevard.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function lhospital_allee() {
+    myTab = window.open('L\'Hospit-Allee.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function cau_chysee() {
+    myTab = window.open('Cau-Chysee.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function nand_gatter() {
+    myTab = window.open('NAND Gatter.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function sandwich_platz() {
+    myTab = window.open('Sandwich-Platz.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function leibniz_hospital() {
+    myTab = window.open('Leibniz Hospital.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function stromquelle() {
+    myTab = window.open('Stromquelle.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function grenzweg() {
+    myTab = window.open('Grenzweg.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function kirchhoffsche_moschee() {
+    myTab = window.open('Kirchhoffsche Moschee.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function norator() {
+    myTab = window.open('Norator.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function tayl_tor() {
+    myTab = window.open('Tayl-Tor.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function nor_gatter() {
+    myTab = window.open('NOR Gatter.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function zirkulator() {
+    myTab = window.open('Zirkulator.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
+
+function ohmplatz() {
+    myTab = window.open('Ohmplatz.png', '_blank', 'height=500,width=500');
+    setTimeout(() => {
+        if(myTab) myTab.close();
+    }, 3000);
+}
 
 
 
