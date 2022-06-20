@@ -433,7 +433,7 @@ function show_chance_card($scope) {
     //Zeige Text
     document.getElementById("taken_card_content").innerHTML = txt;
     //Zeige Fragezeichen
-    document.getElementById("chance_questionmark").style.visibility = "visible";
+    document.getElementById("chance_questionmark").style.display = "inline";
     //prison card
     if(txt == "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
         free_prison_chance_dragged();
@@ -447,7 +447,7 @@ function show_community_card($scope) {
     //Zeige Karte
     document.getElementById("card_field").style.visibility = "visible";
     //Blende Fragezeichen aus
-    document.getElementById("chance_questionmark").style.visibility = "hidden";
+    document.getElementById("chance_questionmark").style.display = "none";
     //Zeige Titel
     document.getElementById("kind_of_taken_card").innerHTML = "Gemeinschaftskarte";
     //Zeige Text
