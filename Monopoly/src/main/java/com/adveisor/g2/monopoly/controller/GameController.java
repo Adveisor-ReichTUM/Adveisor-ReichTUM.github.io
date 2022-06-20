@@ -134,8 +134,8 @@ public class GameController {
     }
 
     @RequestMapping(value="/fieldsByPlayer", method = RequestMethod.GET, produces="application/json")
-    public Game getFieldsByPlayer(@RequestParam int playerId){
-        game.setFieldsByPlayer(playerId);
+    public Game getFieldsByPlayer(){
+        game.setTradeFields();
         return game;
     }
 

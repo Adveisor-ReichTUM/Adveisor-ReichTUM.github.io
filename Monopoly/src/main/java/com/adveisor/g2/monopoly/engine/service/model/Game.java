@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +35,12 @@ public class Game {
 
     // reference attributes
     @JsonManagedReference
+    @OneToMany(mappedBy="game")
     private List<Player> players;
 
     private List<Integer> freecards = new ArrayList<Integer>();
-    private List<Integer> playercards = new ArrayList<Integer>();
+    private List<Integer> mycards = new ArrayList<Integer>();
+    private List<Integer> opcards = new ArrayList<Integer>();
     private Deck communityDeck;
     private Deck chanceDeck;
     private Board board;
@@ -70,7 +73,7 @@ public class Game {
     public Game(String boardfile, String chancefile, String communityfile){
         // set up board
         this.board = new Board(boardfile);
-        this.players = new ArrayList<Player>();
+        this.players = new ArrayList<>();
 
         // set up chance Deck
         this.chanceDeck = new Deck(true, chancefile);
@@ -89,7 +92,7 @@ public class Game {
         this.cardDescription = "Rücken Sie vor bis zum Ohmplatz.";
     }
 
-    @Autowired
+    @JsonManagedReference
     public void join(String name){
        //currentStatus.join(name);
         Player player = new Player(name, this);
@@ -383,18 +386,31 @@ public class Game {
         setCurrentStatus(getTurnStatus());
     }
 
-    public void setFieldsByPlayer(int id){
-        List<Integer> fields = new ArrayList<Integer>();
-        boolean[] possession = players.get(id).getStreets();
-
-        for(int i = 0; i <= 39; i++){
-            Field field = board.getFields().get(i);
-            //if(field.checkType("street") || field.checkType("station") || field.checkType("utilities"))
-            if(possession[i]) fields.add(i);
+    public void setTradeFields(){
+        List<Integer> fields1 = new ArrayList<Integer>();
+        List<Integer> fields2 = new ArrayList<Integer>();
+        if(players.size()>=1){
+            boolean[] possession1 = players.get(currentPlayer).getStreets();
+            for(int i = 0; i <= 39; i++){
+                Field field = board.getFields().get(i);
+                //if(field.checkType("street") || field.checkType("station") || field.checkType("utilities"))
+                if(possession1[i]) fields1.add(i);
+            }
         }
-
-        this.playercards = fields;
+        if(players.size()>=2){
+            boolean[] possession2 = players.get(1-currentPlayer).getStreets();
+            for(int i = 0; i <= 39; i++){
+                Field field = board.getFields().get(i);
+                //if(field.checkType("street") || field.checkType("station") || field.checkType("utilities"))
+                if(possession2[i]) fields2.add(i);
+            }
+        }
+        this.mycards = fields1;
+        this.opcards = fields2;
     }
+
+
+
 
     public void setFreeCards(){
         List<Integer> fields = new ArrayList<Integer>();

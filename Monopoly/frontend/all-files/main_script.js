@@ -581,6 +581,12 @@ var test = false;
 
 angular.module('gameApp', []).controller('gameController', function($scope){
     $scope.username = window.location.search.split("=")[1];
+    $scope.temp_bool = true;
+    $scope.lastbal1 = 0;
+    $scope.freecardslength = 0;
+    $scope.myplayercards = null;
+    $scope.opplayercards = null;
+    $scope.waitshow = false;
     poll($scope);
 
     $scope.getOperation = function(url, callback){
@@ -674,8 +680,8 @@ angular.module('gameApp', []).controller('gameController', function($scope){
         $scope.getOperation('sellHouse?fieldIndex=' + fieldIndex);
     }
         
-    $scope.getFieldsByPlayer = function(id) {
-        $scope.getOperation('fieldsByPlayer?playerId=' + id);
+    $scope.getFieldsByPlayer = function() {
+        $scope.getOperation('fieldsByPlayer?playerId=');
     }
         
     $scope.getFreeCards = function() {
@@ -722,6 +728,41 @@ angular.module('gameApp', []).controller('gameController', function($scope){
         else document.getElementById("roll_out_of_prison").style.display = "none";
     }
 
+    $scope.update_cards1 = function(){
+        $scope.getFreeCards();
+        $scope.getFieldsByPlayer();
+        $scope.waitshow = true;
+        $scope.update_cards2();
+    }
+
+    $scope.update_cards2 = function(){
+
+        for(var i = 0; i < 84; i++) {
+            try {
+                var street_element = document.getElementById("street_" + (i+1));
+                document.getElementById("storage").appendChild(street_element);
+            }
+            catch (e) {
+
+            }
+        }
+
+        $scope.game.mycards.forEach(function(index, i){
+            document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById("street_" + index));
+        });
+        $scope.game.opcards.forEach(function(index, i){
+            document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById("street_" + index));
+        });
+        $scope.game.freecards.forEach(function(index, i){
+            document.getElementById("street_field_" + (i + 57)).appendChild(document.getElementById("street_" + index));
+        });
+
+        if($scope.waitshow){
+            setTimeout(function(){
+                $scope.update_cards2();
+            }, 250);
+        }
+    }
         //to be continued
 });
     
@@ -731,27 +772,37 @@ function poll($scope){
         update($scope, json);
         setTimeout(function(){
             poll($scope);
-        }, 1000);
+        }, 5000);
     });
 }
 
-var temp_bool = true;
+function onepoll($scope){
+    $.getJSON('game', function(json){
+        update($scope, json);
+    });
+}
+
 function update($scope, json){
     // load json package containing game object into scope.game variable
     $scope.game = json;
-    if($scope.game.currentStatusString==="WAITING" && temp_bool===true){
+    if($scope.temp_bool===true){
         $scope.join();
-        $scope.start();
-        temp_bool = false;
+        //$scope.start();
+        $scope.temp_bool = false;
     }
-
-    //checkBalanceAdjustment($scope);
+    $scope.waitshow = false;
+    if($scope.game.players.length>=2){
+        $scope.getFieldsByPlayer(1 - $scope.game.currentPlayer);
+        $scope.opplayercards = $scope.game.playercards;
+    }
+    //window.alert($scope.game.players[$scope.game.currentPlayer].balance);
+    checkBalanceAdjustment($scope);
         
     // Update here every variable that is not directly addressed via $scope.game
-    $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
+    if($scope.temp_bool===false) $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
     //$scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
 
-    for(var i = 0; i < 84; i++) {
+    /*for(var i = 0; i < 84; i++) {
         try {
             var street_element = document.getElementById("street_" + (i+1));
             document.getElementById("storage").appendChild(street_element);
@@ -762,8 +813,13 @@ function update($scope, json){
     }
 
     $scope.getFieldsByPlayer($scope.game.currentPlayer);
-    for(var i = 0; i < $scope.game.playercards.length; i++) {
-        document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById("street_" + $scope.game.playercards[i]));
+    if($scope.temp_bool===false){
+        $scope.game.playercards.forEach(function(index, i){
+            document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById("street_" + index));
+        });
+        for(var i = 0; i < $scope.game.playercards.length; i++) {
+            document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById("street_" + $scope.game.playercards[i]));
+        }
     }
 
     if($scope.game.players.length>=2){
@@ -774,9 +830,15 @@ function update($scope, json){
     }
 
     $scope.getFreeCards();
-    for(var i = 0; i < $scope.game.freecards.length; i++) {
+    if($scope.freecardslength!==$scope.game.freecards.length){
+        $scope.game.freecards.forEach(function(index, i){
+            document.getElementById("street_field_" + (i + 57)).appendChild(document.getElementById("street_" + index));
+        });
+        $scope.freecardslength = $scope.game.freecards.length;
+    }*/
+    /*for(var i = 0; i < $scope.game.freecards.length; i++) {
         document.getElementById("street_field_" + (i + 57)).appendChild(document.getElementById("street_" + $scope.game.freecards[i]));
-    }
+    }*/
 
     $scope.game.board.fields.forEach(function(field, i) {
         if(field.Hypothek) show_mortgage(i);
@@ -796,10 +858,10 @@ function update($scope, json){
 function checkBalanceAdjustment($scope) {
     // player0
     //window.alert($scope.game.players[0].balance);
-    if(lastbal1 != $scope.game.players[0].balance) {
-        isOpponent = $scope.game.players[0].name != $scope.username;
+    if($scope.lastbal1 !== $scope.game.players[0].balance) {
+        isOpponent = $scope.game.players[0].name !== $scope.username;
         updateCounter_2($scope.game.players[0].balance, isOpponent);
-        lastbal1 = $scope.game.players[0].balance;
+        $scope.lastbal1 = $scope.game.players[0].balance;
     }
     /*if(lastbal2 != $scope.game.players[1].balance) {
         isOpponent = $scope.game.players[1].name != $scope.username;

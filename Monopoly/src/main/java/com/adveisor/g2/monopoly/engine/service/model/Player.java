@@ -5,10 +5,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.Scanner;
 
 @Data
+@Getter
+@Setter
+@Component
 public class Player {
 
     public static int nextId = 0;             // identification number for player
@@ -36,11 +42,12 @@ public class Player {
 
     // reference attribute
     @JsonBackReference
+    @ManyToOne
     private Game game;          // reference object to interact with game
 
     // constructor
     public Player(String name, Game game){
-        this.startMoney = 1500;
+        this.startMoney = 1400;
         this.balance = startMoney;
         this.name = name;
         this.bankrupt = false;
