@@ -94,9 +94,16 @@ public class Game {
 
     @JsonManagedReference
     public void join(String name){
-       //currentStatus.join(name);
-        Player player = new Player(name, this);
-        players.add(player);
+        currentStatus.join(name);
+        //if(players.size()==4) return;
+        // get players from the game
+
+        /*for(Player player : players){
+            if(player.getName().equals(name)) return; //throw new IllegalArgumentException("This name already exists.");
+            //if(player.getPiece().equals(piece)) throw new IllegalArgumentException("This color is already used by another player.");
+        }*/
+        /*Player player = new Player(name, this);
+        players.add(player);*/
     }
 
     public void start(){

@@ -777,18 +777,19 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     $scope.myplayercards = null;
     $scope.opplayercards = null;
     $scope.waitshow = false;
+    $scope.counter = 0;
     poll($scope);
 
     $scope.getOperation = function(url, callback){
         $.getJSON(url, function(json){
             update($scope, json);
-            if(callback!=undefined){
+            if(callback!==undefined){
                 callback(true);
             }
         }
         )
         .fail(function(){
-            if(callback!=undefined){
+            if(callback!==undefined){
                 callback(false);
             }
         });
@@ -802,7 +803,7 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     
     $scope.start = function(){
         $scope.getOperation('start');
-        if($scope.game.currentStatusString!="WAITING") pause_timer();
+        if($scope.game.currentStatusString!=="WAITING") pause_timer();
     }
     
     $scope.reset = function(){
@@ -950,7 +951,7 @@ angular.module('gameApp', []).controller('gameController', function($scope){
         if($scope.waitshow){
             setTimeout(function(){
                 $scope.update_cards2();
-            }, 250);
+            }, 1000);
         }
     }
         //to be continued
@@ -959,25 +960,20 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     // periodically making API requests to update scope object
 function poll($scope){
     $.getJSON('game', function(json){
-        update($scope, json);
+        $scope.update($scope, json);
         setTimeout(function(){
             poll($scope);
-        }, 5000);
-    });
-}
-
-function onepoll($scope){
-    $.getJSON('game', function(json){
-        update($scope, json);
+        }, 10000);
     });
 }
 
 function update($scope, json){
     // load json package containing game object into scope.game variable
     $scope.game = json;
+
     if($scope.temp_bool===true){
         $scope.join();
-        //$scope.start();
+        $scope.start();
         $scope.temp_bool = false;
     }
     $scope.waitshow = false;
@@ -985,50 +981,12 @@ function update($scope, json){
         $scope.getFieldsByPlayer(1 - $scope.game.currentPlayer);
         $scope.opplayercards = $scope.game.playercards;
     }
-    //window.alert($scope.game.players[$scope.game.currentPlayer].balance);
+
     checkBalanceAdjustment($scope);
         
     // Update here every variable that is not directly addressed via $scope.game
     if($scope.temp_bool===false) $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
     //$scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
-
-    /*for(var i = 0; i < 84; i++) {
-        try {
-            var street_element = document.getElementById("street_" + (i+1));
-            document.getElementById("storage").appendChild(street_element);
-        }
-        catch (e) {
-
-        }
-    }
-
-    $scope.getFieldsByPlayer($scope.game.currentPlayer);
-    if($scope.temp_bool===false){
-        $scope.game.playercards.forEach(function(index, i){
-            document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById("street_" + index));
-        });
-        for(var i = 0; i < $scope.game.playercards.length; i++) {
-            document.getElementById("street_field_" + (i + 1)).appendChild(document.getElementById("street_" + $scope.game.playercards[i]));
-        }
-    }
-
-    if($scope.game.players.length>=2){
-        $scope.getFieldsByPlayer(1 - $scope.game.currentPlayer);
-        for (var i = 0; i < $scope.game.playercards.length; i++) {
-            document.getElementById("street_field_" + (i + 29)).appendChild(document.getElementById("street_" + $scope.game.playercards[i]));
-        }
-    }
-
-    $scope.getFreeCards();
-    if($scope.freecardslength!==$scope.game.freecards.length){
-        $scope.game.freecards.forEach(function(index, i){
-            document.getElementById("street_field_" + (i + 57)).appendChild(document.getElementById("street_" + index));
-        });
-        $scope.freecardslength = $scope.game.freecards.length;
-    }*/
-    /*for(var i = 0; i < $scope.game.freecards.length; i++) {
-        document.getElementById("street_field_" + (i + 57)).appendChild(document.getElementById("street_" + $scope.game.freecards[i]));
-    }*/
 
     $scope.game.board.fields.forEach(function(field, i) {
         if(field.Hypothek) show_mortgage(i);
@@ -1041,30 +999,29 @@ function update($scope, json){
         statusSwitch($scope);
         laststatus = $scope.game.currentStatusString;
     }
-
     $scope.$apply();
 }
 
 function checkBalanceAdjustment($scope) {
-    // player0
-    //window.alert($scope.game.players[0].balance);
     if($scope.lastbal1 !== $scope.game.players[0].balance) {
         isOpponent = $scope.game.players[0].name !== $scope.username;
         updateCounter_2($scope.game.players[0].balance, isOpponent);
         $scope.lastbal1 = $scope.game.players[0].balance;
     }
-    /*if(lastbal2 != $scope.game.players[1].balance) {
-        isOpponent = $scope.game.players[1].name != $scope.username;
-        updateCounter_2($scope.game.players[1].balance, isOpponent);
-        lastbal2 = $scope.game.players[1].balance;
-    }*/
+    if($scope.game.players.length>=2){
+        if($scope.lastbal2 !== $scope.game.players[1].balance) {
+            isOpponent = $scope.game.players[1].name !== $scope.username;
+            updateCounter_2($scope.game.players[1].balance, isOpponent);
+            $scope.lastbal2 = $scope.game.players[1].balance;
+        }
+    }
 }
 
 function statusSwitch($scope){
     // Adjust UI for inactive players
-    if(($scope.username != $scope.currentPlayer.name) &&
-        ($scope.game.currentStatusString == 'TURN' || $scope.game.currentStatusString == 'BUYPROPERTY'
-        ||$scope.game.currentStatusString == 'DICE' || $scope.game.currentStatusString == 'JAIL')){
+    if(($scope.username !== $scope.currentPlayer.name) &&
+        ($scope.game.currentStatusString === 'TURN' || $scope.game.currentStatusString === 'BUYPROPERTY'
+        ||$scope.game.currentStatusString === 'DICE' || $scope.game.currentStatusString === 'JAIL')){
         disable_trading_page();
     }
     else{
@@ -1072,7 +1029,7 @@ function statusSwitch($scope){
         show_whos_turn();
     }
 
-    if($scope.game.currentstatusString == 'AUCTION'){
+    if($scope.game.currentstatusString === 'AUCTION'){
         $scope.bid = $scope.game.highestBid;
     }
 }
