@@ -522,24 +522,20 @@ function hide_modal() {
 }
 
 function disable_trading_page() {
-    if(true) {
-        //verhindert Drücken auf Verhandeln oder Straßen
-        document.getElementById("Verhandeln").href = "Javascript://"; //alternativ: .href = "";
-        document.getElementById("Straßen").href = "javascript: void(0)";
-        //Graue den Bildschirm ein
-        document.body.style.opacity = 0.5;
-    }
+    //verhindert Drücken auf Verhandeln oder Straßen
+    document.getElementById("Verhandeln").setAttribute('onclick', 'null');
+    document.getElementById("Straßen").setAttribute('onclick', 'null');
+    //Graue den Bildschirm ein
+    document.body.style.opacity = 0.1;
 }
 
 function enable_trading_page() {
-    document.getElementById("Verhandeln").href = "Verhandeln HTML.html";
-    document.getElementById("Straßen").href = "Verhandeln HTML.html";
+    document.getElementById("Verhandeln").setAttribute('onclick', 'switch_sites("tradingpage", "homepage")');
+    document.getElementById("Straßen").setAttribute('onclick', 'switch_sites("tradingpage", "homepage")');
     document.body.style.opacity = 1;
 }
 
 function switch_sites(shown, hidden) {
-    if(shown=='homepage') homepage = true;
-    else homepage = false;
     document.getElementById(shown).style.display='inline';
     document.getElementById(hidden).style.display='none';
     return false;
