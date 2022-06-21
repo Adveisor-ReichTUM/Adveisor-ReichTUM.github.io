@@ -523,19 +523,22 @@ function hide_modal() {
     }, 1000);
 }
 
+
+
 function disable_trading_page() {
     //verhindert Drücken auf Verhandeln oder Straßen
     document.getElementById("Verhandeln").setAttribute('onclick', 'null');
     document.getElementById("Straßen").setAttribute('onclick', 'null');
     //Graue den Bildschirm ein
-    document.body.style.opacity = 0.3;
-    document.body.style.background.setAttribute('background-blend-mode', 'overlay');
+    document.body.style.backgroundImage = "url('background dark.jpg')";
+    document.body.style.filter = "brightness(40%)";
 }
 
 function enable_trading_page() {
     document.getElementById("Verhandeln").setAttribute('onclick', 'switch_sites("tradingpage", "homepage")');
     document.getElementById("Straßen").setAttribute('onclick', 'switch_sites("tradingpage", "homepage")');
-    document.body.style.opacity = 1;
+    document.body.style.backgroundImage = "url('background.jpg')";
+    document.body.style.filter = "brightness(100%)";
 }
 
 function switch_sites(shown, hidden) {
