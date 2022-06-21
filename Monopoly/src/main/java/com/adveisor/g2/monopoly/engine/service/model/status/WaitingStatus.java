@@ -10,6 +10,7 @@ import com.adveisor.g2.monopoly.engine.service.model.Player;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
+import java.util.TimerTask;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class WaitingStatus extends AbstractStatus {
@@ -38,13 +39,20 @@ public class WaitingStatus extends AbstractStatus {
     }
 
     @Override
-    public void start() {
+    public void start(int timeLimit) {
         //start the game
         if(game.getPlayers().size()>=2) {
             // state transfer here?
             game.setCurrentStatus(game.getStartStatus());
         }
-
+        game.setTimeLeft(timeLimit);
+        game.getTimer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(game.getTimeLeft() > 0)
+                    game.setTimeLeft(game.getTimeLeft()-1);
+            }
+        }, 60000, 60000);
     }
 
 }

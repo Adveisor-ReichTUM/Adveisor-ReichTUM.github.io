@@ -788,6 +788,7 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     $scope.opplayer = "Player2";
     $scope.freePrisonCommunity = false;
     $scope.freePrisonChance = false;
+    $scope.timeLimit = 30;
 
     $scope.getOperation = function(url, callback){
         $.getJSON(url, function(json){
@@ -811,7 +812,7 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     }
     
     $scope.start = function(){
-        $scope.getOperation('start');
+        $scope.getOperation('start?timeLimit=' + $scope.timeLimit);
         if($scope.game.currentStatusString!=="WAITING") pause_timer();
     }
     

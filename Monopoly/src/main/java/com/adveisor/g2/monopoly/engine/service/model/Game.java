@@ -1,6 +1,7 @@
 package com.adveisor.g2.monopoly.engine.service.model;
 
 import com.adveisor.g2.monopoly.engine.service.model.status.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Getter
 @Setter
@@ -20,6 +23,10 @@ public class Game {
     private int numActivePlayers;
     private int numBankruptPlayers;
     private int numHouses;
+
+    @JsonIgnore
+    private Timer timer;
+    private int timeLeft;
 
     private int numHotels;
     private int currentPlayer;
@@ -75,6 +82,8 @@ public class Game {
         this.board = new Board(boardfile);
         this.players = new ArrayList<>();
 
+        this.timer = new Timer();
+
         // set up chance Deck
         this.chanceDeck = new Deck(true, chancefile);
 
@@ -107,8 +116,8 @@ public class Game {
         players.add(player);*/
     }
 
-    public void start(){
-        currentStatus.start();
+    public void start(int timeLimit){
+        currentStatus.start(timeLimit);
     }
 
     public String end(){

@@ -44,8 +44,8 @@ public class GameController {
     }
 
     @RequestMapping(value="/start", method=RequestMethod.GET, produces="application/json")
-    public Game start(){
-        game.start();
+    public Game start(@RequestParam int timeLimit){
+        game.start(timeLimit);
         return game;
     }
 
