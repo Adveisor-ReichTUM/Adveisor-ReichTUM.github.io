@@ -80,7 +80,7 @@
                                 <td>
                                     <!--Geldzähler Gegner kann noch verändert werden-->
                                     <div class="counter-container">
-                                        <p>{{game.players[1-$game.currentPlayer].name}}</p>
+                                        <p style="color:red;">{{game.players[1-$game.currentPlayer].name}}</p>
                                         <i class="fa-solid fa-dollar-sign"></i>
                                         <div class="counter-opponent"></div>
                                     </div>
@@ -238,6 +238,13 @@
                     </form>
                 </div>
             </div>
+
+            <!--Zeigt dem Angebotsteller an, ob sein Angebot vom Gegner akzeptiert oder abgelehnt wurde; verschwindet nach 10s wieder-->
+            <div id="show_acception" style="display: none;">
+                <p id="timer_status_accept">10 s</p>
+                <b id="decision_variable"></b>
+            </div>
+
             <p id="showhere">{{username}}</p>
             <button ng-click="addcounter()">+1</button>
             <p>{{counter}}</p>
@@ -247,6 +254,11 @@
 
             <script type="text/javascript" src="main_script.js"></script>
         </div>
+
+
+        <!--Tradingpage beginnt-->
+
+
         <div id="tradingpage" style="display: none;">
           
             <br><br>
@@ -762,12 +774,6 @@
             <!--Submitbutton, um seine Angebote an Alex zu übermitteln-->
             <input id="submit_offer" style="display: inline;" type="submit" value="Submit" ng-click="showoffer()" style="margin-top:400px;">
 
-
-            <!--Zeigt dem Angebotsteller an, ob sein Angebot vom Gegner akzeptiert oder abgelehnt wurde; verschwindet nach 10s wieder-->
-            <div id="show_acception" style="display: none;">
-                <p id="timer_status_accept">10 s</p>
-                <b id="decision_variable"></b>
-            </div>
 
         </div>        
     </body>
