@@ -524,7 +524,7 @@ function disable_trading_page() {
     document.getElementById("Verhandeln").setAttribute('onclick', 'null');
     document.getElementById("Straßen").setAttribute('onclick', 'null');
     //Graue den Bildschirm ein
-    document.body.style.opacity = 0.1;
+    document.body.style.opacity = 0.3;
     document.body.style.background.setAttribute('background-blend-mode', 'overlay');
 }
 
