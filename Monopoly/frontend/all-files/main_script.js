@@ -433,7 +433,7 @@ function show_chance_card($scope) {
     //Zeige Text
     document.getElementById("taken_card_content").innerHTML = txt;
     //Zeige Fragezeichen
-    document.getElementById("chance_questionmark").style.visibility = "visible";
+    document.getElementById("chance_questionmark").style.display = "inline";
     //prison card
     if(txt == "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
         free_prison_chance_dragged();
@@ -443,11 +443,12 @@ function show_chance_card($scope) {
 //ziehe verschiedene Gemeinschaftskarten als HTML
 function show_community_card($scope) {
     //txt aus Backend
+    //window.alert($scope.game.cardDescription);
     txt = $scope.game.cardDescription;
     //Zeige Karte
     document.getElementById("card_field").style.visibility = "visible";
     //Blende Fragezeichen aus
-    document.getElementById("chance_questionmark").style.visibility = "hidden";
+    document.getElementById("chance_questionmark").style.display = "none";
     //Zeige Titel
     document.getElementById("kind_of_taken_card").innerHTML = "Gemeinschaftskarte";
     //Zeige Text
@@ -963,10 +964,10 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     // periodically making API requests to update scope object
 function poll($scope){
     $.getJSON('game', function(json){
-        $scope.update($scope, json);
+        update($scope, json);
         setTimeout(function(){
             poll($scope);
-        }, 10000);
+        }, 1000);
     });
 }
 
@@ -974,7 +975,8 @@ function update($scope, json){
     // load json package containing game object into scope.game variable
     $scope.game = json;
     $scope.myplayer = $scope.game.players[$scope.currentPlayer];
-    if($scope.game.players.length>=2) $scope.opplayer = $scope.game.players[1-$scope.currentPlayer];
+    $scope.opplayer = $scope.game.players[1-$scope.currentPlayer];
+    //if($scope.game.players.length>=2) $scope.opplayer = $scope.game.players[1-$scope.currentPlayer].name;
 
     if($scope.temp_bool===true){
         $scope.join();
@@ -986,7 +988,6 @@ function update($scope, json){
         $scope.getFieldsByPlayer(1 - $scope.game.currentPlayer);
         $scope.opplayercards = $scope.game.playercards;
     }
-
     checkBalanceAdjustment($scope);
         
     // Update here every variable that is not directly addressed via $scope.game
@@ -1005,6 +1006,7 @@ function update($scope, json){
         laststatus = $scope.game.currentStatusString;
     }
     $scope.$apply();
+    switch_sites('homepage')
 }
 
 function checkBalanceAdjustment($scope) {

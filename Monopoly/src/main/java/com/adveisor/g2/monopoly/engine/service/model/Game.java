@@ -27,7 +27,7 @@ public class Game {
     private boolean running;
 
     private String cardDescription;
-    private String cardType;
+    //private String cardType;
 
     private int highestBidderIndex;
 
