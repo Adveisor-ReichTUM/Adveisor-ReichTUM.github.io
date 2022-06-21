@@ -46,7 +46,7 @@ public class Field {
 
     public static void evaluateField(Field field, Player player, Game game){
         switch(field.getType()){
-            case los: break;
+            //case los: break;
             case station:
             case utilities:
             case street:
@@ -57,8 +57,14 @@ public class Field {
             case jail:
             case parking: break;
             case tax: player.adjustBalance(-field.getPrice()); break;
-            case chance: game.getChanceDeck().takeCard(player, game); return;
-            case community: game.getCommunityDeck().takeCard(player, game); return;
+            case chance:
+                game.getChanceDeck().takeCard(player, game);
+                game.setCardType("CHANCE");
+                return;
+            case community:
+                game.getCommunityDeck().takeCard(player, game);
+                game.setCardType("COMMUNITY");
+                return;
             default: break;
         }
     }

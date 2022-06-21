@@ -27,7 +27,7 @@ public class Game {
     private boolean running;
 
     private String cardDescription;
-    //private String cardType;
+    private String cardType;
 
     private int highestBidderIndex;
 
@@ -90,6 +90,7 @@ public class Game {
         this.currentStatus = this.waitingStatus;
 
         this.cardDescription = "Rücken Sie vor bis zum Ohmplatz.";
+        this.cardType = "COMMUNITY";
     }
 
     @JsonManagedReference

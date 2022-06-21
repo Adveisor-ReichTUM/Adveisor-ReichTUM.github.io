@@ -426,39 +426,41 @@ function updateCounter_2(new_counter_value, is_opponent) {
 //ziehe verschiedene Ereigniskarten als HTML
 function show_chance_card($scope) {
     //txt aus Backend
-    txt = $scope.game.cardDescription;
-    //Zeige Karte
-    document.getElementById("card_field").style.visibility = "visible";
-    //Zeige Ereigniskarte
-    document.getElementById("kind_of_taken_card").innerHTML = "Ereigniskarte";
-    //Zeige Text
-    document.getElementById("taken_card_content").innerHTML = txt;
-    //Zeige Fragezeichen
-    document.getElementById("chance_questionmark").style.display = "inline";
-    //prison card
-    if(txt == "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
-        free_prison_chance_dragged();
+    if($scope.game.cardType==="CHANCE"){
+        txt = $scope.game.cardDescription;
+        //Zeige Karte
+        document.getElementById("card_field").style.visibility = "visible";
+        //Zeige Ereigniskarte
+        document.getElementById("kind_of_taken_card").innerHTML = "Ereigniskarte";
+        //Zeige Text
+        document.getElementById("taken_card_content").innerHTML = txt;
+        //Zeige Fragezeichen
+        document.getElementById("chance_questionmark").style.display = "inline";
+        //prison card
+        if(txt === "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
+            free_prison_chance_dragged();
+        }
     }
 }
 
 //ziehe verschiedene Gemeinschaftskarten als HTML
 function show_community_card($scope) {
     //txt aus Backend
-    //window.alert($scope.game.cardDescription);
-    txt = $scope.game.cardDescription;
-    //Zeige Karte
-    document.getElementById("card_field").style.visibility = "visible";
-    //Blende Fragezeichen aus
-    document.getElementById("chance_questionmark").style.display = "none";
-    //Zeige Titel
-    document.getElementById("kind_of_taken_card").innerHTML = "Gemeinschaftskarte";
-    //Zeige Text
-    document.getElementById("taken_card_content").innerHTML = txt;
-    //prison card
-    if(txt == "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
-        free_prison_community_dragged();
+    if($scope.game.cardType==="COMMUNITY"){
+        txt = $scope.game.cardDescription;
+        //Zeige Karte
+        document.getElementById("card_field").style.visibility = "visible";
+        //Blende Fragezeichen aus
+        document.getElementById("chance_questionmark").style.display = "none";
+        //Zeige Titel
+        document.getElementById("kind_of_taken_card").innerHTML = "Gemeinschaftskarte";
+        //Zeige Text
+        document.getElementById("taken_card_content").innerHTML = txt;
+        //prison card
+        if(txt === "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
+            free_prison_community_dragged();
+        }
     }
-    
 }
 
 //Umgang mit Du kommst aus dem Gefängnis frei
@@ -783,7 +785,6 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     $scope.myplayercards = null;
     $scope.opplayercards = null;
     $scope.waitshow = false;
-    $scope.counter = 0;
     $scope.myplayer = "Player1";
     $scope.opplayer = "Player2";
 
@@ -822,6 +823,7 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     }
     
     $scope.endTurn = function(){
+        hide_card_after_dragged();
         $scope.getOperation('endturn');
     }
     
