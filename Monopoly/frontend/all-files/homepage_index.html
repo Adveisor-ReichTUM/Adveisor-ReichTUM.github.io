@@ -16,7 +16,7 @@
     <body id="angularUpdate" ng-app='gameApp' ng-controller='gameController'>
         <!--Navigationsleiste mit Weiterleitung zu anderen Seiten -->
         <ul class="menu">
-            <li><a href="#" onclick="switch_sites('homepage', 'tradingpage')" ng-click="update_cards1()"><img id="logo" src="AdvEIsor Logo rund.png"> </a> </li>
+            <li><a href="#" onclick="switch_sites('homepage', 'tradingpage')" ng-click="buttonpoll()"><img id="logo" src="AdvEIsor Logo rund.png"> </a> </li>
             <li><a id="Verhandeln" href="#" onclick="switch_sites('tradingpage', 'homepage')" ng-click="update_cards1()"><i class="fa-solid fa-arrow-right-arrow-left"></i> Verhandeln</a></li>
             <li><a id="Straßen" href="#" onclick="switch_sites('tradingpage', 'homepage')" ng-click="update_cards1()"><i class="fa-solid fa-road"></i> Straßen</a></li>
             <li style="float:right;"><a href="loginpage_index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
@@ -247,7 +247,7 @@
 
             <p id="showhere">{{username}}</p>
             <button ng-click="addcounter()">+1</button>
-            <p>{{counter}}</p>
+            <p id="test123">Test</p>
             <script>
                 document.getElementById("showhere").innerHTML = document.getElementById("submitted_name").value;
             </script>

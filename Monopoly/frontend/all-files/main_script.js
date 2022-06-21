@@ -12,6 +12,7 @@ value_angebote = 0;
 
 var streets_wuensche = [];
 var streets_angebote = [];
+var homepage = true;
 
 //Notwendig für Drag&Drop
 function allowDrop(ev) {
@@ -535,6 +536,8 @@ function enable_trading_page() {
 }
 
 function switch_sites(shown, hidden) {
+    if(shown=='homepage') homepage = true;
+    else homepage = false;
     document.getElementById(shown).style.display='inline';
     document.getElementById(hidden).style.display='none';
     return false;
@@ -771,6 +774,8 @@ var lastbal2 = 0;
 var test = false;
 
 angular.module('gameApp', []).controller('gameController', function($scope){
+    poll($scope);
+
     $scope.username = window.location.search.split("=")[1];
     $scope.temp_bool = true;
     $scope.lastbal1 = 0;
@@ -781,8 +786,6 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     $scope.counter = 0;
     $scope.myplayer = "Player1";
     $scope.opplayer = "Player2";
-
-    poll($scope);
 
     $scope.getOperation = function(url, callback){
         $.getJSON(url, function(json){
@@ -964,7 +967,9 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     // periodically making API requests to update scope object
 function poll($scope){
     $.getJSON('game', function(json){
-        update($scope, json);
+        $scope.$apply(function(){
+            update($scope, json);
+        });
         setTimeout(function(){
             poll($scope);
         }, 1000);
@@ -977,22 +982,19 @@ function update($scope, json){
     $scope.myplayer = $scope.game.players[$scope.currentPlayer];
     $scope.opplayer = $scope.game.players[1-$scope.currentPlayer];
     //if($scope.game.players.length>=2) $scope.opplayer = $scope.game.players[1-$scope.currentPlayer].name;
-
+    //window.alert("hello");
     if($scope.temp_bool===true){
         $scope.join();
         $scope.start();
         $scope.temp_bool = false;
     }
     $scope.waitshow = false;
-    if($scope.game.players.length>=2){
-        $scope.getFieldsByPlayer(1 - $scope.game.currentPlayer);
-        $scope.opplayercards = $scope.game.playercards;
-    }
+
     checkBalanceAdjustment($scope);
         
     // Update here every variable that is not directly addressed via $scope.game
     if($scope.temp_bool===false) $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
-    //$scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
+    // $scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
 
     $scope.game.board.fields.forEach(function(field, i) {
         if(field.Hypothek) show_mortgage(i);
@@ -1006,7 +1008,14 @@ function update($scope, json){
         laststatus = $scope.game.currentStatusString;
     }
     $scope.$apply();
-    switch_sites('homepage')
+    /*if(homepage){
+        switch_sites('tradingpage', 'homepage');
+        switch_sites('homepage', 'tradingpage');
+    }
+    else{
+        switch_sites('homepage', 'tradingpage');
+        switch_sites('tradingpage', 'homepage');
+    }*/
 }
 
 function checkBalanceAdjustment($scope) {
