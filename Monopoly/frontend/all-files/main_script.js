@@ -778,6 +778,9 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     $scope.opplayercards = null;
     $scope.waitshow = false;
     $scope.counter = 0;
+    $scope.myplayer = "Player1";
+    $scope.opplayer = "Player2";
+
     poll($scope);
 
     $scope.getOperation = function(url, callback){
@@ -970,6 +973,8 @@ function poll($scope){
 function update($scope, json){
     // load json package containing game object into scope.game variable
     $scope.game = json;
+    $scope.myplayer = $scope.game.players[$scope.currentPlayer];
+    if($scope.game.players.length>=2) $scope.opplayer = $scope.game.players[1-$scope.currentPlayer];
 
     if($scope.temp_bool===true){
         $scope.join();
