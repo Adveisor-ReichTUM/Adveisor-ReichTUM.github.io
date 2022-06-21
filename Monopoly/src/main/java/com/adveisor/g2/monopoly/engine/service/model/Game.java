@@ -89,7 +89,7 @@ public class Game {
         // game start at this status
         this.currentStatus = this.waitingStatus;
 
-        this.cardDescription = "Rücken Sie vor bis zum Ohmplatz.";
+        this.cardDescription = "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.";
         this.cardType = "COMMUNITY";
     }
 

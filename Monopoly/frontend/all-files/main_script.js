@@ -438,7 +438,8 @@ function show_chance_card($scope) {
         document.getElementById("chance_questionmark").style.display = "inline";
         //prison card
         if(txt === "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
-            free_prison_chance_dragged();
+            //free_prison_chance_dragged();
+            $scope.freePrisonChance = true;
         }
     }
 }
@@ -458,7 +459,8 @@ function show_community_card($scope) {
         document.getElementById("taken_card_content").innerHTML = txt;
         //prison card
         if(txt === "Sie haben die Wiederholungsprüfung bestanden! Behalten Sie diese Karte, bis Sie sie benötigen oder verkaufen.") {
-            free_prison_community_dragged();
+            //free_prison_community_dragged();
+            $scope.freePrisonCommunity = true;
         }
     }
 }
@@ -783,6 +785,8 @@ angular.module('gameApp', []).controller('gameController', function($scope){
     $scope.waitshow = false;
     $scope.myplayer = "Player1";
     $scope.opplayer = "Player2";
+    $scope.freePrisonCommunity = false;
+    $scope.freePrisonChance = false;
 
     $scope.getOperation = function(url, callback){
         $.getJSON(url, function(json){
@@ -977,8 +981,10 @@ function poll($scope){
 function update($scope, json){
     // load json package containing game object into scope.game variable
     $scope.game = json;
+    // Update here every variable that is not directly addressed via $scope.game
     $scope.myplayer = $scope.game.players[$scope.currentPlayer];
     $scope.opplayer = $scope.game.players[1-$scope.currentPlayer];
+    if($scope.temp_bool===false) $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
     //if($scope.game.players.length>=2) $scope.opplayer = $scope.game.players[1-$scope.currentPlayer].name;
     //window.alert("hello");
     if($scope.temp_bool===true){
@@ -988,10 +994,13 @@ function update($scope, json){
     }
     $scope.waitshow = false;
 
+    if($scope.currentPlayer.numJailCards >= 1){
+        if($scope.freePrisonChance) free_prison_chance_dragged();
+        if($scope.freePrisonCommunity) free_prison_community_dragged();
+    }
+
     checkBalanceAdjustment($scope);
-        
-    // Update here every variable that is not directly addressed via $scope.game
-    if($scope.temp_bool===false) $scope.currentPlayer = $scope.game.players[$scope.game.currentPlayer];
+
     // $scope.opponent = $scope.game.players[1-$scope.game.currentPlayer];
 
     $scope.game.board.fields.forEach(function(field, i) {
