@@ -81,7 +81,7 @@
                                     <!--Geldzähler Gegner kann noch verändert werden-->
                                     <div class="counter-container">
                                         <p style="color:red;">{{game.players[1-$game.currentPlayer].name}}</p>
-                                        <i class="fa-solid fa-dollar-sign"></i>
+                                        <i class="fa-solid fa-sack-dollar"></i>
                                         <div class="counter-opponent"></div>
                                     </div>
                                 
@@ -244,13 +244,6 @@
                 <p id="timer_status_accept">10 s</p>
                 <b id="decision_variable"></b>
             </div>
-
-            <p id="showhere">{{username}}</p>
-            <button ng-click="addcounter()">+1</button>
-            <p id="test123">Test</p>
-            <script>
-                document.getElementById("showhere").innerHTML = document.getElementById("submitted_name").value;
-            </script>
 
             <script type="text/javascript" src="main_script.js"></script>
         </div>
